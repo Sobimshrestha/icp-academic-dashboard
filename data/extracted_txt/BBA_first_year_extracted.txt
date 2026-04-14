@@ -1,0 +1,16 @@
+LONDON METROPOLITAN UNIVERSITY
+YEAR 1 BUSINESS ADMINISTRATION TIME TABLE
+
+Day Time Class Type Year Course Intake Module Code Module Title Lecturer Group Block Room
+SUN 07:00 AM - 08:30 AM Lecture 1 BBA A25 AC4052NP Financial Accounting Mr. Samip Thakali B2 Nepal SR01- Fewa
+SUN 08:30 AM - 10:00 AM Lecture 1 BBA A25 HR4053NP Managing People in Organizations Mr. Vikram Rana B2 Nepal LT04- Dipang
+MON 07:00 AM - 08:30 AM Lecture 1 BBA A25 MN4W54NP Learning Through Organizations Mr. Kiran Kunwar B2 Nepal LT04- Dipang
+MON 09:30 AM - 11:00 AM Lecture 1 BBA A25 FE4055NP Understanding the Business and Economic Environment Ms. Ganga Ghale B2 Nepal LT03- Rupa
+TUE 07:00 AM - 08:30 AM Tutorial 1 BBA A25 AC4052NP Financial Accounting Mr. Samip Thakali B2 Nepal SR02- Begnas
+TUE 08:30 AM - 10:00 AM Tutorial 1 BBA A25 HR4053NP Managing People in Organizations Mr. Vikram Rana B2 Nepal SR02- Begnas
+WED 07:00 AM - 08:30 AM Tutorial 1 BBA A25 MN4W54NP Learning Through Organizations Mr. Kiran Kunwar B2 UK Lab03- Open Access Lab
+WED 09:30 AM - 11:00 AM Tutorial 1 BBA A25 FE4055NP Understanding the Business and Economic Environment Ms. Ganga Ghale B2 UK Lab03- Open Access Lab
+THU 07:00 AM - 08:30 AM Lab 1 BBA A25 HR4053NP Managing People in Organizations Mr. Vikram Rana B2 Nepal SR04- Tilicho
+THU 08:30 AM - 10:00 AM Lab 1 BBA A25 HR4053NP Managing People in Organizations Mr. Vikram Rana B2 Nepal SR07- Kapuche
+FRI 07:00 AM - 08:30 AM Lab 1 BBA A25 FE4055NP Understanding the Business and Economic Environment Ms. Ganga Ghale B2 UK TR02- Stonehenge
+FRI 09:30 AM - 11:00 AM Lab 1 BBA A25 FE4055NP Understanding the Business and Economic Environment Ms. Ganga Ghale B2 UK TR03- Thames

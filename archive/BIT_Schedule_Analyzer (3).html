@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIT Free Class Finder</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&family=Mukta:wght@400;700&display=swap');
+:root{
+  --bg:#0b0c10;--surface:#13141a;--s2:#1a1c24;--s3:#20222c;--border:#252730;
+  --accent:#4f9cf9;--green:#34d399;--amber:#fbbf24;--purple:#a78bfa;
+  --red:#f87171;--orange:#fb923c;--text:#e8eaf0;--muted:#5a5f72;
+  --mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif;
+}
+.light-mode{
+  --bg:#f4f5f7;--surface:#ffffff;--s2:#f0f1f4;--s3:#e8e9ed;--border:#dde0e8;
+  --text:#1a1c24;--muted:#7a7f94;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;transition:background .2s,color .2s;}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:300;}
+.logo{font-family:var(--mono);font-size:12px;color:var(--accent);background:rgba(79,156,249,.1);border:1px solid rgba(79,156,249,.25);padding:3px 9px;border-radius:4px;letter-spacing:1px;}
+header h1{font-size:15px;font-weight:500;}
+.hright{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.theme-btn{background:var(--s2);border:1px solid var(--border);color:var(--muted);font-size:14px;width:32px;height:32px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent);}
+.hinfo{font-family:var(--mono);font-size:10px;color:var(--muted);}
+
+/* NAV */
+.nav{display:flex;gap:0;background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto;}
+.nav-tab{font-family:var(--mono);font-size:11px;padding:10px 16px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;letter-spacing:.5px;white-space:nowrap;flex-shrink:0;}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.nav-tab:hover:not(.active){color:var(--text);}
+
+.page{display:none;}.page.show{display:block;}
+
+/* CLOCK BANNER */
+.clock-banner{background:var(--s2);border-bottom:1px solid var(--border);padding:18px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.clock-time{font-family:var(--mono);font-size:44px;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;}
+.clock-meta{display:flex;flex-direction:column;gap:4px;}
+.clock-date{font-family:var(--mono);font-size:11px;color:var(--muted);}
+.day-pill{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:4px;margin-top:4px;}
+.vdiv{width:1px;height:52px;background:var(--border);flex-shrink:0;}
+.stat-group{display:flex;gap:18px;}
+.stat{display:flex;flex-direction:column;gap:2px;}
+.stat-num{font-family:var(--mono);font-size:28px;font-weight:700;line-height:1;}
+.stat-lbl{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;}
+.status-info{display:flex;flex-direction:column;gap:5px;}
+.status-row{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 1.4s ease-in-out infinite;flex-shrink:0;}
+.dot-off{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;}
+
+/* FILTERS */
+.filters{background:var(--surface);border-bottom:1px solid var(--border);padding:9px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.flabel{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+.bgroup{display:flex;gap:3px;}
+.btn{font-family:var(--mono);font-size:11px;padding:4px 11px;border-radius:5px;border:1px solid var(--border);background:var(--s2);color:var(--muted);cursor:pointer;transition:all .15s;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn.a-all{background:rgba(251,191,36,.12);border-color:var(--amber);color:var(--amber);}
+.btn.a-y1{background:rgba(52,211,153,.12);border-color:var(--green);color:var(--green);}
+.btn.a-y2{background:rgba(167,139,250,.12);border-color:var(--purple);color:var(--purple);}
+.btn.a-y3{background:rgba(251,146,60,.12);border-color:var(--orange);color:var(--orange);}
+.btn.a-view{background:rgba(79,156,249,.12);border-color:var(--accent);color:var(--accent);}
+.btn.a-green{background:rgba(52,211,153,.12);border-color:var(--green);color:var(--green);}
+.vline{width:1px;height:20px;background:var(--border);}
+input[type=text],select{background:var(--s2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:11px;padding:4px 11px;border-radius:5px;outline:none;transition:border-color .15s;}
+input[type=text]:focus,select:focus{border-color:var(--accent);}
+input[type=text]::placeholder{color:var(--muted);}
+select option{background:var(--surface);}
+
+/* CONTENT */
+.content{padding:20px 24px;}
+
+/* TABS */
+.tabs{display:flex;gap:0;margin-bottom:16px;border-bottom:1px solid var(--border);}
+.tab{font-family:var(--mono);font-size:11px;padding:7px 16px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;letter-spacing:.5px;white-space:nowrap;}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.tab:hover:not(.active){color:var(--text);}
+.tab-body{display:none;}.tab-body.show{display:block;}
+
+/* ROOM CARDS */
+.room-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;}
+.rcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 15px;position:relative;overflow:hidden;transition:transform .15s,border-color .15s;}
+.rcard:hover{transform:translateY(-1px);}
+.rcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.rcard.c-both::before,.rcard.c-all::before,.rcard.c-multi::before{background:var(--amber);}
+.rcard.c-y1::before{background:var(--green);}
+.rcard.c-y2::before{background:var(--purple);}
+.rcard.c-y3::before{background:var(--orange);}
+.rcard.c-occ{opacity:.4;}
+.rcard.c-ending::before{background:var(--red);}
+.rcard.pinned{border-color:var(--amber);}
+.pin-btn{position:absolute;top:10px;right:10px;background:none;border:none;cursor:pointer;font-size:14px;opacity:.4;transition:opacity .15s;padding:2px;}
+.pin-btn:hover,.pin-btn.active{opacity:1;}
+.rc-code{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text);padding-right:20px;}
+.rc-name{font-size:11px;color:var(--muted);margin:2px 0 8px;}
+.slot-list{display:flex;flex-direction:column;gap:3px;}
+.slot-row{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;padding:3px 6px;border-radius:4px;}
+.slot-row.is-now{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);}
+.slot-row.is-up{background:rgba(79,156,249,.06);border:1px solid rgba(79,156,249,.1);}
+.slot-time{flex:1;color:var(--text);}
+.chip{font-size:9px;letter-spacing:.4px;padding:1px 5px;border-radius:3px;white-space:nowrap;}
+.chip-now{background:rgba(52,211,153,.2);color:var(--green);}
+.chip-next{background:rgba(79,156,249,.2);color:var(--accent);}
+.chip-y1{background:rgba(52,211,153,.15);color:var(--green);}
+.chip-y2{background:rgba(167,139,250,.15);color:var(--purple);}
+.chip-y3{background:rgba(251,146,60,.15);color:var(--orange);}
+.chip-both,.chip-all,.chip-multi{background:rgba(251,191,36,.15);color:var(--amber);}
+.chip-end{background:rgba(248,113,113,.2);color:var(--red);}
+.dur-badge{font-family:var(--mono);font-size:10px;color:var(--green);margin-top:4px;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{padding:8px 13px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--s2);white-space:nowrap;}
+td{padding:9px 13px;border-bottom:1px solid rgba(37,39,48,.5);vertical-align:middle;}
+.light-mode td{border-bottom-color:rgba(200,203,215,.5);}
+tr:last-child td{border-bottom:none;}
+tr.row-now td{background:rgba(52,211,153,.04);}
+tr:hover td{background:rgba(127,127,127,.04);}
+.t-mono{font-family:var(--mono);font-size:11px;}
+.t-bold{font-weight:700;}
+.badge-live{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:20px;background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.3);}
+.badge-occ{font-family:var(--mono);font-size:10px;color:var(--red);}
+.badge-next{font-family:var(--mono);font-size:10px;color:var(--accent);}
+
+.empty-msg{padding:44px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:12px;}
+.offhours{padding:60px 24px;text-align:center;}
+.offhours-title{font-family:var(--mono);font-size:18px;color:var(--muted);margin-bottom:8px;}
+.offhours-sub{font-size:14px;color:var(--muted);}
+
+/* ── MY TIMETABLE PAGE ── */
+.my-tt-setup{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;}
+.setup-title{font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--text);margin-bottom:4px;}
+.setup-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.setup-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.setup-select{padding:7px 12px;border-radius:6px;font-size:13px;}
+.tt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+.tt-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.tt-card-head{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.tt-day-badge{font-family:var(--mono);font-size:10px;font-weight:700;padding:2px 9px;border-radius:3px;letter-spacing:1px;}
+.tt-item{padding:10px 14px;border-bottom:1px solid rgba(37,39,48,.4);display:flex;gap:10px;align-items:flex-start;}
+.tt-item:last-child{border-bottom:none;}
+.tt-time{font-family:var(--mono);font-size:10px;color:var(--accent);min-width:90px;flex-shrink:0;padding-top:2px;}
+.tt-info{}
+.tt-title{font-size:12px;font-weight:500;color:var(--text);}
+.tt-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.tt-room{font-family:var(--mono);font-size:10px;color:var(--accent);margin-top:3px;}
+.tt-now{background:rgba(52,211,153,.06);border-left:2px solid var(--green);}
+.tt-empty{padding:12px 14px;font-size:12px;color:var(--muted);font-family:var(--mono);}
+
+/* ── SEARCH PAGE ── */
+.search-page{padding:24px;}
+.search-hero{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;}
+.search-hero-title{font-family:var(--mono);font-size:12px;color:var(--text);margin-bottom:4px;letter-spacing:.5px;}
+.search-hero-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.search-bar-wrap{display:flex;gap:8px;flex-wrap:wrap;}
+.search-big{background:var(--s2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:13px;padding:9px 14px;border-radius:8px;outline:none;flex:1;min-width:180px;transition:border-color .15s;}
+.search-big:focus{border-color:var(--accent);}
+.search-big::placeholder{color:var(--muted);}
+.search-suggestions{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+.sug-btn{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;border:1px solid var(--border);background:var(--s2);color:var(--muted);cursor:pointer;transition:all .15s;}
+.sug-btn:hover{border-color:var(--accent);color:var(--accent);}
+.result-card{border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:14px;}
+.result-head{padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.result-room-name{font-family:var(--mono);font-size:15px;font-weight:700;}
+.result-status-badge{font-family:var(--mono);font-size:11px;padding:4px 11px;border-radius:20px;font-weight:700;margin-left:auto;}
+.rsbadge-free{background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.3);}
+.rsbadge-occ{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.3);}
+.result-body{padding:0 18px 16px;}
+.class-box{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-top:10px;}
+.class-box-title{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.class-row{display:flex;gap:8px;margin-bottom:5px;align-items:flex-start;}
+.class-key{font-family:var(--mono);font-size:10px;color:var(--muted);min-width:86px;flex-shrink:0;padding-top:1px;}
+.class-val{font-size:12px;color:var(--text);font-weight:500;}
+.year-badge{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:4px;margin-right:4px;}
+.yb1{background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.25);}
+.yb2{background:rgba(167,139,250,.15);color:var(--purple);border:1px solid rgba(167,139,250,.25);}
+.yb3{background:rgba(251,146,60,.15);color:var(--orange);border:1px solid rgba(251,146,60,.25);}
+.free-slots-section{margin-top:12px;}
+.free-slots-title{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.free-slot-pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:5px;background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.18);color:var(--green);margin:2px;}
+.no-result{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:36px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:12px;}
+
+/* FIND ME page */
+.find-hero{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:18px;}
+.find-title{font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--text);margin-bottom:4px;}
+.find-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.find-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.find-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;}
+.find-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;border-top:3px solid var(--green);transition:transform .15s;}
+.find-card:hover{transform:translateY(-1px);}
+.find-rank{font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:6px;}
+.find-room{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.find-subname{font-size:11px;color:var(--muted);margin-bottom:10px;}
+.find-dur{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--green);margin-bottom:2px;}
+.find-dur-lbl{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.find-time{font-family:var(--mono);font-size:10px;color:var(--accent);}
+
+/* LEGEND */
+.legend{display:flex;gap:14px;flex-wrap:wrap;padding:12px 24px;border-top:1px solid var(--border);}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-family:var(--mono);}
+.leg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--s3);border:1px solid var(--border);border-radius:8px;padding:10px 18px;font-family:var(--mono);font-size:12px;color:var(--text);transition:transform .3s;z-index:999;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+/* ── DARK MODE CARD FIX ── */
+body:not(.light-mode) .rcard { background: #1a1d27; border-color: #2e3140; }
+body:not(.light-mode) .rcard:hover { background: #1f2235; border-color: #3a3d52; }
+body:not(.light-mode) .rcard.pinned { border-color: var(--amber) !important; }
+body:not(.light-mode) .rcard.c-y1 { background: #141e1c; }
+body:not(.light-mode) .rcard.c-y2 { background: #171420; }
+body:not(.light-mode) .rcard.c-y3 { background: #1e1710; }
+body:not(.light-mode) .rcard.c-all, body:not(.light-mode) .rcard.c-multi, body:not(.light-mode) .rcard.c-both { background: #1c1a10; }
+body:not(.light-mode) .rcard.c-ending { background: #1e1212; }
+body:not(.light-mode) .rcard.c-occ { background: #14151b; opacity:.45; }
+body:not(.light-mode) .slot-row { background: #222532; border-color: #2e3245; }
+body:not(.light-mode) .slot-row.is-now { background: rgba(52,211,153,.1); border-color: rgba(52,211,153,.25); }
+body:not(.light-mode) .slot-row.is-up  { background: rgba(79,156,249,.07); border-color: rgba(79,156,249,.15); }
+body:not(.light-mode) .rc-name { color: #6e7490; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.82);
+  z-index: 600;
+  align-items: flex-start; justify-content: center;
+  padding: 32px 16px; overflow-y: auto;
+  backdrop-filter: blur(3px);
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  width: 100%; max-width: 580px;
+  display: flex; flex-direction: column;
+  overflow: hidden; margin: auto;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6);
+}
+body:not(.light-mode) .modal { background: #16181f; border-color: #2a2d3a; }
+.modal-head {
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 12px;
+}
+body:not(.light-mode) .modal-head { border-bottom-color: #2a2d3a; }
+.modal-room-code { font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--text); }
+.modal-room-raw  { font-size: 11px; color: var(--muted); font-family: var(--mono); margin-top: 2px; }
+.modal-nepali    { font-family: 'Mukta', sans-serif; font-size: 13px; color: var(--amber); margin-top: 4px; }
+.modal-close {
+  margin-left: auto; flex-shrink: 0;
+  background: var(--s2); border: 1px solid var(--border);
+  color: var(--muted); width: 30px; height: 30px;
+  border-radius: 6px; cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.modal-close:hover { border-color: var(--red); color: var(--red); }
+.modal-body {
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 7px;
+  max-height: 72vh; overflow-y: auto;
+}
+/* Timeline items */
+.tl-item {
+  display: flex; gap: 12px;
+  padding: 11px 14px; border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--s2);
+}
+body:not(.light-mode) .tl-item         { background: #1a1d27; border-color: #2a2d3a; }
+body:not(.light-mode) .tl-item.tl-free { background: #0f1c18; border-color: rgba(52,211,153,.25); }
+body:not(.light-mode) .tl-item.tl-now  { background: #0e1e16; border-color: var(--green); }
+body:not(.light-mode) .tl-item.tl-occ  { background: #171624; border-color: #32304a; }
+.tl-item.tl-free { border-color: rgba(52,211,153,.2); background: rgba(52,211,153,.04); }
+.tl-item.tl-now  { border-color: var(--green); }
+.tl-left { min-width: 68px; display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; }
+.tl-time { font-family: var(--mono); font-size: 10px; color: var(--accent); text-align: center; line-height: 1.6; }
+.tl-arrow{ font-size: 10px; color: var(--muted); }
+.tl-dur  { font-family: var(--mono); font-size: 9px; color: var(--muted); }
+.tl-right { flex: 1; min-width: 0; }
+.tl-now-badge {
+  display: inline-block; font-family: 'Mukta', sans-serif;
+  font-size: 10px; padding: 1px 8px; border-radius: 3px;
+  margin-bottom: 5px;
+}
+.tl-now-badge.free { background: rgba(52,211,153,.2); color: var(--green); }
+.tl-now-badge.occ  { background: rgba(248,113,113,.2); color: var(--red); }
+.tl-free-label { font-family: 'Mukta', sans-serif; font-size: 13px; color: var(--green); font-weight: 700; }
+.tl-free-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.tl-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.tl-meta  { font-size: 11px; color: var(--muted); margin-bottom: 5px; }
+.tl-groups { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.tl-gbadge {
+  font-size: 10px; font-family: var(--mono);
+  padding: 2px 7px; border-radius: 4px;
+  background: var(--s3); border: 1px solid var(--border);
+}
+body:not(.light-mode) .tl-gbadge { background: #222536; border-color: #32354a; }
+
+/* make room cards clickable */
+.rcard { cursor: pointer; }
+.rcard:hover .rc-code { color: var(--accent); transition: color .15s; }
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- FULL DAY SCHEDULE MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalBg(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="modal-room-code" id="m-title"></div>
+        <div class="modal-room-raw"  id="m-raw"></div>
+        <div class="modal-nepali"    id="m-nepali"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+  </div>
+</div>
+
+<header>
+  <div class="logo">BIT</div>
+  <h1>Free Class Finder — Live</h1>
+  <h1 style="margin-left:auto;font-family:'Mukta',sans-serif;font-size:18px;font-weight:700;color:var(--amber);letter-spacing:1px;padding-right:12px;">कुन class खाली छ???</h1>
+  <div class="hright">
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle light/dark">☀</button>
+  </div>
+</header>
+
+<div class="nav">
+  <div class="nav-tab active" data-page="live"   onclick="switchPage('live')">🟢 Live Rooms</div>
+  <div class="nav-tab"        data-page="find"   onclick="switchPage('find')">⚡ Find Me a Room</div>
+  <div class="nav-tab"        data-page="search" onclick="switchPage('search')">🔍 Room Search</div>
+  <div class="nav-tab"        data-page="mytт"   onclick="switchPage('mytт')">📅 My Timetable</div>
+</div>
+
+<!-- ══ PAGE: LIVE ══ -->
+<div class="page show" id="page-live">
+  <div class="clock-banner">
+    <div>
+      <div class="clock-time" id="clk"></div>
+      <div class="clock-meta">
+        <div class="clock-date" id="clk-date"></div>
+        <div class="day-pill" id="clk-day"></div>
+      </div>
+    </div>
+    <div class="vdiv"></div>
+    <div class="status-info">
+      <div class="status-row"><span class="dot-live" id="dot"></span><span id="st-main" style="color:var(--text)">Loading...</span></div>
+      <div class="status-row" id="st-slot-row" style="display:none"><span style="width:8px"></span><span id="st-slot" style="color:var(--muted)"></span></div>
+      <div class="status-row" style="margin-top:3px"><span style="width:8px"></span><span style="color:var(--muted);font-size:10px">Auto-refreshes every 30s</span></div>
+    </div>
+    <div class="vdiv"></div>
+    <div class="stat-group">
+      <div class="stat"><div class="stat-num" style="color:var(--green)" id="n-now">—</div><div class="stat-lbl">Free Now</div></div>
+      <div class="stat"><div class="stat-num" style="color:var(--accent)" id="n-next">—</div><div class="stat-lbl">Free Next</div></div>
+      <div class="stat"><div class="stat-num" style="color:var(--red)" id="n-occ">—</div><div class="stat-lbl">In Use</div></div>
+    </div>
+  </div>
+  <div class="filters">
+    <span class="flabel">Year</span>
+    <div class="bgroup">
+      <button class="btn a-all" id="b-all" onclick="setY('all')">All</button>
+      <button class="btn" id="b-y1"  onclick="setY('1')">Y1</button>
+      <button class="btn" id="b-y2"  onclick="setY('2')">Y2</button>
+      <button class="btn" id="b-y3"  onclick="setY('3')">Y3</button>
+    </div>
+    <div class="vline"></div>
+    <span class="flabel">Min free</span>
+    <select id="min-free" onchange="renderLive()">
+      <option value="0">Any</option>
+      <option value="60">1h+</option>
+      <option value="90">1.5h+</option>
+      <option value="120">2h+</option>
+    </select>
+    <div class="vline"></div>
+    <input type="text" id="srch-live" placeholder="Filter room..." oninput="renderLive()" style="width:130px">
+    <div class="vline"></div>
+    <div class="bgroup">
+      <button class="btn a-view" id="b-card"  onclick="setV('card')">Cards</button>
+      <button class="btn"        id="b-table" onclick="setV('table')">Table</button>
+    </div>
+    <div class="vline"></div>
+    <button class="btn" id="b-pins" onclick="togglePinsOnly()">⭐ Pinned</button>
+  </div>
+  <div class="content" id="live-content"></div>
+  <div class="legend">
+    <div class="leg"><span class="leg-dot" style="background:var(--green)"></span>Y1 free</div>
+    <div class="leg"><span class="leg-dot" style="background:var(--purple)"></span>Y2 free</div>
+    <div class="leg"><span class="leg-dot" style="background:var(--orange)"></span>Y3 free</div>
+    <div class="leg"><span class="leg-dot" style="background:var(--amber)"></span>Multi-year free</div>
+    <div class="leg"><span class="leg-dot" style="background:var(--red)"></span>Class ending soon</div>
+  </div>
+</div>
+
+<!-- ══ PAGE: FIND ME ══ -->
+<div class="page" id="page-find">
+  <div style="padding:20px 24px">
+    <div class="find-hero">
+      <div class="find-title">⚡ FIND ME A FREE ROOM</div>
+      <div class="find-sub">Instantly ranked by how long the room stays free — longest first.</div>
+      <div class="find-controls">
+        <span class="flabel">Need at least</span>
+        <select id="find-min" onchange="renderFind()">
+          <option value="30">30 min</option>
+          <option value="60" selected>1 hour</option>
+          <option value="90">1.5 hours</option>
+          <option value="120">2 hours</option>
+          <option value="180">3 hours</option>
+        </select>
+        <span class="flabel">Year</span>
+        <select id="find-year" onchange="renderFind()">
+          <option value="all">All years</option>
+          <option value="1">Year 1 only</option>
+          <option value="2">Year 2 only</option>
+          <option value="3">Year 3 only</option>
+        </select>
+      </div>
+    </div>
+    <div id="find-content"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE: SEARCH ══ -->
+<div class="page" id="page-search">
+  <div class="search-page">
+    <div class="search-hero">
+      <div class="search-hero-title">🔍 ROOM STATUS CHECKER</div>
+      <div class="search-hero-sub">Search by room name, lecturer, or group number to see live status.</div>
+      <div class="search-bar-wrap">
+        <input type="text" class="search-big" id="room-search-input" placeholder="e.g. LT01, Rupa, Fewa, Mr. Sumit, C5..." oninput="renderSearch()">
+      </div>
+      <div class="search-suggestions" id="suggestions"></div>
+    </div>
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE: MY TIMETABLE ══ -->
+<div class="page" id="page-mytт">
+  <div style="padding:20px 24px">
+    <div class="my-tt-setup">
+      <div class="setup-title">📅 MY TIMETABLE</div>
+      <div class="setup-sub">Select your year and group to see your personal weekly schedule.</div>
+      <div class="setup-row">
+        <span class="flabel">Year</span>
+        <select class="setup-select" id="tt-year" onchange="renderTT()">
+          <option value="">-- Select Year --</option>
+          <option value="1">Year 1 (A25)</option>
+          <option value="2">Year 2 (A24)</option>
+          <option value="3">Year 3 (A23)</option>
+        </select>
+        <span class="flabel">Group</span>
+        <select class="setup-select" id="tt-group" onchange="renderTT()">
+          <option value="">-- Select Group --</option>
+        </select>
+      </div>
+    </div>
+    <div id="tt-content"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════
+const rawY1D=[
+  {day:'SUN',start:'07:00',end:'08:30',room:'LT01- Machhapuchhre',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C4+C5+C6',type:'Lecture'},
+  {day:'SUN',start:'07:30',end:'09:00',room:'LT02- Annapurna',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Prabin Banstola',group:'C1+C2+C3',type:'Lecture'},
+  {day:'SUN',start:'09:30',end:'11:00',room:'LT02- Annapurna',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Prabin Banstola',group:'C4+C5+C6',type:'Lecture'},
+  {day:'SUN',start:'10:00',end:'11:30',room:'LT01- Machhapuchhre',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C1+C2+C3',type:'Lecture'},
+  {day:'SUN',start:'12:00',end:'13:30',room:'LT01- Machhapuchhre',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C7+C8',type:'Lecture'},
+  {day:'SUN',start:'14:30',end:'16:00',room:'LT01- Machhapuchhre',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C7+C8',type:'Lecture'},
+  {day:'MON',start:'07:00',end:'08:30',room:'LT02- Annapurna',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C7+C8',type:'Lecture'},
+  {day:'MON',start:'09:30',end:'11:00',room:'LT01- Machhapuchhre',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C1+C2+C3',type:'Lecture'},
+  {day:'MON',start:'09:30',end:'11:00',room:'LT04- Dipang',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Prabin Banstola',group:'C7+C8',type:'Lecture'},
+  {day:'MON',start:'11:00',end:'12:30',room:'LT01- Machhapuchhre',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C4+C5+C6',type:'Lecture'},
+  {day:'MON',start:'12:00',end:'13:30',room:'LT02- Annapurna',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C1+C2+C3',type:'Lecture'},
+  {day:'MON',start:'13:30',end:'15:00',room:'LT02- Annapurna',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C4+C5+C6',type:'Lecture'},
+  {day:'TUE',start:'07:00',end:'08:30',room:'SR03- Rara',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C6',type:'Tutorial'},
+  {day:'TUE',start:'07:30',end:'09:00',room:'SR01- Fewa',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Prabin Banstola',group:'C1',type:'Tutorial'},
+  {day:'TUE',start:'09:00',end:'10:30',room:'SR01- Fewa',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C4',type:'Tutorial'},
+  {day:'TUE',start:'09:00',end:'10:30',room:'SR03- Rara',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Suman Bhandari',group:'C5',type:'Tutorial'},
+  {day:'TUE',start:'09:00',end:'10:30',room:'SR07- Kapuche',title:'Programming',module:'CS4001NP',lecturer:'Mr. Bishal Bhattarai',group:'C8',type:'Tutorial'},
+  {day:'TUE',start:'09:30',end:'11:00',room:'TR02- Stonehenge',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Prasiddha Khadka',group:'C6',type:'Tutorial'},
+  {day:'TUE',start:'10:00',end:'11:30',room:'SR04- Tilicho',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C1',type:'Tutorial'},
+  {day:'TUE',start:'11:00',end:'12:30',room:'SR02- Begnas',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Anoj Banjara',group:'C3',type:'Tutorial'},
+  {day:'TUE',start:'11:30',end:'13:00',room:'SR05- Manaslu',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Ms. Sikha Kunwar',group:'C8',type:'Tutorial'},
+  {day:'TUE',start:'11:30',end:'13:00',room:'SR07- Kapuche',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Dawadi',group:'C4',type:'Tutorial'},
+  {day:'TUE',start:'11:30',end:'13:00',room:'Lab02- Nilgiri',title:'Programming',module:'CS4001NP',lecturer:'Mr. Bishal Bhattarai',group:'C7',type:'Tutorial'},
+  {day:'TUE',start:'11:30',end:'13:00',room:'TR02- Stonehenge',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Prasiddha Khadka',group:'C5',type:'Tutorial'},
+  {day:'TUE',start:'12:00',end:'13:30',room:'SR03- Rara',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C2',type:'Tutorial'},
+  {day:'TUE',start:'13:30',end:'15:00',room:'SR05- Manaslu',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C3',type:'Tutorial'},
+  {day:'TUE',start:'14:00',end:'15:30',room:'SR04- Tilicho',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Anoj Banjara',group:'C7',type:'Tutorial'},
+  {day:'TUE',start:'14:30',end:'16:00',room:'SR03- Rara',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C2',type:'Tutorial'},
+  {day:'WED',start:'07:00',end:'08:30',room:'SR03- Rara',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Prabin Banstola',group:'C2',type:'Tutorial'},
+  {day:'WED',start:'07:00',end:'08:30',room:'SR07- Kapuche',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C3',type:'Tutorial'},
+  {day:'WED',start:'09:30',end:'11:00',room:'SR03- Rara',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Ms. Sikha Kunwar',group:'C2',type:'Tutorial'},
+  {day:'WED',start:'09:30',end:'11:00',room:'SR05- Manaslu',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C1',type:'Tutorial'},
+  {day:'WED',start:'09:30',end:'11:00',room:'SR07- Kapuche',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C3',type:'Tutorial'},
+  {day:'WED',start:'11:00',end:'12:30',room:'SR03- Rara',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Ms. Sikha Kunwar',group:'C5',type:'Tutorial'},
+  {day:'WED',start:'11:00',end:'12:30',room:'SR05- Manaslu',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Prasiddha Khadka',group:'C7',type:'Tutorial'},
+  {day:'WED',start:'11:00',end:'12:30',room:'Lab01- Gokyo',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Anoj Banjara',group:'C4',type:'Tutorial'},
+  {day:'WED',start:'11:00',end:'12:30',room:'Lab02- Nilgiri',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Dawadi',group:'C6',type:'Tutorial'},
+  {day:'WED',start:'12:00',end:'13:30',room:'SR02- Begnas',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C1',type:'Tutorial'},
+  {day:'WED',start:'12:30',end:'14:00',room:'SR07- Kapuche',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Suman Bhandari',group:'C8',type:'Tutorial'},
+  {day:'WED',start:'13:30',end:'15:00',room:'SR01- Fewa',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Ms. Sikha Kunwar',group:'C7',type:'Tutorial'},
+  {day:'WED',start:'13:30',end:'15:00',room:'SR02- Begnas',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C5',type:'Tutorial'},
+  {day:'WED',start:'13:30',end:'15:00',room:'SR03- Rara',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C4',type:'Tutorial'},
+  {day:'WED',start:'13:30',end:'15:00',room:'SR05- Manaslu',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Anoj Banjara',group:'C6',type:'Tutorial'},
+  {day:'WED',start:'15:00',end:'16:30',room:'SR04- Tilicho',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Prasiddha Khadka',group:'C8',type:'Tutorial'},
+  {day:'THU',start:'07:00',end:'08:30',room:'LT04- Dipang',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C6',type:'Lab'},
+  {day:'THU',start:'07:30',end:'09:00',room:'LT03- Rupa',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Dawadi',group:'C4',type:'Lab'},
+  {day:'THU',start:'07:30',end:'09:00',room:'SR05- Manaslu',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Prabin Banstola',group:'C1',type:'Lab'},
+  {day:'THU',start:'09:00',end:'10:30',room:'LT04- Dipang',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Prasiddha Khadka',group:'C6',type:'Lab'},
+  {day:'THU',start:'09:30',end:'11:00',room:'Lab01- Gokyo',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Ms. Sikha Kunwar',group:'C8',type:'Lab'},
+  {day:'THU',start:'10:00',end:'11:30',room:'LT01- Machhapuchhre',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C1',type:'Lab'},
+  {day:'THU',start:'10:00',end:'11:30',room:'SR07- Kapuche',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C4',type:'Lab'},
+  {day:'THU',start:'10:30',end:'12:00',room:'SR05- Manaslu',title:'Programming',module:'CS4001NP',lecturer:'Mr. Bishal Bhattarai',group:'C7',type:'Lab'},
+  {day:'THU',start:'11:00',end:'12:30',room:'Lab02- Nilgiri',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Anoj Banjara',group:'C3',type:'Lab'},
+  {day:'THU',start:'12:00',end:'13:30',room:'SR03- Rara',title:'Programming',module:'CS4001NP',lecturer:'Mr. Bishal Bhattarai',group:'C8',type:'Lab'},
+  {day:'THU',start:'12:00',end:'13:30',room:'SR05- Manaslu',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C2',type:'Lab'},
+  {day:'THU',start:'12:30',end:'14:00',room:'LT03- Rupa',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Prasiddha Khadka',group:'C5',type:'Lab'},
+  {day:'THU',start:'13:00',end:'14:30',room:'Lab02- Nilgiri',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Anoj Banjara',group:'C7',type:'Lab'},
+  {day:'THU',start:'13:30',end:'15:00',room:'SR05- Manaslu',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C3',type:'Lab'},
+  {day:'THU',start:'14:30',end:'16:00',room:'SR07- Kapuche',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C2',type:'Lab'},
+  {day:'THU',start:'15:00',end:'16:30',room:'LT03- Rupa',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Suman Bhandari',group:'C5',type:'Lab'},
+  {day:'FRI',start:'07:00',end:'08:30',room:'SR02- Begnas',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Prabin Banstola',group:'C2',type:'Lab'},
+  {day:'FRI',start:'07:30',end:'09:00',room:'SR03- Rara',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C3',type:'Lab'},
+  {day:'FRI',start:'09:30',end:'11:00',room:'LT04- Dipang',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Ms. Sikha Kunwar',group:'C2',type:'Lab'},
+  {day:'FRI',start:'09:30',end:'11:00',room:'Lab03- Open Access Lab',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Mr. Amar Khanal',group:'C1',type:'Lab'},
+  {day:'FRI',start:'10:00',end:'11:30',room:'LT02- Annapurna',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Anoj Banjara',group:'C4',type:'Lab'},
+  {day:'FRI',start:'10:00',end:'11:30',room:'SR07- Kapuche',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C3',type:'Lab'},
+  {day:'FRI',start:'11:00',end:'12:30',room:'LT04- Dipang',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Ms. Sikha Kunwar',group:'C5',type:'Lab'},
+  {day:'FRI',start:'11:00',end:'12:30',room:'TR01- Bigben',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Dawadi',group:'C6',type:'Lab'},
+  {day:'FRI',start:'11:00',end:'12:30',room:'TR03- Thames',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Prasiddha Khadka',group:'C7',type:'Lab'},
+  {day:'FRI',start:'12:00',end:'13:30',room:'SR07- Kapuche',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C1',type:'Lab'},
+  {day:'FRI',start:'12:30',end:'14:00',room:'TR01- Bigben',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Krishna Wagle',group:'C4',type:'Lab'},
+  {day:'FRI',start:'12:30',end:'14:00',room:'TR03- Thames',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Suman Bhandari',group:'C8',type:'Lab'},
+  {day:'FRI',start:'13:30',end:'15:00',room:'LT04- Dipang',title:'Computer Hardware & Software Architectures',module:'CT4005NP',lecturer:'Ms. Sikha Kunwar',group:'C7',type:'Lab'},
+  {day:'FRI',start:'13:30',end:'15:00',room:'SR05- Manaslu',title:'Logic and Problem Solving',module:'MA4001NP',lecturer:'Mr. Anoj Banjara',group:'C6',type:'Lab'},
+  {day:'FRI',start:'13:30',end:'15:00',room:'SR07- Kapuche',title:'Programming',module:'CS4001NP',lecturer:'Mr. Sushil Parajuli',group:'C5',type:'Lab'},
+  {day:'FRI',start:'15:00',end:'16:30',room:'SR04- Tilicho',title:'Fundamentals of Computing',module:'CS4051NP',lecturer:'Mr. Prasiddha Khadka',group:'C8',type:'Lab'},
+];
+
+const rawY2D=[
+  {day:'SUN',start:'07:00',end:'08:30',room:'LT03- Rupa',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C3',type:'Lab'},
+  {day:'SUN',start:'07:00',end:'08:30',room:'LT04- Dipang',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Suraj Shrestha',group:'C7',type:'Lab'},
+  {day:'SUN',start:'07:30',end:'09:00',room:'SR07- Kapuche',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C6',type:'Lab'},
+  {day:'SUN',start:'07:30',end:'09:00',room:'SR04- Tilicho',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C10',type:'Lab'},
+  {day:'SUN',start:'07:30',end:'09:00',room:'SR05- Manaslu',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C8',type:'Lab'},
+  {day:'SUN',start:'07:30',end:'09:00',room:'TR04- Kingston',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Niroj Karki',group:'C12',type:'Lab'},
+  {day:'SUN',start:'08:30',end:'10:00',room:'LT01- Machhapuchhre',module:'CS5002NP',title:'Software Engineering',lecturer:'Mr. Sandeep Gurung',group:'C1',type:'Lab'},
+  {day:'SUN',start:'09:30',end:'11:00',room:'LT03- Rupa',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C7',type:'Lab'},
+  {day:'SUN',start:'09:30',end:'11:00',room:'SR05- Manaslu',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Niroj Karki',group:'C11',type:'Lab'},
+  {day:'SUN',start:'09:30',end:'11:00',room:'SR07- Kapuche',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C3',type:'Lab'},
+  {day:'SUN',start:'09:30',end:'11:00',room:'TR04- Kingston',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Suraj Shrestha',group:'C15',type:'Lab'},
+  {day:'SUN',start:'10:00',end:'11:30',room:'SR01- Fewa',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C8',type:'Lab'},
+  {day:'SUN',start:'10:00',end:'11:30',room:'TR03- Thames',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C6',type:'Lab'},
+  {day:'SUN',start:'10:00',end:'11:30',room:'Lab01- Gokyo',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C2',type:'Lab'},
+  {day:'SUN',start:'10:00',end:'11:30',room:'Lab02- Nilgiri',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Saugat Timilsina',group:'C12',type:'Lab'},
+  {day:'SUN',start:'10:00',end:'11:30',room:'TR01- Bigben',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C10',type:'Lab'},
+  {day:'SUN',start:'11:00',end:'12:30',room:'LT04- Dipang',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Ms. Pratibha Gurung',group:'C1',type:'Lab'},
+  {day:'SUN',start:'11:30',end:'13:00',room:'SR07- Kapuche',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Ms. Anupama Bajracharya',group:'C9',type:'Lab'},
+  {day:'SUN',start:'11:30',end:'13:00',room:'LT03- Rupa',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C4',type:'Lab'},
+  {day:'SUN',start:'11:30',end:'13:00',room:'SR01- Fewa',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C13',type:'Lab'},
+  {day:'SUN',start:'11:30',end:'13:00',room:'SR02- Begnas',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C5',type:'Lab'},
+  {day:'SUN',start:'11:30',end:'13:00',room:'TR01- Bigben',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C14',type:'Lab'},
+  {day:'SUN',start:'12:00',end:'13:30',room:'SR03- Rara',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C11',type:'Lab'},
+  {day:'SUN',start:'12:00',end:'13:30',room:'SR05- Manaslu',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C15',type:'Lab'},
+  {day:'SUN',start:'12:30',end:'14:00',room:'LT04- Dipang',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandip Dhakal',group:'C2',type:'Lab'},
+  {day:'SUN',start:'13:30',end:'15:00',room:'LT03- Rupa',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Saugat Timilsina',group:'C4',type:'Lab'},
+  {day:'SUN',start:'13:30',end:'15:00',room:'SR01- Fewa',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C13',type:'Lab'},
+  {day:'SUN',start:'13:30',end:'15:00',room:'SR02- Begnas',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C5',type:'Lab'},
+  {day:'SUN',start:'13:30',end:'15:00',room:'SR04- Tilicho',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C14',type:'Lab'},
+  {day:'SUN',start:'13:30',end:'15:00',room:'SR05- Manaslu',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C9',type:'Lab'},
+  {day:'MON',start:'07:00',end:'08:30',room:'LT03- Rupa',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Niroj Karki',group:'C13',type:'Lab'},
+  {day:'MON',start:'07:30',end:'09:00',room:'SR04- Tilicho',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C3',type:'Lab'},
+  {day:'MON',start:'07:30',end:'09:00',room:'SR05- Manaslu',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C6',type:'Lab'},
+  {day:'MON',start:'07:30',end:'09:00',room:'Lab01- Gokyo',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C1',type:'Lab'},
+  {day:'MON',start:'07:30',end:'09:00',room:'TR04- Kingston',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C5',type:'Lab'},
+  {day:'MON',start:'09:00',end:'10:30',room:'SR04- Tilicho',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C7',type:'Lab'},
+  {day:'MON',start:'09:00',end:'10:30',room:'SR05- Manaslu',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C4',type:'Lab'},
+  {day:'MON',start:'09:00',end:'10:30',room:'TR04- Kingston',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Niroj Karki',group:'C14',type:'Lab'},
+  {day:'MON',start:'09:30',end:'11:00',room:'Lab01- Gokyo',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Suraj Shrestha',group:'C13',type:'Lab'},
+  {day:'MON',start:'10:00',end:'11:30',room:'SR01- Fewa',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C3',type:'Lab'},
+  {day:'MON',start:'10:00',end:'11:30',room:'SR03- Rara',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C5',type:'Lab'},
+  {day:'MON',start:'10:00',end:'11:30',room:'Lab02- Nilgiri',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C1',type:'Lab'},
+  {day:'MON',start:'10:00',end:'11:30',room:'TR01- Bigben',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C12',type:'Lab'},
+  {day:'MON',start:'10:00',end:'11:30',room:'TR02- Stonehenge',module:'CS5002NP',title:'Software Engineering',lecturer:'Mr. Sandeep Gurung',group:'C2',type:'Lab'},
+  {day:'MON',start:'10:00',end:'11:30',room:'TR03- Thames',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C6',type:'Lab'},
+  {day:'MON',start:'11:00',end:'12:30',room:'LT04- Dipang',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Ms. Anupama Bajracharya',group:'C10',type:'Lab'},
+  {day:'MON',start:'11:00',end:'12:30',room:'SR04- Tilicho',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C11',type:'Lab'},
+  {day:'MON',start:'11:00',end:'12:30',room:'SR07- Kapuche',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C9',type:'Lab'},
+  {day:'MON',start:'11:00',end:'12:30',room:'Lab01- Gokyo',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandip Dhakal',group:'C15',type:'Lab'},
+  {day:'MON',start:'11:30',end:'13:00',room:'LT03- Rupa',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C8',type:'Lab'},
+  {day:'MON',start:'11:30',end:'13:00',room:'SR03- Rara',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Saugat Timilsina',group:'C14',type:'Lab'},
+  {day:'MON',start:'11:30',end:'13:00',room:'TR01- Bigben',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C4',type:'Lab'},
+  {day:'MON',start:'11:30',end:'13:00',room:'TR02- Stonehenge',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C7',type:'Lab'},
+  {day:'MON',start:'12:30',end:'14:00',room:'SR04- Tilicho',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C2',type:'Lab'},
+  {day:'MON',start:'12:30',end:'14:00',room:'SR05- Manaslu',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C12',type:'Lab'},
+  {day:'MON',start:'13:30',end:'15:00',room:'SR01- Fewa',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C10',type:'Lab'},
+  {day:'MON',start:'13:30',end:'15:00',room:'SR02- Begnas',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C8',type:'Lab'},
+  {day:'MON',start:'13:30',end:'15:00',room:'SR03- Rara',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C15',type:'Lab'},
+  {day:'MON',start:'13:30',end:'15:00',room:'SR07- Kapuche',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C11',type:'Lab'},
+  {day:'MON',start:'13:30',end:'15:00',room:'TR01- Bigben',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C9',type:'Lab'},
+  {day:'TUE',start:'07:00',end:'08:30',room:'LT01- Machhapuchhre',module:'CS5002NP',title:'Software Engineering',lecturer:'Mr. Sandeep Gurung',group:'C1+C2+C3',type:'Lecture'},
+  {day:'TUE',start:'07:00',end:'08:30',room:'LT03- Rupa',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C14+C15',type:'Lecture'},
+  {day:'TUE',start:'07:30',end:'09:00',room:'LT02- Annapurna',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandip Dhakal',group:'C4+C5+C6',type:'Lecture'},
+  {day:'TUE',start:'09:30',end:'11:00',room:'LT02- Annapurna',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandip Dhakal',group:'C1+C2+C3',type:'Lecture'},
+  {day:'TUE',start:'09:30',end:'11:00',room:'LT03- Rupa',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Suraj Shrestha',group:'C14+C15',type:'Lecture'},
+  {day:'TUE',start:'10:00',end:'11:30',room:'LT01- Machhapuchhre',module:'CS5002NP',title:'Software Engineering',lecturer:'Mr. Sandeep Gurung',group:'C4+C5+C6',type:'Lecture'},
+  {day:'TUE',start:'11:00',end:'12:30',room:'LT02- Annapurna',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C9+C10+C11',type:'Lecture'},
+  {day:'TUE',start:'11:00',end:'12:30',room:'LT03- Rupa',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C7+C8',type:'Lecture'},
+  {day:'TUE',start:'11:00',end:'12:30',room:'LT04- Dipang',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Ms. Pratibha Gurung',group:'C12+C13',type:'Lecture'},
+  {day:'TUE',start:'13:30',end:'15:00',room:'LT02- Annapurna',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Ms. Pratibha Gurung',group:'C9+C10+C11',type:'Lecture'},
+  {day:'TUE',start:'13:30',end:'15:00',room:'LT03- Rupa',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandip Dhakal',group:'C7+C8',type:'Lecture'},
+  {day:'TUE',start:'13:30',end:'15:00',room:'LT04- Dipang',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C12+C13',type:'Lecture'},
+  {day:'WED',start:'07:00',end:'08:30',room:'LT02- Annapurna',module:'CS5002NP',title:'Software Engineering',lecturer:'Mr. Sandeep Gurung',group:'C12+C13',type:'Lecture'},
+  {day:'WED',start:'07:00',end:'08:30',room:'LT03- Rupa',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C7+C8',type:'Lecture'},
+  {day:'WED',start:'07:30',end:'09:00',room:'LT01- Machhapuchhre',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandip Dhakal',group:'C9+C10+C11',type:'Lecture'},
+  {day:'WED',start:'09:30',end:'11:00',room:'LT01- Machhapuchhre',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandip Dhakal',group:'C12+C13',type:'Lecture'},
+  {day:'WED',start:'09:30',end:'11:00',room:'LT03- Rupa',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Suraj Shrestha',group:'C7+C8',type:'Lecture'},
+  {day:'WED',start:'10:00',end:'11:30',room:'LT02- Annapurna',module:'CS5002NP',title:'Software Engineering',lecturer:'Mr. Sandeep Gurung',group:'C9+C10+C11',type:'Lecture'},
+  {day:'WED',start:'11:00',end:'12:30',room:'LT01- Machhapuchhre',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C1+C2+C3',type:'Lecture'},
+  {day:'WED',start:'11:00',end:'12:30',room:'LT03- Rupa',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C14+C15',type:'Lecture'},
+  {day:'WED',start:'11:30',end:'13:00',room:'LT02- Annapurna',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Ms. Pratibha Gurung',group:'C4+C5+C6',type:'Lecture'},
+  {day:'WED',start:'13:30',end:'15:00',room:'LT01- Machhapuchhre',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C4+C5+C6',type:'Lecture'},
+  {day:'WED',start:'13:30',end:'15:00',room:'LT02- Annapurna',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Ms. Pratibha Gurung',group:'C1+C2+C3',type:'Lecture'},
+  {day:'WED',start:'13:30',end:'15:00',room:'LT03- Rupa',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandip Dhakal',group:'C14+C15',type:'Lecture'},
+  {day:'THU',start:'07:00',end:'08:30',room:'SR04- Tilicho',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C10',type:'Tutorial'},
+  {day:'THU',start:'07:00',end:'08:30',room:'Lab01- Gokyo',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C8',type:'Tutorial'},
+  {day:'THU',start:'07:00',end:'08:30',room:'Lab02- Nilgiri',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C2',type:'Tutorial'},
+  {day:'THU',start:'07:00',end:'08:30',room:'TR01- Bigben',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C6',type:'Tutorial'},
+  {day:'THU',start:'07:00',end:'08:30',room:'TR04- Kingston',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Suraj Shrestha',group:'C7',type:'Tutorial'},
+  {day:'THU',start:'07:30',end:'09:00',room:'SR01- Fewa',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C5',type:'Tutorial'},
+  {day:'THU',start:'07:30',end:'09:00',room:'SR02- Begnas',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C3',type:'Tutorial'},
+  {day:'THU',start:'07:30',end:'09:00',room:'TR02- Stonehenge',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Niroj Karki',group:'C12',type:'Tutorial'},
+  {day:'THU',start:'09:00',end:'10:30',room:'SR05- Manaslu',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Suraj Shrestha',group:'C15',type:'Tutorial'},
+  {day:'THU',start:'09:30',end:'11:00',room:'LT03- Rupa',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Niroj Karki',group:'C11',type:'Tutorial'},
+  {day:'THU',start:'09:30',end:'11:00',room:'SR01- Fewa',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C8',type:'Tutorial'},
+  {day:'THU',start:'09:30',end:'11:00',room:'SR02- Begnas',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandip Dhakal',group:'C2',type:'Tutorial'},
+  {day:'THU',start:'09:30',end:'11:00',room:'Lab02- Nilgiri',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C7',type:'Tutorial'},
+  {day:'THU',start:'09:30',end:'11:00',room:'TR01- Bigben',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C6',type:'Tutorial'},
+  {day:'THU',start:'09:30',end:'11:00',room:'TR02- Stonehenge',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C10',type:'Tutorial'},
+  {day:'THU',start:'10:00',end:'11:30',room:'LT02- Annapurna',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C5',type:'Tutorial'},
+  {day:'THU',start:'10:00',end:'11:30',room:'SR03- Rara',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C3',type:'Tutorial'},
+  {day:'THU',start:'10:00',end:'11:30',room:'TR04- Kingston',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Saugat Timilsina',group:'C12',type:'Tutorial'},
+  {day:'THU',start:'11:00',end:'12:30',room:'LT04- Dipang',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Ms. Pratibha Gurung',group:'C1',type:'Tutorial'},
+  {day:'THU',start:'11:00',end:'12:30',room:'SR04- Tilicho',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C4',type:'Tutorial'},
+  {day:'THU',start:'11:00',end:'12:30',room:'TR02- Stonehenge',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C14',type:'Tutorial'},
+  {day:'THU',start:'11:30',end:'13:00',room:'SR07- Kapuche',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C15',type:'Tutorial'},
+  {day:'THU',start:'11:30',end:'13:00',room:'Lab01- Gokyo',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Ms. Anupama Bajracharya',group:'C9',type:'Tutorial'},
+  {day:'THU',start:'11:30',end:'13:00',room:'TR03- Thames',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C13',type:'Tutorial'},
+  {day:'THU',start:'12:00',end:'13:30',room:'SR01- Fewa',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C11',type:'Tutorial'},
+  {day:'THU',start:'13:30',end:'15:00',room:'SR01- Fewa',module:'CS5002NP',title:'Software Engineering',lecturer:'Mr. Sandeep Gurung',group:'C1',type:'Tutorial'},
+  {day:'THU',start:'13:30',end:'15:00',room:'SR02- Begnas',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Saugat Timilsina',group:'C4',type:'Tutorial'},
+  {day:'THU',start:'13:30',end:'15:00',room:'SR03- Rara',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C9',type:'Tutorial'},
+  {day:'THU',start:'13:30',end:'15:00',room:'SR04- Tilicho',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C14',type:'Tutorial'},
+  {day:'THU',start:'13:30',end:'15:00',room:'Lab01- Gokyo',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C13',type:'Tutorial'},
+  {day:'FRI',start:'07:00',end:'08:30',room:'LT04- Dipang',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Suraj Shrestha',group:'C13',type:'Tutorial'},
+  {day:'FRI',start:'07:00',end:'08:30',room:'SR04- Tilicho',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C6',type:'Tutorial'},
+  {day:'FRI',start:'07:00',end:'08:30',room:'SR05- Manaslu',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C2',type:'Tutorial'},
+  {day:'FRI',start:'07:00',end:'08:30',room:'TR01- Bigben',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C12',type:'Tutorial'},
+  {day:'FRI',start:'07:00',end:'08:30',room:'TR02- Stonehenge',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C5',type:'Tutorial'},
+  {day:'FRI',start:'07:00',end:'08:30',room:'TR03- Thames',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C3',type:'Tutorial'},
+  {day:'FRI',start:'07:30',end:'09:00',room:'Lab02- Nilgiri',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Niroj Karki',group:'C14',type:'Tutorial'},
+  {day:'FRI',start:'07:30',end:'09:00',room:'Lab03- Open Access Lab',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C1',type:'Tutorial'},
+  {day:'FRI',start:'09:00',end:'10:30',room:'SR05- Manaslu',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C9',type:'Tutorial'},
+  {day:'FRI',start:'09:00',end:'10:30',room:'SR03- Rara',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C7',type:'Tutorial'},
+  {day:'FRI',start:'09:30',end:'11:00',room:'SR02- Begnas',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Niroj Karki',group:'C13',type:'Tutorial'},
+  {day:'FRI',start:'09:30',end:'11:00',room:'SR04- Tilicho',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C3',type:'Tutorial'},
+  {day:'FRI',start:'09:30',end:'11:00',room:'Lab02- Nilgiri',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C5',type:'Tutorial'},
+  {day:'FRI',start:'09:30',end:'11:00',room:'TR01- Bigben',module:'CS5002NP',title:'Software Engineering',lecturer:'Mr. Sandeep Gurung',group:'C2',type:'Tutorial'},
+  {day:'FRI',start:'09:30',end:'11:00',room:'TR02- Stonehenge',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C6',type:'Tutorial'},
+  {day:'FRI',start:'09:30',end:'11:00',room:'TR04- Kingston',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C12',type:'Tutorial'},
+  {day:'FRI',start:'10:00',end:'11:30',room:'LT01- Machhapuchhre',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Ms. Anupama Bajracharya',group:'C10',type:'Tutorial'},
+  {day:'FRI',start:'10:00',end:'11:30',room:'SR01- Fewa',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Saugat Timilsina',group:'C14',type:'Tutorial'},
+  {day:'FRI',start:'10:00',end:'11:30',room:'Lab01- Gokyo',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Jeevan Prakash Pant',group:'C1',type:'Tutorial'},
+  {day:'FRI',start:'11:00',end:'12:30',room:'SR02- Begnas',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandip Dhakal',group:'C15',type:'Tutorial'},
+  {day:'FRI',start:'11:00',end:'12:30',room:'SR03- Rara',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C11',type:'Tutorial'},
+  {day:'FRI',start:'11:00',end:'12:30',room:'Lab02- Nilgiri',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Pratigya Dhakal',group:'C4',type:'Tutorial'},
+  {day:'FRI',start:'11:30',end:'13:00',room:'SR01- Fewa',module:'CS5071NP',title:'Professional and Ethical Issues',lecturer:'Mr. Sumit Gurung',group:'C8',type:'Tutorial'},
+  {day:'FRI',start:'11:30',end:'13:00',room:'SR04- Tilicho',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C9',type:'Tutorial'},
+  {day:'FRI',start:'12:00',end:'13:30',room:'LT03- Rupa',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C7',type:'Tutorial'},
+  {day:'FRI',start:'12:00',end:'13:30',room:'Lab01- Gokyo',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C10',type:'Tutorial'},
+  {day:'FRI',start:'13:30',end:'15:00',room:'SR01- Fewa',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sunil Thapa',group:'C4',type:'Tutorial'},
+  {day:'FRI',start:'13:30',end:'15:00',room:'SR02- Begnas',module:'CC5067NP',title:'Smart Data Discovery',lecturer:'Mr. Nischal Bhandari',group:'C8',type:'Tutorial'},
+  {day:'FRI',start:'13:30',end:'15:00',room:'SR03- Rara',module:'CS5002NP',title:'Software Engineering',lecturer:'Ms. Eliza Gautam',group:'C15',type:'Tutorial'},
+  {day:'FRI',start:'13:30',end:'15:00',room:'Lab01- Gokyo',module:'CS5054NP',title:'Advanced Programming and Technologies',lecturer:'Mr. Sandesh Hamal',group:'C11',type:'Tutorial'},
+];
+
+const rawY3D=[
+  {day:'SUN',start:'07:00',end:'08:30',room:'Lab02- Nilgiri',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sudip Bhandari',group:'C2',type:'Tutorial'},
+  {day:'SUN',start:'07:00',end:'08:30',room:'TR01- Bigben',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Anupama Bajracharya',group:'C8',type:'Tutorial'},
+  {day:'SUN',start:'07:00',end:'08:30',room:'TR02- Stonehenge',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Prajwal Pokhrel',group:'C10',type:'Tutorial'},
+  {day:'SUN',start:'07:00',end:'08:30',room:'TR03- Thames',module:'CC6012NP',title:'Data and Web Development',lecturer:'Mr. Achyut Parajuli',group:'C4',type:'Tutorial'},
+  {day:'SUN',start:'07:00',end:'08:30',room:'Lab03- Open Access Lab',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sushil Dawadi',group:'C5',type:'Tutorial'},
+  {day:'SUN',start:'08:30',end:'10:00',room:'Lab02- Nilgiri',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Pratibha Gurung',group:'C1',type:'Tutorial'},
+  {day:'SUN',start:'08:30',end:'10:00',room:'TR01- Bigben',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Anupama Bajracharya',group:'C7',type:'Tutorial'},
+  {day:'SUN',start:'08:30',end:'10:00',room:'TR02- Stonehenge',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Prajwal Pokhrel',group:'C9',type:'Tutorial'},
+  {day:'SUN',start:'08:30',end:'10:00',room:'TR03- Thames',module:'CC6012NP',title:'Data and Web Development',lecturer:'Mr. Achyut Parajuli',group:'C3',type:'Tutorial'},
+  {day:'SUN',start:'08:30',end:'10:00',room:'Lab03- Open Access Lab',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sushil Dawadi',group:'C6',type:'Tutorial'},
+  {day:'MON',start:'07:00',end:'08:30',room:'Lab02- Nilgiri',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sushil Dawadi',group:'C3',type:'Tutorial'},
+  {day:'MON',start:'07:00',end:'08:30',room:'TR01- Bigben',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Pratibha Gurung',group:'C2',type:'Tutorial'},
+  {day:'MON',start:'07:00',end:'08:30',room:'TR02- Stonehenge',module:'CC6012NP',title:'Data and Web Development',lecturer:'Mr. Achyut Parajuli',group:'C5',type:'Tutorial'},
+  {day:'MON',start:'07:00',end:'08:30',room:'TR03- Thames',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Prajwal Pokhrel',group:'C7',type:'Tutorial'},
+  {day:'MON',start:'07:00',end:'08:30',room:'Lab03- Open Access Lab',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Anupama Bajracharya',group:'C9',type:'Tutorial'},
+  {day:'MON',start:'08:30',end:'10:00',room:'Lab02- Nilgiri',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sushil Dawadi',group:'C4',type:'Tutorial'},
+  {day:'MON',start:'08:30',end:'10:00',room:'TR01- Bigben',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sudip Bhandari',group:'C1',type:'Tutorial'},
+  {day:'MON',start:'08:30',end:'10:00',room:'TR02- Stonehenge',module:'CC6012NP',title:'Data and Web Development',lecturer:'Mr. Achyut Parajuli',group:'C6',type:'Tutorial'},
+  {day:'MON',start:'08:30',end:'10:00',room:'TR03- Thames',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Prajwal Pokhrel',group:'C8',type:'Tutorial'},
+  {day:'MON',start:'08:30',end:'10:00',room:'Lab03- Open Access Lab',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Anupama Bajracharya',group:'C10',type:'Tutorial'},
+  {day:'TUE',start:'07:00',end:'08:30',room:'SR05- Manaslu',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Pratibha Gurung',group:'C1',type:'Lab'},
+  {day:'TUE',start:'07:00',end:'08:30',room:'SR07- Kapuche',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sudip Bhandari',group:'C2',type:'Lab'},
+  {day:'TUE',start:'07:00',end:'08:30',room:'Lab01- Gokyo',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Anupama Bajracharya',group:'C8',type:'Lab'},
+  {day:'TUE',start:'07:00',end:'08:30',room:'Lab02- Nilgiri',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Prajwal Pokhrel',group:'C10',type:'Lab'},
+  {day:'TUE',start:'07:00',end:'08:30',room:'TR03- Thames',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sushil Dawadi',group:'C5',type:'Lab'},
+  {day:'TUE',start:'07:00',end:'08:30',room:'Lab03- Open Access Lab',module:'CC6012NP',title:'Data and Web Development',lecturer:'Mr. Achyut Parajuli',group:'C4',type:'Lab'},
+  {day:'TUE',start:'08:30',end:'10:00',room:'Lab01- Gokyo',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Anupama Bajracharya',group:'C7',type:'Lab'},
+  {day:'TUE',start:'08:30',end:'10:00',room:'Lab02- Nilgiri',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Prajwal Pokhrel',group:'C9',type:'Lab'},
+  {day:'TUE',start:'08:30',end:'10:00',room:'TR03- Thames',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sushil Dawadi',group:'C6',type:'Lab'},
+  {day:'TUE',start:'08:30',end:'10:00',room:'Lab03- Open Access Lab',module:'CC6012NP',title:'Data and Web Development',lecturer:'Mr. Achyut Parajuli',group:'C3',type:'Lab'},
+  {day:'WED',start:'07:00',end:'08:30',room:'SR04- Tilicho',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Anupama Bajracharya',group:'C9',type:'Lab'},
+  {day:'WED',start:'07:00',end:'08:30',room:'SR05- Manaslu',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Pratibha Gurung',group:'C2',type:'Lab'},
+  {day:'WED',start:'07:00',end:'08:30',room:'Lab01- Gokyo',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Prajwal Pokhrel',group:'C7',type:'Lab'},
+  {day:'WED',start:'07:00',end:'08:30',room:'Lab02- Nilgiri',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sushil Dawadi',group:'C3',type:'Lab'},
+  {day:'WED',start:'07:00',end:'08:30',room:'TR02- Stonehenge',module:'CC6012NP',title:'Data and Web Development',lecturer:'Mr. Achyut Parajuli',group:'C5',type:'Lab'},
+  {day:'WED',start:'08:30',end:'10:00',room:'SR04- Tilicho',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Anupama Bajracharya',group:'C10',type:'Lab'},
+  {day:'WED',start:'08:30',end:'10:00',room:'Lab01- Gokyo',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Prajwal Pokhrel',group:'C8',type:'Lab'},
+  {day:'WED',start:'08:30',end:'10:00',room:'Lab02- Nilgiri',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sushil Dawadi',group:'C4',type:'Lab'},
+  {day:'WED',start:'08:30',end:'10:00',room:'TR01- Bigben',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sudip Bhandari',group:'C1',type:'Lab'},
+  {day:'WED',start:'08:30',end:'10:00',room:'TR02- Stonehenge',module:'CC6012NP',title:'Data and Web Development',lecturer:'Mr. Achyut Parajuli',group:'C6',type:'Lab'},
+  {day:'THU',start:'07:00',end:'08:30',room:'LT01- Machhapuchhre',module:'CC6012NP',title:'Data and Web Development',lecturer:'Mr. Achyut Parajuli',group:'C1+C2+C3',type:'Lecture'},
+  {day:'THU',start:'07:00',end:'08:30',room:'LT02- Annapurna',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sudip Bhandari',group:'C4+C5+C6',type:'Lecture'},
+  {day:'THU',start:'08:30',end:'10:00',room:'LT01- Machhapuchhre',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Pratibha Gurung',group:'C7+C8',type:'Lecture'},
+  {day:'THU',start:'08:30',end:'10:00',room:'LT02- Annapurna',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sudip Bhandari',group:'C9+C10',type:'Lecture'},
+  {day:'FRI',start:'07:00',end:'08:30',room:'LT01- Machhapuchhre',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sudip Bhandari',group:'C1+C2+C3',type:'Lecture'},
+  {day:'FRI',start:'07:00',end:'08:30',room:'LT02- Annapurna',module:'CC6012NP',title:'Data and Web Development',lecturer:'Mr. Achyut Parajuli',group:'C9+C10',type:'Lecture'},
+  {day:'FRI',start:'08:30',end:'10:00',room:'LT01- Machhapuchhre',module:'CC6012NP',title:'Data and Web Development',lecturer:'Ms. Pratibha Gurung',group:'C4+C5+C6',type:'Lecture'},
+  {day:'FRI',start:'08:30',end:'10:00',room:'LT02- Annapurna',module:'CS6004NP',title:'Application Development',lecturer:'Mr. Sudip Bhandari',group:'C7+C8',type:'Lecture'},
+];
+
+// ═══ HELPERS ═══
+const DJ=['SUN','MON','TUE','WED','THU','FRI','SAT'];
+const DAY_C={SUN:'#f87171',MON:'#4f9cf9',TUE:'#34d399',WED:'#fbbf24',THU:'#a78bfa',FRI:'#fb923c',SAT:'#6b7280'};
+const DAY_BG={SUN:'rgba(248,113,113,.13)',MON:'rgba(79,156,249,.13)',TUE:'rgba(52,211,153,.13)',WED:'rgba(251,191,36,.13)',THU:'rgba(167,139,250,.13)',FRI:'rgba(251,146,60,.13)',SAT:'rgba(107,114,128,.13)'};
+const OP_S=7*60,OP_E=16*60+30;
+
+function toM(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
+function fmt(m){const h=Math.floor(m/60),mn=m%60,ap=h>=12?'PM':'AM';return`${h>12?h-12:(h===0?12:h)}:${mn.toString().padStart(2,'0')} ${ap}`;}
+function nr(r){return r.trim().replace(/\s+/,' ').replace(/^LT-04\s/,'LT04- ').replace(/^LT04\s/,'LT04- ');}
+function snap(m){return Math.floor(m/30)*30;}
+function durFmt(mins){if(mins>=60){const h=Math.floor(mins/60),m=mins%60;return m?`${h}h ${m}m`:`${h}h`;}return`${mins}m`;}
+
+const allDetailData=[
+  ...rawY1D.map(e=>({...e,year:1})),
+  ...rawY2D.map(e=>({...e,year:2})),
+  ...rawY3D.map(e=>({...e,year:3})),
+];
+
+function buildOcc(rows){
+  const map=new Map();
+  for(const e of rows){
+    const r=nr(e.room);
+    if(!map.has(r))map.set(r,new Map());
+    if(!map.get(r).has(e.day))map.get(r).set(e.day,new Set());
+    const s=toM(e.start),en=toM(e.end);
+    for(let m=s;m<en;m+=30)map.get(r).get(e.day).add(m);
+  }
+  return map;
+}
+const oY1=buildOcc(rawY1D),oY2=buildOcc(rawY2D),oY3=buildOcc(rawY3D);
+const ROOMS=[...new Set(allDetailData.map(e=>nr(e.room)))].sort();
+
+// Physical occupancy — checks ALL years regardless of year filter
+// A room is physically occupied if ANY year has a class there
+function isPhysicallyFreeAt(room,day,slot){
+  const s1=(oY1.get(room)||new Map()).get(day)||new Set();
+  const s2=(oY2.get(room)||new Map()).get(day)||new Set();
+  const s3=(oY3.get(room)||new Map()).get(day)||new Set();
+  return !s1.has(slot)&&!s2.has(slot)&&!s3.has(slot);
+}
+
+function isFreeAt(room,day,slot,yf){
+  const s1=(oY1.get(room)||new Map()).get(day)||new Set();
+  const s2=(oY2.get(room)||new Map()).get(day)||new Set();
+  const s3=(oY3.get(room)||new Map()).get(day)||new Set();
+  if(yf==='1')return!s1.has(slot)?'Y1':false;
+  if(yf==='2')return!s2.has(slot)?'Y2':false;
+  if(yf==='3')return!s3.has(slot)?'Y3':false;
+  const f1=!s1.has(slot),f2=!s2.has(slot),f3=!s3.has(slot);
+  const cnt=[f1,f2,f3].filter(Boolean).length;
+  if(cnt===3)return'ALL';if(cnt===2)return'MULTI';
+  if(f1)return'Y1';if(f2)return'Y2';if(f3)return'Y3';
+  return false;
+}
+
+function freeBlocksFrom(room,day,fromMin,yf){
+  const blocks=[];let i=Math.max(OP_S,snap(fromMin));
+  while(i<OP_E){
+    // Room must be physically empty (no class from ANY year) to count as free
+    const physFree=isPhysicallyFreeAt(room,day,i);
+    if(physFree){
+      const f=isFreeAt(room,day,i,yf)||'ALL';
+      let j=i;
+      while(j<OP_E&&isPhysicallyFreeAt(room,day,j))j+=30;
+      blocks.push({start:i,end:j,freeFor:f,dur:j-i});
+      i=j;
+    }else i+=30;
+  }
+  return blocks;
+}
+
+function getClassesAt(room,day,nowMin){
+  return allDetailData.filter(e=>nr(e.room)===nr(room)&&e.day===day&&toM(e.start)<=nowMin&&toM(e.end)>nowMin);
+}
+
+function minutesUntilEnd(room,day,nowMin){
+  const classes=getClassesAt(room,day,nowMin);
+  if(!classes.length)return null;
+  return Math.min(...classes.map(c=>toM(c.end)-nowMin));
+}
+
+// ═══ STATE ═══
+let yf='all',vm='card',liveTab='now',pinsOnly=false;
+let pinnedRooms=new Set(JSON.parse(localStorage.getItem('pins')||'[]'));
+function savePins(){try{localStorage.setItem('pins',JSON.stringify([...pinnedRooms]));}catch(e){}}
+
+function toggleTheme(){document.body.classList.toggle('light-mode');showToast(document.body.classList.contains('light-mode')?'☀ Light mode on':'🌙 Dark mode on');}
+
+function showToast(msg,dur=2000){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
+
+function switchPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.toggle('show',el.id==='page-'+p));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.toggle('active',el.dataset.page===p));
+  if(p==='find')renderFind();
+  if(p==='search')renderSuggestions();
+  if(p==='mytт')populateTTGroups();
+}
+
+function setY(y){
+  yf=y;
+  ['all','y1','y2','y3'].forEach(k=>{
+    const el=document.getElementById('b-'+k);if(!el)return;
+    el.className='btn'+(k===(y==='all'?'all':('y'+y))?' a-'+k:'');
+  });
+  renderLive();
+}
+function setV(v){
+  vm=v;
+  document.getElementById('b-card').className='btn'+(v==='card'?' a-view':'');
+  document.getElementById('b-table').className='btn'+(v==='table'?' a-view':'');
+  renderLive();
+}
+function togglePinsOnly(){
+  pinsOnly=!pinsOnly;
+  document.getElementById('b-pins').className='btn'+(pinsOnly?' a-green':'');
+  renderLive();
+}
+function togglePin(room){
+  if(pinnedRooms.has(room)){pinnedRooms.delete(room);showToast('📌 Unpinned '+room.split('-')[0].trim());}
+  else{pinnedRooms.add(room);showToast('⭐ Pinned '+room.split('-')[0].trim());}
+  savePins();renderLive();
+}
+function switchLiveTab(t){
+  liveTab=t;
+  document.querySelectorAll('#page-live .tab').forEach(el=>el.classList.toggle('active',el.dataset.tab===t));
+  document.querySelectorAll('#page-live .tab-body').forEach(el=>el.classList.toggle('show',el.dataset.tab===t));
+}
+
+// ═══ CLOCK ═══
+function tickClock(){
+  const n=new Date(),h=n.getHours(),m=n.getMinutes(),ap=h>=12?'PM':'AM',hh=h>12?h-12:(h===0?12:h);
+  document.getElementById('clk').textContent=`${hh.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')} ${ap}`;
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  document.getElementById('clk-date').textContent=`${days[n.getDay()]}, ${months[n.getMonth()]} ${n.getDate()}, ${n.getFullYear()}`;
+  const ds=DJ[n.getDay()];
+  const pill=document.getElementById('clk-day');
+  pill.textContent=ds;
+  pill.style.cssText=`background:${DAY_BG[ds]};color:${DAY_C[ds]};border:1px solid ${DAY_C[ds]}44;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:4px;display:inline-block;margin-top:4px;`;
+}
+
+// ═══ LIVE PAGE ═══
+function freeChip(f){
+  const map={Y1:'chip-y1 Y1',Y2:'chip-y2 Y2',Y3:'chip-y3 Y3',ALL:'chip-all All',MULTI:'chip-multi Multi'};
+  const[cls,lbl]=(map[f]||'chip-multi Multi').split(' ');
+  return`<span class="chip ${cls}">${lbl}</span>`;
+}
+function cardCls(f){return{Y1:'c-y1',Y2:'c-y2',Y3:'c-y3',ALL:'c-all',MULTI:'c-multi'}[f]||'c-y1';}
+function rcCode(r){return r.split('-')[0].trim();}
+function rcName(r){const p=r.split('- ');return p.length>1?p[1].trim():r;}
+
+function renderLive(){
+  const now=new Date(),nowMin=now.getHours()*60+now.getMinutes(),day=DJ[now.getDay()];
+  const q=document.getElementById('srch-live').value.toLowerCase();
+  const minFree=parseInt(document.getElementById('min-free').value)||0;
+  const within=nowMin>=OP_S&&nowMin<OP_E;
+  const curSlot=snap(nowMin),nxtSlot=curSlot+30;
+
+  if(within){
+    document.getElementById('st-main').textContent=`Live · ${fmt(curSlot)} – ${fmt(Math.min(curSlot+90,OP_E))}`;
+    document.getElementById('dot').className='dot-live';
+    document.getElementById('st-slot-row').style.display='flex';
+    document.getElementById('st-slot').textContent=`Next slot: ${fmt(nxtSlot)}`;
+  }else{
+    document.getElementById('st-main').textContent='Active हुने समय: 07:00 – 16:30';
+    document.getElementById('dot').className='dot-off';
+    document.getElementById('st-slot-row').style.display='none';
+  }
+
+  if(!within){
+    ['n-now','n-next','n-occ'].forEach(id=>document.getElementById(id).textContent='—');
+    document.getElementById('live-content').innerHTML=`<div class="offhours"><div style="font-size:36px;margin-bottom:14px">🌙</div><div class="offhours-title" style="font-family:'Mukta',sans-serif;">Class सकियो — भोलि आउनुस्</div><div class="offhours-sub" style="font-family:'Mukta',sans-serif;">07:00 AM देखि 04:30 PM</div></div>`;
+    return;
+  }
+
+  const freeNow=[],freeNext=[],occ=[];
+  for(const room of ROOMS){
+    if(q&&!room.toLowerCase().includes(q))continue;
+    if(pinsOnly&&!pinnedRooms.has(room))continue;
+
+    // Physical check — is the room actually empty (no class from ANY year)?
+    const physFreeNow  = isPhysicallyFreeAt(room,day,curSlot);
+    const physFreeNext = nxtSlot<OP_E ? isPhysicallyFreeAt(room,day,nxtSlot) : false;
+
+    // Label check — what year filter label to show (only relevant if physically free)
+    const fn = physFreeNow  ? isFreeAt(room,day,curSlot,yf) : false;
+    const nx = physFreeNext ? isFreeAt(room,day,nxtSlot,yf) : false;
+
+    const blocks=freeBlocksFrom(room,day,nowMin,yf);
+    const maxFreeDur=blocks.length?blocks[0].dur:0;
+    if(minFree>0&&physFreeNow&&maxFreeDur<minFree)continue;
+    const minsLeft=minutesUntilEnd(room,day,nowMin);
+    const endingSoon=!physFreeNow&&minsLeft!==null&&minsLeft<=20;
+    const obj={room,fn,nx,blocks,minsLeft,endingSoon};
+    if(physFreeNow)freeNow.push(obj);
+    else if(physFreeNext)freeNext.push(obj);
+    else occ.push(obj);
+  }
+  // Sort freeNow by longest first block duration
+  freeNow.sort((a,b)=>(b.blocks[0]?.dur||0)-(a.blocks[0]?.dur||0));
+  // Pins float to top
+  const sortFn=(a,b)=>(pinnedRooms.has(b.room)?1:0)-(pinnedRooms.has(a.room)?1:0);
+  freeNow.sort(sortFn);freeNext.sort(sortFn);
+
+  document.getElementById('n-now').textContent=freeNow.length;
+  document.getElementById('n-next').textContent=freeNext.length;
+  document.getElementById('n-occ').textContent=occ.length;
+
+  function cardHTML(list,mode){
+    if(!list.length)return`<div class="empty-msg">No rooms in this category.</div>`;
+    return`<div class="room-grid">${list.map(({room,fn,nx,blocks,minsLeft,endingSoon})=>{
+      const f=fn||nx;
+      const isPinned=pinnedRooms.has(room);
+      const cls=endingSoon?'c-ending':(f?cardCls(f):'c-occ');
+      const _r=room.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      return`<div class="rcard ${cls}${isPinned?' pinned':''}" onclick="openRoomModal('${_r}')" title="क्लिक — आजको पूरा तालिका">
+        <button class="pin-btn${isPinned?' active':''}" onclick="event.stopPropagation();togglePin('${_r}')">⭐</button>
+        <div class="rc-code">${rcCode(room)}</div>
+        <div class="rc-name">${rcName(room)}</div>
+        <div class="slot-list">
+          ${blocks.slice(0,3).map((b,i)=>`
+            <div class="slot-row ${i===0?'is-now':'is-up'}">
+              <span class="slot-time">${fmt(b.start)}–${fmt(b.end)}</span>
+              ${i===0&&mode==='now'?`<span class="chip chip-now">NOW</span>`:''}
+              ${i===0&&mode==='next'?`<span class="chip chip-next">NEXT</span>`:''}
+              ${freeChip(b.freeFor)}
+            </div>`).join('')}
+          ${blocks.length&&mode==='now'?`<div class="dur-badge">Free for ${durFmt(blocks[0].dur)}</div>`:''}
+          ${endingSoon?`<div style="font-size:10px;color:var(--red);font-family:var(--mono);margin-top:4px">⚠ Class ends in ${minsLeft}m</div>`:''}
+          ${!blocks.length&&!endingSoon?`<div style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:4px">No more free slots today</div>`:''}
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+  function tableHTML(list,mode){
+    if(!list.length)return`<div class="empty-msg">No rooms in this category.</div>`;
+    return`<div class="table-wrap"><table>
+      <thead><tr><th>★</th><th>Room</th><th>Status</th><th>Free Until</th><th>Duration</th><th>Free For</th></tr></thead>
+      <tbody>${list.map(({room,fn,nx,blocks,endingSoon})=>{
+        const b0=blocks[0];const isNow=!!fn;
+        return`<tr class="${isNow?'row-now':''}">
+          <td><button style="background:none;border:none;cursor:pointer;font-size:13px;opacity:${pinnedRooms.has(room)?1:.3}" onclick="togglePin('${room.replace(/'/g,"\\'")}')">⭐</button></td>
+          <td><span class="t-mono t-bold">${room.replace(/- /,'·')}</span></td>
+          <td>${isNow?`<span class="badge-live"><span class="dot-live" style="width:6px;height:6px;display:inline-block"></span>FREE</span>`:endingSoon?`<span style="font-family:var(--mono);font-size:10px;color:var(--red)">⚠ ENDING SOON</span>`:mode==='next'?`<span class="badge-next">FREE NEXT</span>`:`<span class="badge-occ">IN USE</span>`}</td>
+          <td>${b0&&isNow?`<span class="t-mono">Until ${fmt(b0.end)}</span>`:'—'}</td>
+          <td>${b0&&isNow?`<span class="t-mono" style="color:var(--green)">${durFmt(b0.dur)}</span>`:'—'}</td>
+          <td>${freeChip(fn||nx)}</td>
+        </tr>`;
+      }).join('')}</tbody></table></div>`;
+  }
+
+  const renderFn=vm==='card'?cardHTML:tableHTML;
+  document.getElementById('live-content').innerHTML=`
+    <div class="tabs">
+      <div class="tab ${liveTab==='now'?'active':''}" data-tab="now" onclick="switchLiveTab('now')">🟢 Free Now (${freeNow.length})</div>
+      <div class="tab ${liveTab==='next'?'active':''}" data-tab="next" onclick="switchLiveTab('next')">🔵 Free Next (${freeNext.length})</div>
+      <div class="tab ${liveTab==='occ'?'active':''}" data-tab="occ" onclick="switchLiveTab('occ')">🔴 In Use (${occ.length})</div>
+    </div>
+    <div class="tab-body ${liveTab==='now'?'show':''}" data-tab="now">${renderFn(freeNow,'now')}</div>
+    <div class="tab-body ${liveTab==='next'?'show':''}" data-tab="next">${renderFn(freeNext,'next')}</div>
+    <div class="tab-body ${liveTab==='occ'?'show':''}" data-tab="occ">${renderFn(occ,'occ')}</div>
+  `;
+}
+
+// ═══ FIND ME PAGE ═══
+function renderFind(){
+  const now=new Date(),nowMin=now.getHours()*60+now.getMinutes(),day=DJ[now.getDay()];
+  const within=nowMin>=OP_S&&nowMin<OP_E;
+  const minNeeded=parseInt(document.getElementById('find-min').value)||60;
+  const fyear=document.getElementById('find-year').value||'all';
+  const cont=document.getElementById('find-content');
+
+  if(!within){
+    cont.innerHTML=`<div class="offhours"><div style="font-size:36px;margin-bottom:14px">🌙</div><div class="offhours-title">Outside schedule hours</div><div class="offhours-sub">Come back 07:00 AM – 04:30 PM</div></div>`;
+    return;
+  }
+
+  const candidates=[];
+  for(const room of ROOMS){
+    const blocks=freeBlocksFrom(room,day,nowMin,fyear);
+    if(!blocks.length)continue;
+    const best=blocks[0];
+    if(best.dur>=minNeeded) candidates.push({room,block:best,dur:best.dur});
+  }
+  candidates.sort((a,b)=>b.dur-a.dur);
+
+  if(!candidates.length){
+    cont.innerHTML=`<div class="no-result">No rooms free for ${durFmt(minNeeded)} right now.<br>Try reducing the minimum time.</div>`;
+    return;
+  }
+
+  cont.innerHTML=`<div class="find-cards">${candidates.map(({room,block,dur},i)=>`
+    <div class="find-card">
+      <div class="find-rank">#${i+1} BEST OPTION</div>
+      <div class="find-room">${rcCode(room)}</div>
+      <div class="find-subname">${rcName(room)}</div>
+      <div class="find-dur">${durFmt(dur)}</div>
+      <div class="find-dur-lbl">Free from now</div>
+      <div class="find-time">${fmt(block.start)} – ${fmt(block.end)}</div>
+    </div>`).join('')}</div>`;
+}
+
+// ═══ SEARCH PAGE ═══
+function renderSuggestions(){
+  const popular=['LT01','LT02','LT03','LT04','SR01','SR04','SR07','Lab01','Lab02','TR01','Rupa','Fewa'];
+  document.getElementById('suggestions').innerHTML=popular.map(s=>
+    `<button class="sug-btn" onclick="document.getElementById('room-search-input').value='${s}';renderSearch()">${s}</button>`
+  ).join('');
+}
+
+function renderSearch(){
+  const q=document.getElementById('room-search-input').value.trim().toLowerCase();
+  const now=new Date(),nowMin=now.getHours()*60+now.getMinutes(),day=DJ[now.getDay()];
+  const within=nowMin>=OP_S&&nowMin<OP_E;
+  const results=document.getElementById('search-results');
+  if(!q){results.innerHTML='';return;}
+
+  // Match rooms OR lecturers OR groups
+  const matchedRooms=ROOMS.filter(r=>r.toLowerCase().includes(q));
+  const matchedByLecturer=[...new Set(allDetailData.filter(e=>e.lecturer&&e.lecturer.toLowerCase().includes(q)).map(e=>nr(e.room)))];
+  const matchedByGroup=[...new Set(allDetailData.filter(e=>e.group&&e.group.toLowerCase().includes(q)).map(e=>nr(e.room)))];
+  const allMatched=[...new Set([...matchedRooms,...matchedByLecturer,...matchedByGroup])];
+
+  if(!allMatched.length){
+    results.innerHTML=`<div class="no-result">No results for "<strong>${q}</strong>"<br><br>Try room codes like LT01, SR04, lecturer names, or group numbers like C5</div>`;
+    return;
+  }
+
+  results.innerHTML=allMatched.map(room=>{
+    const classes=within?getClassesAt(room,day,nowMin):[];
+    const isOcc=classes.length>0;
+    const freeBlocks=within?freeBlocksFrom(room,day,nowMin,'all'):[];
+    const minsLeft=within&&isOcc?minutesUntilEnd(room,day,nowMin):null;
+
+    let classBoxes='';
+    if(!within){
+      classBoxes=`<div class="class-box"><div class="class-box-title">Schedule not active</div><div style="font-size:12px;color:var(--muted)">Come back 07:00 AM – 04:30 PM to see live status.</div></div>`;
+    }else if(isOcc){
+      classBoxes=classes.map(c=>`
+        <div class="class-box">
+          <div class="class-box-title">📚 Class In Progress ${minsLeft?`<span style="color:var(--red);font-size:9px;margin-left:6px">ends in ${minsLeft}m</span>`:''}</div>
+          <div class="class-row"><span class="class-key">Year</span><span class="class-val"><span class="year-badge yb${c.year}">Year ${c.year}</span></span></div>
+          <div class="class-row"><span class="class-key">Subject</span><span class="class-val">${c.title}</span></div>
+          <div class="class-row"><span class="class-key">Module</span><span class="class-val" style="color:var(--muted)">${c.module}</span></div>
+          <div class="class-row"><span class="class-key">Type</span><span class="class-val">${c.type}</span></div>
+          <div class="class-row"><span class="class-key">Lecturer</span><span class="class-val">${c.lecturer}</span></div>
+          <div class="class-row"><span class="class-key">Group</span><span class="class-val">${c.group}</span></div>
+          <div class="class-row"><span class="class-key">Time</span><span class="class-val" style="color:var(--accent);font-family:var(--mono);font-size:11px">${fmt(toM(c.start))} – ${fmt(toM(c.end))}</span></div>
+        </div>`).join('');
+    }else{
+      classBoxes=`<div class="class-box"><div class="class-box-title">✅ Room is Free</div><div style="font-size:12px;color:var(--green)">No class scheduled right now.</div></div>`;
+    }
+
+    const freeSlotsHTML=freeBlocks.length?`
+      <div class="free-slots-section">
+        <div class="free-slots-title">Remaining free slots today</div>
+        ${freeBlocks.map(b=>`<span class="free-slot-pill">🕐 ${fmt(b.start)} – ${fmt(b.end)} (${durFmt(b.dur)})</span>`).join('')}
+      </div>`:'';
+
+    return`<div class="result-card" style="border-color:${isOcc?'rgba(248,113,113,.3)':'rgba(52,211,153,.25)'}">
+      <div class="result-head" style="background:${isOcc?'rgba(248,113,113,.06)':'rgba(52,211,153,.05)'}">
+        <div>
+          <div class="result-room-name">${rcCode(room)} · ${rcName(room)}</div>
+          <div style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:2px">${room}</div>
+        </div>
+        <span class="result-status-badge ${isOcc?'rsbadge-occ':'rsbadge-free'}">${isOcc?'● IN USE':'● FREE NOW'}</span>
+      </div>
+      <div class="result-body">${classBoxes}${freeSlotsHTML}</div>
+    </div>`;
+  }).join('');
+}
+
+// ═══ MY TIMETABLE PAGE ═══
+function populateTTGroups(){
+  const year=document.getElementById('tt-year').value;
+  const gSel=document.getElementById('tt-group');
+  gSel.innerHTML='<option value="">-- Select Group --</option>';
+  if(!year)return;
+  const data=year==='1'?rawY1D:year==='2'?rawY2D:rawY3D;
+  const groups=new Set();
+  data.forEach(e=>{
+    e.group.split('+').forEach(g=>groups.add(g.trim()));
+  });
+  [...groups].sort((a,b)=>{
+    const na=parseInt(a.replace('C','')),nb=parseInt(b.replace('C',''));
+    return na-nb;
+  }).forEach(g=>{
+    const o=document.createElement('option');o.value=g;o.textContent=g;gSel.appendChild(o);
+  });
+  renderTT();
+}
+
+function renderTT(){
+  const year=document.getElementById('tt-year').value;
+  const group=document.getElementById('tt-group').value;
+  const cont=document.getElementById('tt-content');
+  if(!year||!group){cont.innerHTML=`<div class="empty-msg">Select your year and group above.</div>`;return;}
+
+  const now=new Date(),nowMin=now.getHours()*60+now.getMinutes(),today=DJ[now.getDay()];
+  const data=year==='1'?rawY1D:year==='2'?rawY2D:rawY3D;
+  const myClasses=data.filter(e=>e.group.split('+').map(g=>g.trim()).includes(group));
+
+  if(!myClasses.length){cont.innerHTML=`<div class="empty-msg">No classes found for Year ${year} · ${group}.</div>`;return;}
+
+  const byDay={};
+  ['SUN','MON','TUE','WED','THU','FRI'].forEach(d=>{
+    const dc=myClasses.filter(e=>e.day===d).sort((a,b)=>toM(a.start)-toM(b.start));
+    if(dc.length)byDay[d]=dc;
+  });
+
+  cont.innerHTML=`<div class="tt-grid">${Object.entries(byDay).map(([day,classes])=>`
+    <div class="tt-card">
+      <div class="tt-card-head">
+        <span class="tt-day-badge" style="background:${DAY_BG[day]};color:${DAY_C[day]}">${day}</span>
+        <span style="font-size:12px;color:var(--muted)">${classes.length} class${classes.length>1?'es':''}</span>
+      </div>
+      ${classes.map(c=>{
+        const isNow=day===today&&toM(c.start)<=nowMin&&toM(c.end)>nowMin;
+        return`<div class="tt-item${isNow?' tt-now':''}">
+          <div class="tt-time">${fmt(toM(c.start))}<br>${fmt(toM(c.end))}</div>
+          <div class="tt-info">
+            <div class="tt-title">${c.title}</div>
+            <div class="tt-meta">${c.type} · ${c.module}</div>
+            <div class="tt-meta">${c.lecturer}</div>
+            <div class="tt-room">${c.room}</div>
+            ${isNow?`<div style="font-size:10px;color:var(--green);font-family:var(--mono);margin-top:3px">▶ ONGOING NOW</div>`:''}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`).join('')}</div>`;
+}
+
+// ═══ FULL DAY MODAL ═══
+const NEPALI_DAYS={SUN:'आइतबार',MON:'सोमबार',TUE:'मङ्गलबार',WED:'बुधबार',THU:'बिहीबार',FRI:'शुक्रबार',SAT:'शनिबार'};
+
+function openRoomModal(room){
+  const now=new Date(), nowMin=now.getHours()*60+now.getMinutes(), day=DJ[now.getDay()];
+  const within=nowMin>=OP_S&&nowMin<OP_E;
+
+  // All classes today in this room, sorted by start time
+  const todayClasses=allDetailData
+    .filter(e=>nr(e.room)===nr(room)&&e.day===day)
+    .sort((a,b)=>toM(a.start)-toM(b.start));
+
+  // Merge same-timeslot entries (multiple groups sharing room)
+  const merged=[];
+  for(const cls of todayClasses){
+    const s=toM(cls.start),e=toM(cls.end);
+    const ex=merged.find(t=>t.type==='class'&&t.start===s&&t.end===e);
+    if(ex){ex.groups.push({year:cls.year,group:cls.group,lecturer:cls.lecturer});}
+    else{merged.push({type:'class',start:s,end:e,title:cls.title,module:cls.module,
+      classType:cls.type,groups:[{year:cls.year,group:cls.group,lecturer:cls.lecturer}]});}
+  }
+  merged.sort((a,b)=>a.start-b.start);
+
+  // Build full timeline with free gaps
+  const timeline=[];
+  let cur=OP_S;
+  for(const item of merged){
+    if(item.start>cur) timeline.push({type:'free',start:cur,end:item.start});
+    timeline.push(item);
+    cur=Math.max(cur,item.end);
+  }
+  if(cur<OP_E) timeline.push({type:'free',start:cur,end:OP_E});
+
+  // Set header
+  document.getElementById('m-title').textContent=`${rcCode(room)} · ${rcName(room)}`;
+  document.getElementById('m-raw').textContent=room;
+  document.getElementById('m-nepali').textContent=`${NEPALI_DAYS[day]||day} — आजको पूरा तालिका`;
+
+  // Year color helpers
+  const yC=y=>y===1?'var(--green)':y===2?'var(--purple)':'var(--orange)';
+  const yBg=y=>y===1?'rgba(52,211,153,.15)':y===2?'rgba(167,139,250,.15)':'rgba(251,146,60,.15)';
+  const yTag=y=>`<span style="font-family:var(--mono);font-size:9px;padding:1px 6px;border-radius:3px;background:${yBg(y)};color:${yC(y)};border:1px solid ${yC(y)}44">Y${y}</span>`;
+
+  if(!todayClasses.length){
+    document.getElementById('m-body').innerHTML=
+      `<div style="padding:40px;text-align:center;">
+        <div style="font-size:32px;margin-bottom:12px;">✅</div>
+        <div style="font-family:'Mukta',sans-serif;font-size:16px;color:var(--green);margin-bottom:6px;">आज यो room मा कुनै class छैन</div>
+        <div style="font-size:12px;color:var(--muted);">No classes scheduled today</div>
+      </div>`;
+  }else{
+    document.getElementById('m-body').innerHTML=timeline.map(item=>{
+      const dur=item.end-item.start;
+      const isNow=within&&nowMin>=item.start&&nowMin<item.end;
+      if(item.type==='free'){
+        return`<div class="tl-item tl-free${isNow?' tl-now':''}">
+          <div class="tl-left">
+            <div class="tl-time">${fmt(item.start)}</div>
+            <div class="tl-arrow">↓</div>
+            <div class="tl-time">${fmt(item.end)}</div>
+            <div class="tl-dur">${durFmt(dur)}</div>
+          </div>
+          <div class="tl-right">
+            ${isNow?`<div class="tl-now-badge free">🟢 अहिले खाली छ</div>`:''}
+            <div class="tl-free-label">खाली — Free</div>
+            <div class="tl-free-sub">No class in this slot</div>
+          </div>
+        </div>`;
+      }else{
+        return`<div class="tl-item tl-occ${isNow?' tl-now':''}">
+          <div class="tl-left">
+            <div class="tl-time">${fmt(item.start)}</div>
+            <div class="tl-arrow">↓</div>
+            <div class="tl-time">${fmt(item.end)}</div>
+            <div class="tl-dur">${durFmt(dur)}</div>
+          </div>
+          <div class="tl-right">
+            ${isNow?`<div class="tl-now-badge occ">🔴 अहिले चलिरहेको</div>`:''}
+            <div class="tl-title">${item.title}</div>
+            <div class="tl-meta">${item.classType} · ${item.module}</div>
+            <div class="tl-groups">
+              ${item.groups.map(g=>`<span class="tl-gbadge">${yTag(g.year)} ${g.group} · ${g.lecturer}</span>`).join('')}
+            </div>
+          </div>
+        </div>`;
+      }
+    }).join('');
+  }
+  document.getElementById('modal-overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+function closeModalBg(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// ═══ INIT ═══
+renderSuggestions();
+tickClock();
+renderLive();
+setInterval(tickClock,1000);
+setInterval(()=>{renderLive();if(document.getElementById('page-find').classList.contains('show'))renderFind();if(document.getElementById('page-search').classList.contains('show'))renderSearch();},30000);
+</script>
+</body>
+</html>

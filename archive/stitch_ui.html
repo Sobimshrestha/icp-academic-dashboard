@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Dean | The Scholarly Atelier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@200;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "tertiary-container": "#97b0ff",
+                "surface-tint": "#e9c349",
+                "on-tertiary-container": "#254188",
+                "inverse-surface": "#e4e1e7",
+                "outline-variant": "#4d4635",
+                "on-primary": "#3c2f00",
+                "on-secondary": "#3c2f05",
+                "on-secondary-fixed-variant": "#544519",
+                "secondary-fixed-dim": "#dac58d",
+                "on-secondary-fixed": "#241a00",
+                "secondary": "#dac58d",
+                "inverse-primary": "#735c00",
+                "on-tertiary-fixed": "#00174b",
+                "on-surface-variant": "#d0c5af",
+                "on-primary-fixed": "#241a00",
+                "on-tertiary-fixed-variant": "#27438a",
+                "on-tertiary": "#082b72",
+                "inverse-on-surface": "#303034",
+                "primary": "#f2ca50",
+                "tertiary-fixed-dim": "#b4c5ff",
+                "surface-container-lowest": "#0e0e12",
+                "surface-container-low": "#1b1b1f",
+                "secondary-container": "#544519",
+                "tertiary-fixed": "#dbe1ff",
+                "tertiary": "#bfcdff",
+                "primary-fixed-dim": "#e9c349",
+                "on-error-container": "#ffdad6",
+                "on-primary-fixed-variant": "#574500",
+                "on-secondary-container": "#c8b37d",
+                "on-primary-container": "#554300",
+                "surface-bright": "#39393d",
+                "background": "#131317",
+                "surface-container-highest": "#353439",
+                "outline": "#99907c",
+                "surface-container-high": "#2a292e",
+                "primary-fixed": "#ffe088",
+                "primary-container": "#d4af37",
+                "on-background": "#e4e1e7",
+                "surface-container": "#1f1f23",
+                "on-surface": "#e4e1e7",
+                "error": "#ffb4ab",
+                "secondary-fixed": "#f7e1a6",
+                "surface": "#131317",
+                "surface-variant": "#353439",
+                "surface-dim": "#131317",
+                "error-container": "#93000a",
+                "on-error": "#690005"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "fontFamily": {
+                "headline": ["Noto Serif"],
+                "body": ["Manrope"],
+                "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(19, 19, 23, 0.6) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .glow-gold {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+        .filament-line {
+            background: linear-gradient(90deg, #d4af37 0%, #f2ca50 50%, rgba(212, 175, 55, 0) 100%);
+        }
+        .asymmetric-grid {
+            grid-template-columns: 80px 1fr;
+        }
+        body {
+            background-color: #0e0e12;
+            color: #e4e1e7;
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen overflow-x-hidden">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 flex justify-between items-center w-full px-12 py-6 z-50 bg-slate-950/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-serif italic text-[#d4af37] drop-shadow-[0_0_8px_rgba(212,175,55,0.3)]">Digital Dean</span>
+<div class="hidden md:flex gap-8 ml-12">
+<a class="text-slate-400 font-medium hover:text-[#d4af37]/80 transition-colors font-label uppercase tracking-widest text-[10px]" href="#">Free Rooms</a>
+<a class="text-[#d4af37] border-b border-[#d4af37]/50 pb-1 font-label uppercase tracking-widest text-[10px]" href="#">Schedules</a>
+<a class="text-slate-400 font-medium hover:text-[#d4af37]/80 transition-colors font-label uppercase tracking-widest text-[10px]" href="#">Archives</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative bg-surface-container-low px-4 py-2 rounded-full flex items-center gap-3">
+<span class="material-symbols-outlined text-outline text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 text-on-surface placeholder:text-outline-variant" placeholder="Explore repository..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-primary hover:bg-[#d4af37]/5 p-2 rounded-full transition-all">schedule</button>
+<button class="material-symbols-outlined text-primary hover:bg-[#d4af37]/5 p-2 rounded-full transition-all">notifications</button>
+<img alt="Academic profile avatar" class="w-10 h-10 rounded-full border border-primary/20 object-cover" data-alt="close-up portrait of a distinguished professor in a dark academic setting with soft rim lighting and scholarly ambiance" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUmtc5z-LwzyVZwpz7kZbp3APlVj0RqppnjiasBOOUFL0CuS9BDQ7troJpO_KgWMbloA_SGAhM6_4iehGWhQkYRdYfmX-8XirWxI2_dnK5LlkUgnsQwj4l6kZtW9jLszajllw8yd5t5uu0DYzh5Jkqo4acJPxm2ZrYOcDv0RkQ1dHgvYqRhlmNswyYT2ZeLoB4kyGGccDv9wtE3gamPOG_NKUgwlHKGoWE4o2ozxg1UexnGwQWelKfxPVRns1kclLz3HzAZfe1PJU"/>
+</div>
+</nav>
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-10 z-40 bg-[#131317]/80 backdrop-blur-2xl w-72 translate-x-[-100%] lg:translate-x-0 transition-transform duration-500">
+<div class="px-8 mb-12">
+<h2 class="font-serif text-[#d4af37] text-xl">The Scholarly Atelier</h2>
+<p class="font-label text-[10px] uppercase tracking-[0.2em] text-slate-500">Dean's Private Office</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-4 px-8 py-4 text-slate-500 hover:text-slate-200 hover:translate-x-2 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label text-xs uppercase tracking-widest">Free Rooms Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-8 py-4 bg-[#d4af37]/10 text-[#d4af37] shadow-[inset_0_0_10px_rgba(212,175,55,0.1)] rounded-r-full" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label text-xs uppercase tracking-widest">My Personal Schedule</span>
+</a>
+<a class="flex items-center gap-4 px-8 py-4 text-slate-500 hover:text-slate-200 hover:translate-x-2 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-label text-xs uppercase tracking-widest">Academic Ledger</span>
+</a>
+<a class="flex items-center gap-4 px-8 py-4 text-slate-500 hover:text-slate-200 hover:translate-x-2 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label text-xs uppercase tracking-widest">Faculty Directory</span>
+</a>
+</nav>
+<div class="mt-auto px-8 space-y-4">
+<button class="w-full py-3 bg-surface-container-high rounded-xl text-primary font-label text-[10px] uppercase tracking-widest border border-primary/10 hover:bg-primary/5 transition-colors">
+                Curate Session
+            </button>
+<div class="pt-8 space-y-4">
+<a class="flex items-center gap-4 text-slate-500 hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span class="font-label text-[10px] uppercase tracking-widest">Settings</span>
+</a>
+<a class="flex items-center gap-4 text-slate-500 hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">logout</span>
+<span class="font-label text-[10px] uppercase tracking-widest">Log Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-72 pt-32 px-8 md:px-16 pb-20">
+<!-- 1. Elegant Digital Clock -->
+<section class="flex flex-col items-center justify-center mb-16">
+<div class="text-center">
+<p class="font-label text-[10px] uppercase tracking-[0.4em] text-primary/60 mb-2">Chronos Dimension</p>
+<div class="flex items-baseline gap-4">
+<h1 class="text-8xl md:text-[10rem] font-extralight tracking-tighter text-primary glow-gold leading-none">09:42</h1>
+<span class="text-4xl font-serif italic text-primary/40">am</span>
+</div>
+<p class="font-serif text-2xl text-on-surface-variant italic mt-4">Tuesday, October 24th</p>
+</div>
+</section>
+<!-- 2. Sophisticated Navigation Tabs -->
+<section class="flex justify-center mb-12">
+<div class="bg-surface-container-low p-1 rounded-full flex gap-2">
+<button class="px-8 py-3 rounded-full text-slate-400 font-label text-xs uppercase tracking-widest hover:text-slate-200 transition-all">
+                    Free Rooms Dashboard
+                </button>
+<button class="px-8 py-3 rounded-full bg-primary/10 text-primary font-bold shadow-[0_0_20px_rgba(212,175,55,0.1)] font-label text-xs uppercase tracking-widest">
+                    My Personal Schedule
+                </button>
+</div>
+</section>
+<!-- 3. Control Bar -->
+<section class="flex flex-wrap items-center justify-between gap-6 mb-12 max-w-6xl mx-auto">
+<div class="flex items-center gap-4">
+<div class="relative">
+<label class="block font-label text-[9px] uppercase tracking-widest text-outline mb-2 ml-2">Academic Year</label>
+<div class="glass-panel border border-primary/10 px-6 py-3 rounded-xl flex items-center justify-between w-56 cursor-pointer hover:bg-primary/5 transition-all">
+<span class="text-sm font-semibold">Senior Fellow 2024</span>
+<span class="material-symbols-outlined text-primary text-lg">expand_more</span>
+</div>
+</div>
+<div class="relative">
+<label class="block font-label text-[9px] uppercase tracking-widest text-outline mb-2 ml-2">Research Group</label>
+<div class="glass-panel border border-primary/10 px-6 py-3 rounded-xl flex items-center justify-between w-56 cursor-pointer hover:bg-primary/5 transition-all">
+<span class="text-sm font-semibold">Adv. Metaphysics B</span>
+<span class="material-symbols-outlined text-primary text-lg">expand_more</span>
+</div>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-6 py-3 bg-surface-container-high rounded-xl hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-primary">filter_list</span>
+<span class="font-label text-[10px] uppercase tracking-widest">Refine</span>
+</button>
+<button class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-bold rounded-xl shadow-[0_10px_30px_rgba(212,175,55,0.2)]">
+<span class="material-symbols-outlined">add_task</span>
+<span class="font-label text-[10px] uppercase tracking-widest">New Session</span>
+</button>
+</div>
+</section>
+<!-- 4. Timeline & Schedule Cards -->
+<section class="max-w-6xl mx-auto space-y-12 relative">
+<!-- Decorative Timeline Filament -->
+<div class="absolute left-[39px] top-0 bottom-0 w-[1px] bg-outline-variant/30 hidden md:block"></div>
+<!-- Session 1: Lecture -->
+<div class="grid asymmetric-grid gap-12 relative group">
+<div class="flex flex-col items-center pt-8 z-10">
+<div class="w-10 h-10 rounded-full glass-panel border border-primary/40 flex items-center justify-center glow-gold">
+<div class="w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_#d4af37]"></div>
+</div>
+<div class="mt-4 font-label text-[10px] uppercase text-outline-variant font-bold">08:00</div>
+</div>
+<div class="glass-panel rounded-2xl p-8 border border-white/5 hover:border-primary/20 transition-all duration-500 hover:shadow-[0_40px_80px_rgba(0,0,0,0.4)]">
+<div class="flex flex-wrap justify-between items-start mb-6">
+<div class="space-y-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-primary/20 text-primary text-[9px] font-label uppercase tracking-widest px-3 py-1 rounded-full border border-primary/20">Lecture</span>
+<span class="text-outline text-xs">•</span>
+<span class="text-on-surface-variant font-label text-[10px] uppercase tracking-widest">90 Minutes</span>
+</div>
+<h3 class="text-3xl font-headline italic">Quantum Epistemology &amp; Neural Networks</h3>
+</div>
+<div class="flex -space-x-3">
+<img class="w-12 h-12 rounded-full border-2 border-surface-container-low object-cover" data-alt="portrait of female professor with intellectual expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5Q5-7B8q0h6O2_dOQSBDz2YFhxMV0JbVm4Av3GE0vfxI8FLnK63PwnxGQMbrbkQoFTe0dswkB0yDJMkiCrWzGkPrhQ228fY7XfkORGsJVI17mSNmLurNyCK6uYAyOOGggoLxBu7EPPFuDPqyNWSUd6E4oZ4BtOTKU-r9pdKZa0Qz0xnsPTuYLyuA2bQHRDGNBY-_yQlY-6TrIlAIITwhvoDwgDX_q0zy-HETAq5Ewg2e16rPR69UBAVcca9iO4hiwRvdELOmgWwU"/>
+<div class="w-12 h-12 rounded-full glass-panel border-2 border-surface-container-low flex items-center justify-center text-[10px] font-bold text-primary">+3</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-6 border-t border-white/5">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-primary/5">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-outline">Sanctum</p>
+<p class="text-sm font-semibold">Hall of Infinite Reason, 402</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-primary/5">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">person_book</span>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-outline">Lead Curate</p>
+<p class="text-sm font-semibold">Dr. Alistair Vance</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-primary/5">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-outline">Reference</p>
+<p class="text-sm font-semibold italic">The Digital Soul, Ch. 12</p>
+</div>
+</div>
+</div>
+<div class="mt-8 h-[2px] w-full bg-surface-container-highest overflow-hidden rounded-full">
+<div class="filament-line h-full w-2/3 shadow-[0_0_10px_#d4af37]"></div>
+</div>
+</div>
+</div>
+<!-- Session 2: Tutorial -->
+<div class="grid asymmetric-grid gap-12 relative group opacity-80 hover:opacity-100 transition-opacity">
+<div class="flex flex-col items-center pt-8 z-10">
+<div class="w-10 h-10 rounded-full glass-panel border border-white/10 flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+</div>
+<div class="mt-4 font-label text-[10px] uppercase text-outline-variant font-bold">11:30</div>
+</div>
+<div class="glass-panel rounded-2xl p-8 border border-white/5">
+<div class="flex flex-wrap justify-between items-start mb-6">
+<div class="space-y-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-tertiary-container/20 text-tertiary-container text-[9px] font-label uppercase tracking-widest px-3 py-1 rounded-full border border-tertiary-container/20">Tutorial</span>
+<span class="text-outline text-xs">•</span>
+<span class="text-on-surface-variant font-label text-[10px] uppercase tracking-widest">45 Minutes</span>
+</div>
+<h3 class="text-3xl font-headline italic">Ethics of Algorithmic Governance</h3>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-6 border-t border-white/5">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-white/5">
+<span class="material-symbols-outlined text-outline">meeting_room</span>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-outline">Chamber</p>
+<p class="text-sm font-semibold">Faculty Lounge, North Wing</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-white/5">
+<span class="material-symbols-outlined text-outline">group</span>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-outline">Assembly</p>
+<p class="text-sm font-semibold">Alpha Cohort (12 Researchers)</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-primary text-[10px] font-label uppercase tracking-widest underline underline-offset-8 decoration-primary/30 hover:decoration-primary transition-all">
+                                Review Preparations
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Session 3: Lab -->
+<div class="grid asymmetric-grid gap-12 relative group">
+<div class="flex flex-col items-center pt-8 z-10">
+<div class="w-10 h-10 rounded-full glass-panel border border-primary/20 flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+</div>
+<div class="mt-4 font-label text-[10px] uppercase text-outline-variant font-bold">14:00</div>
+</div>
+<div class="glass-panel rounded-2xl p-8 border border-white/5 hover:border-primary/20 transition-all duration-500">
+<div class="flex flex-wrap justify-between items-start mb-6">
+<div class="space-y-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-error-container/20 text-error text-[9px] font-label uppercase tracking-widest px-3 py-1 rounded-full border border-error/20">Laboratory</span>
+<span class="text-outline text-xs">•</span>
+<span class="text-on-surface-variant font-label text-[10px] uppercase tracking-widest">180 Minutes</span>
+</div>
+<h3 class="text-3xl font-headline italic">Practical Synthesis: Bio-Digital Interfaces</h3>
+</div>
+<div class="bg-primary/10 text-primary px-4 py-2 rounded-xl flex items-center gap-2 border border-primary/20">
+<span class="material-symbols-outlined text-sm">lock</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold">Secure Session</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-6 border-t border-white/5">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-primary/5">
+<span class="material-symbols-outlined text-primary">biotech</span>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-outline">Atelier</p>
+<p class="text-sm font-semibold">Sub-Level 2, Bio-Lab 09</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-primary/5">
+<span class="material-symbols-outlined text-primary">science</span>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-outline">Mandatory Kit</p>
+<p class="text-sm font-semibold">Standard Alpha Bio-Gear</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-primary/5">
+<span class="material-symbols-outlined text-primary">experiment</span>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-outline">Status</p>
+<p class="text-sm font-semibold">Awaiting Initialization</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Accent -->
+<footer class="mt-24 text-center max-w-6xl mx-auto border-t border-white/5 pt-12">
+<p class="font-serif italic text-outline/50 mb-4">"Scientia potentia est, sed sapientia libertas."</p>
+<div class="flex justify-center gap-8 text-[10px] font-label uppercase tracking-[0.3em] text-outline/30">
+<span>The Scholarly Atelier</span>
+<span>Digital Dean Engine v.4.8.2</span>
+<span>Legacy Protocol Active</span>
+</div>
+</footer>
+</main>
+<!-- Decorative Elements -->
+<div class="fixed top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-primary/5 blur-[150px] rounded-full pointer-events-none"></div>
+<div class="fixed bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-tertiary-container/5 blur-[120px] rounded-full pointer-events-none"></div>
+</body></html>

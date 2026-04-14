@@ -1,0 +1,25 @@
+LONDON METROPOLITAN UNIVERSITY
+YEAR 3 BUSINESS ADMINISTRATION TIME TABLE
+
+Day Time Class Type Year Course Intake Module Code Module Title Lecturer Group Block Room
+SUN 07:00 AM - 08:30 AM Tutorial 3 BBA A23 MN6089NP Achieve Your Potential Mr. Amrit Timilsina DBM1+ET1 Nepal Lab01- Gokyo
+SUN 08:30 AM - 10:00 AM Tutorial 3 BBA A23 FE6062NP Applied Information Technology for Professional Practice Ms. Rinki Gurung DBM1 Nepal SR01- Fewa
+SUN 08:30 AM - 10:00 AM Tutorial 3 BBA A23 LT6097NP Managing Events - Planning and Practices Ms. Sajena Dwa ET1 Nepal Lab01- Gokyo
+MON 07:00 AM - 08:30 AM Tutorial 3 BBA A23 MC6104NP Digital Marketing Trends and Practice Ms. Ganga Ghale DBM1 Nepal SR01- Fewa
+MON 07:00 AM - 08:30 AM Tutorial 3 BBA A23 LT6033NP Managing Culture, Tourism and Regeneration Mr. Prabesh Paudel ET1 Nepal SR03- Rara
+MON 08:30 AM - 10:00 AM Tutorial 3 BBA A23 MN6092NP Use of Artificial Intelligence and Big Data in Business Mr. Vikram Rana DBM1 Nepal SR01- Fewa
+MON 08:30 AM - 10:00 AM Tutorial 3 BBA A23 LT6034NP Destination Management and Marketing Ms. Arantee Tripathee ET1 Nepal SR03- Rara
+TUE 07:00 AM - 08:30 AM Lab 3 BBA A23 MN6089NP Achieve Your Potential Mr. Amrit Timilsina DBM1+ET1 Nepal SR04- Tilicho
+TUE 08:30 AM - 10:00 AM Lab 3 BBA A23 FE6062NP Applied Information Technology for Professional Practice Ms. Rinki Gurung DBM1 Nepal SR04- Tilicho
+TUE 08:30 AM - 10:00 AM Lab 3 BBA A23 LT6097NP Managing Events - Planning and Practices Ms. Sajena Dwa ET1 Nepal SR05- Manaslu
+WED 07:00 AM - 08:30 AM Lab 3 BBA A23 LT6033NP Managing Culture, Tourism and Regeneration Mr. Prabesh Paudel ET1 Nepal SR01- Fewa
+WED 07:00 AM - 08:30 AM Lab 3 BBA A23 MC6104NP Digital Marketing Trends and Practice Ms. Ganga Ghale DBM1 Nepal SR02- Begnas
+WED 08:30 AM - 10:00 AM Lab 3 BBA A23 LT6034NP Destination Management and Marketing Ms. Arantee Tripathee ET1 Nepal SR01- Fewa
+WED 08:30 AM - 10:00 AM Lab 3 BBA A23 MN6092NP Use of Artificial Intelligence and Big Data in Business Mr. Vikram Rana DBM1 Nepal SR02- Begnas
+THU 07:00 AM - 08:30 AM Lecture 3 BBA A23 MN6089NP Achieve Your Potential Mr. Amrit Timilsina DBM1+ET1 Nepal SR03- Rara
+THU 08:30 AM - 10:00 AM Lecture 3 BBA A23 FE6062NP Applied Information Technology for Professional Practice Ms. Rinki Gurung DBM1 Nepal SR03- Rara
+THU 08:30 AM - 10:00 AM Lecture 3 BBA A23 LT6097NP Managing Events - Planning and Practices Ms. Sajena Dwa ET1 Nepal SR07- Kapuche
+FRI 07:00 AM - 08:30 AM Lecture 3 BBA A23 LT6033NP Managing Culture, Tourism and Regeneration Mr. Prabesh Paudel ET1 Nepal SR01- Fewa
+FRI 07:00 AM - 08:30 AM Lecture 3 BBA A23 MC6104NP Digital Marketing Trends and Practice Ms. Ganga Ghale DBM1 Nepal SR07- Kapuche
+FRI 08:30 AM - 10:00 AM Lecture 3 BBA A23 LT6034NP Destination Management and Marketing Ms. Arantee Tripathee ET1 Nepal SR01- Fewa
+FRI 08:30 AM - 10:00 AM Lecture 3 BBA A23 MN6092NP Use of Artificial Intelligence and Big Data in Business Mr. Vikram Rana DBM1 Nepal SR07- Kapuche

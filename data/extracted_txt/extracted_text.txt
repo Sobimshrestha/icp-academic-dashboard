@@ -1,0 +1,347 @@
+
+================================================================================
+FILE: BIT 1st year Sem 2 (1).pdf
+================================================================================
+Number of pages: 4
+
+--- Page 1 ---
+Day Time Class Type Year  Course  Intake Module Code Module Title Lecturer Group Block Room
+SUN 07:00 AM - 08:30 AM Lecture 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C4+C5+C6 Nepal LT01- Machhapuchhre
+SUN 07:30 AM - 09:00 AM Lecture 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Prabin Banstola C1+C2+C3 Nepal LT02- Annapurna
+SUN 09:30 AM - 11:00 AM Lecture 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Prabin Banstola C4+C5+C6 Nepal LT02- Annapurna
+SUN 10:00 AM - 11:30 AM Lecture 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Krishna wagle C1+C2+C3 Nepal LT01- Machhapuchhre
+SUN 12:00 PM - 01:30 PM Lecture 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C7+C8 Nepal LT01- Machhapuchhre
+SUN 02:30 PM - 04:00 PM Lecture 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Krishna wagle C7+C8 Nepal LT01- Machhapuchhre
+MON 07:00 AM - 08:30 AM Lecture 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C7+C8 Nepal LT02- Annapurna
+MON 09:30 AM - 11:00 AM Lecture 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C1+C2+C3 Nepal LT01- Machhapuchhre
+MON 09:30 AM - 11:00 AM Lecture 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Prabin Banstola C7+C8 Nepal LT-04 Dipang
+MON 11:00 AM - 12:30 PM Lecture 1 BIT A25 CS4051NP Fundamentals of Computing  Mr. Krishna Wagle C4+C5+C6 Nepal LT01- Machhapuchhre
+MON 12:00 PM - 01:30 PM Lecture 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C1+C2+C3 Nepal LT02- Annapurna
+MON 01:30 PM - 03:00 PM Lecture 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C4+C5+C6 Nepal LT02- Annapurna
+TUE 07:00 AM - 08:30 AM Tutorial 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C6 Nepal SR03- Rara
+TUE 07:30 AM - 09:00 AM Tutorial 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Prabin Banstola C1 Nepal SR01- Fewa
+TUE 09:00 AM - 10:30 AM Tutorial 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C4 Nepal SR01- Fewa
+TUE 09:00 AM - 10:30 AM Tutorial 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Suman Bhandari C5 Nepal SR03- Rara
+TUE 09:00 AM - 10:30 AM Tutorial 1 BIT A25 CS4001NP Programming Mr. Bishal Bhattarai C8 Nepal SR07- Kapuche
+TUE 09:30 AM - 11:00 AM Tutorial 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Prasiddha Khadka C6 UK TR02- Stonehenge
+TUE 10:00 AM - 11:30 AM Tutorial 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Krishna Wagle C1 Nepal SR04- TilichoLONDON METROPOLITAN UNIVERSITY
+YEAR 1 COMPUTING TIME TABLE
+
+--- Page 2 ---
+Day Time Class Type Year  Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 1 COMPUTING TIME TABLE
+TUE 11:00 AM - 12:30 PM Tutorial 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Anoj Banjara C3 Nepal SR02- Begnas
+TUE 11:30 AM - 01:00 PM Tutorial 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Ms. Sikha Kunwar C8 Nepal SR05- Manaslu 
+TUE 11:30 AM - 01:00 PM Tutorial 1 BIT A25 CS4001NP Programming Mr. Sushil Dawadi C4 Nepal SR07- Kapuche
+TUE 11:30 AM - 01:00 PM Tutorial 1 BIT A25 CS4001NP Programming Mr. Bishal Bhattarai C7 Nepal Lab02- Nilgiri 
+TUE 11:30 AM - 01:00 PM Tutorial 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Prasiddha Khadka C5 UK TR02- Stonehenge
+TUE 12:00 PM - 01:30 PM Tutorial 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C2 Nepal SR03- Rara
+TUE 01:30 PM - 03:00 PM Tutorial 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C3 Nepal SR05- Manaslu 
+TUE 02:00 PM - 03:30 PM Tutorial 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Anoj Banjara C7 Nepal SR04- Tilicho
+TUE 02:30 PM - 04:00 PM Tutorial 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Krishna Wagle C2 Nepal SR03- Rara
+WED 07:00 AM - 08:30 AM Tutorial 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Prabin Banstola C2 Nepal SR03- Rara
+WED 07:00 AM - 08:30 AM Tutorial 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C3 Nepal SR07- Kapuche
+WED 09:30 AM - 11:00 AM Tutorial 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Ms. Sikha Kunwar C2 Nepal SR03- Rara
+WED 09:30 AM - 11:00 AM Tutorial 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C1 Nepal SR05- Manaslu 
+WED 09:30 AM - 11:00 AM Tutorial 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Krishna Wagle C3 Nepal SR07- Kapuche
+WED 11:00 AM - 12:30 PM Tutorial 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Ms. Sikha Kunwar C5 Nepal SR03- Rara
+WED 11:00 AM - 12:30 PM Tutorial 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Prasiddha Khadka C7 Nepal SR05- Manaslu 
+WED 11:00 AM - 12:30 PM Tutorial 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Anoj Banjara C4 Nepal Lab01- Gokyo
+WED 11:00 AM - 12:30 PM Tutorial 1 BIT A25 CS4001NP Programming Mr. Sushil Dawadi C6 Nepal Lab02- Nilgiri 
+WED 12:00 PM - 01:30 PM Tutorial 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C1 Nepal SR02- Begnas
+
+--- Page 3 ---
+Day Time Class Type Year  Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 1 COMPUTING TIME TABLE
+WED 12:30 PM - 02:00 PM Tutorial 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Suman Bhandari C8 Nepal SR07- Kapuche
+WED 01:30 PM - 03:00 PM Tutorial 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Ms. Sikha Kunwar C7 Nepal SR01- Fewa
+WED 01:30 PM - 03:00 PM Tutorial 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C5 Nepal SR02- Begnas
+WED 01:30 PM - 03:00 PM Tutorial 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Krishna Wagle C4 Nepal SR03- Rara
+WED 01:30 PM - 03:00 PM Tutorial 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Anoj Banjara C6 Nepal SR05- Manaslu 
+WED 03:00 PM - 04:30 PM Tutorial 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Prasiddha Khadka C8 Nepal SR04- Tilicho
+THU 07:00 AM - 08:30 AM Lab 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C6 Nepal LT04- Dipang 
+THU 07:30 AM - 09:00 AM Lab 1 BIT A25 CS4001NP Programming Mr. Sushil Dawadi C4 Nepal LT03- Rupa
+THU 07:30 AM - 09:00 AM Lab 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Prabin Banstola C1 Nepal SR05- Manaslu 
+THU 09:00 AM - 10:30 AM Lab 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Prasiddha Khadka C6 Nepal LT04- Dipang 
+THU 09:30 AM - 11:00 AM Lab 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Ms. Sikha Kunwar C8 Nepal Lab01- Gokyo
+THU 10:00 AM - 11:30 AM Lab 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Krishna Wagle C1 Nepal LT01- Machhapuchhre
+THU 10:00 AM - 11:30 AM Lab 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C4 Nepal SR07- Kapuche
+THU 10:30 AM - 12:00 PM Lab 1 BIT A25 CS4001NP Programming Mr. Bishal Bhattarai C7 Nepal SR05- Manaslu 
+THU 11:00 AM - 12:30 PM Lab 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Anoj Banjara C3 Nepal Lab02- Nilgiri 
+THU 12:00 PM - 01:30 PM Lab 1 BIT A25 CS4001NP Programming Mr. Bishal Bhattarai C8 Nepal SR03- Rara
+THU 12:00 PM - 01:30 PM Lab 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C2 Nepal SR05- Manaslu 
+THU 12:30 PM - 02:00 PM Lab 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Prasiddha Khadka C5 Nepal LT03- Rupa
+THU 01:00 PM - 02:30 PM Lab 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Anoj Banjara C7 Nepal Lab02- Nilgiri 
+
+--- Page 4 ---
+Day Time Class Type Year  Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 1 COMPUTING TIME TABLE
+THU 01:30 PM - 03:00 PM Lab 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C3 Nepal SR05- Manaslu 
+THU 02:30 PM - 04:00 PM Lab 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Krishna Wagle C2 Nepal SR07- Kapuche
+THU 03:00 PM - 04:30 PM Lab 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Suman Bhandari C5 Nepal LT03- Rupa
+FRI 07:00 AM - 08:30 AM Lab 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Prabin Banstola C2 Nepal SR02- Begnas
+FRI 07:30 AM - 09:00 AM Lab 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C3 Nepal SR03- Rara
+FRI 09:30 AM - 11:00 AM Lab 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Ms. Sikha Kunwar C2 Nepal LT-04 Dipang
+FRI 09:30 AM - 11:00 AM Lab 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Mr. Amar Khanal C1 UK Lab03- Open Access Lab
+FRI 10:00 AM - 11:30 AM Lab 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Anoj Banjara C4 Nepal LT02- Annapurna
+FRI 10:00 AM - 11:30 AM Lab 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Krishna Wagle C3 Nepal SR07- Kapuche
+FRI 11:00 AM - 12:30 PM Lab 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Ms. Sikha Kunwar C5 Nepal LT-04 Dipang
+FRI 11:00 AM - 12:30 PM Lab 1 BIT A25 CS4001NP Programming Mr. Sushil Dawadi C6 UK TR01- Bigben
+FRI 11:00 AM - 12:30 PM Lab 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Prasiddha Khadka C7 UK TR03- Thames
+FRI 12:00 PM - 01:30 PM Lab 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C1 Nepal SR07- Kapuche
+FRI 12:30 PM - 02:00 PM Lab 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Krishna Wagle C4 UK TR01- Bigben
+FRI 12:30 PM - 02:00 PM Lab 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Suman Bhandari C8 UK TR03- Thames
+FRI 01:30 PM - 03:00 PM Lab 1 BIT A25 CT4005NP Computer Hardware & Software Architectures Ms. Sikha Kunwar C7 Nepal LT-04 Dipang
+FRI 01:30 PM - 03:00 PM Lab 1 BIT A25 MA4001NP Logic and Problem Solving Mr. Anoj Banjara C6 Nepal SR05- Manaslu 
+FRI 01:30 PM - 03:00 PM Lab 1 BIT A25 CS4001NP Programming Mr. Sushil Parajuli C5 Nepal SR07- Kapuche
+FRI 03:00 PM - 04:30 PM Lab 1 BIT A25 CS4051NP Fundamentals of Computing Mr. Prasiddha Khadka C8 Nepal SR04- Tilicho
+
+================================================================================
+FILE: AY 2025-26 BIT Year 2 Class Schedule.pdf
+================================================================================
+Number of pages: 9
+
+--- Page 1 ---
+Day Time Class Type Year Course  Intake Module Code Module Title Lecturer Group Block Room
+SUN 07:00 AM - 08:30 AM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C3 Nepal LT03- Rupa
+SUN 07:00 AM - 08:30 AM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Suraj Shrestha C7 Nepal LT04- Dipang
+SUN 07:30 AM - 09:00 AM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C6 Nepal SR07- Kapuche
+SUN 07:30 AM - 09:00 AM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C10 Nepal SR04- Tilicho
+SUN 07:30 AM - 09:00 AM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C8 Nepal SR05- Manaslu 
+SUN 07:30 AM - 09:00 AM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Niroj Karki C12 UK TR04- Kingston 
+SUN 08:30 AM - 10:00 AM Lab 2 BIT A24 CS5002NP Software Engineering Mr. Sandeep Gurung C1 Nepal LT01- Machhapuchhre
+SUN 09:30 AM - 11:00 AM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C7 Nepal LT03- Rupa
+SUN 09:30 AM - 11:00 AM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Niroj Karki C11 Nepal SR05- Manaslu 
+SUN 09:30 AM - 11:00 AM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C3 Nepal SR07- Kapuche
+SUN 09:30 AM - 11:00 AM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Suraj Shrestha C15 UK TR04- Kingston 
+SUN 10:00 AM - 11:30 AM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C8 Nepal SR01- Fewa
+SUN 10:00 AM - 11:30 AM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C6 UK TR03- Thames
+SUN 10:00 AM - 11:30 AM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C2 Nepal Lab01- Gokyo
+SUN 10:00 AM - 11:30 AM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Saugat Timilsina C12 Nepal Lab02- Nilgiri 
+SUN 10:00 AM - 11:30 AM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C10 UK TR01- Bigben
+SUN 11:00 AM - 12:30 PM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Ms. Pratibha Gurung C1 Nepal LT04- DipangLONDON METROPOLITAN UNIVERSITY
+YEAR 2 COMPUTING TIME TABLE
+
+--- Page 2 ---
+Day Time Class Type Year Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 2 COMPUTING TIME TABLE
+SUN 11:30 AM - 01:00 PM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Ms. Anupama Bajracharya C9 Nepal SR07- Kapuche
+SUN 11:30 AM - 01:00 PM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C4 Nepal LT03- Rupa
+SUN 11:30 AM - 01:00 PM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C13 Nepal SR01- Fewa
+SUN 11:30 AM - 01:00 PM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C5 Nepal SR02- Begnas 
+SUN 11:30 AM - 01:00 PM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C14 UK TR01- Bigben
+SUN 12:00 PM - 01:30 PM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C11 Nepal SR03- Rara
+SUN 12:00 PM - 01:30 PM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C15 Nepal SR05- Manaslu 
+SUN 12:30 PM - 02:00 PM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandip Dhakal C2 Nepal LT04- Dipang
+SUN 01:30 PM - 03:00 PM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Saugat Timilsina C4 Nepal LT03- Rupa
+SUN 01:30 PM - 03:00 PM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C13 Nepal SR01- Fewa
+SUN 01:30 PM - 03:00 PM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C5 Nepal SR02- Begnas 
+SUN 01:30 PM - 03:00 PM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C14 Nepal SR04- Tilicho
+SUN 01:30 PM - 03:00 PM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C9 Nepal SR05- Manaslu 
+MON 07:00 AM - 08:30 AM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Niroj Karki C13 Nepal LT03- Rupa
+MON 07:30 AM - 09:00 AM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C3 Nepal SR04- Tilicho
+MON 07:30 AM - 09:00 AM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C6 Nepal SR05- Manaslu 
+MON 07:30 AM - 09:00 AM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C1 Nepal Lab01- Gokyo
+
+--- Page 3 ---
+Day Time Class Type Year Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 2 COMPUTING TIME TABLE
+MON 07:30 AM - 09:00 AM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C5 UK TR04- Kingston 
+MON 09:00 AM - 10:30 AM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C7 Nepal SR04- Tilicho
+MON 09:00 AM - 10:30 AM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C4 Nepal SR05- Manaslu 
+MON 09:00 AM - 10:30 AM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Niroj Karki C14 UK TR04- Kingston 
+MON 09:30 AM - 11:00 AM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Suraj Shrestha C13 Nepal Lab01- Gokyo
+MON 10:00 AM - 11:30 AM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C3 Nepal SR01- Fewa
+MON 10:00 AM - 11:30 AM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C5 Nepal SR03- Rara
+MON 10:00 AM - 11:30 AM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C1 Nepal Lab02- Nilgiri 
+MON 10:00 AM - 11:30 AM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C12 UK TR01- Bigben
+MON 10:00 AM - 11:30 AM Lab 2 BIT A24 CS5002NP Software Engineering Mr. Sandeep Gurung C2 UK TR02- Stonehenge
+MON 10:00 AM - 11:30 AM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C6 UK TR03- Thames
+MON 11:00 AM - 12:30 PM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Ms. Anupama Bajracharya C10 Nepal LT04- Dipang
+MON 11:00 AM - 12:30 PM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C11 Nepal SR04- Tilicho
+MON 11:00 AM - 12:30 PM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C9 Nepal SR07- Kapuche
+MON 11:00 AM - 12:30 PM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandip Dhakal C15 Nepal Lab01- Gokyo
+MON 11:30 AM - 01:00 PM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C8 Nepal LT03- Rupa
+MON 11:30 AM - 01:00 PM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Saugat Timilsina C14 Nepal SR03- Rara
+
+--- Page 4 ---
+Day Time Class Type Year Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 2 COMPUTING TIME TABLE
+MON 11:30 AM - 01:00 PM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C4 UK TR01- Bigben
+MON 11:30 AM - 01:00 PM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C7 UK TR02- Stonehenge
+MON 12:30 PM - 02:00 PM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C2 Nepal SR04- Tilicho
+MON 12:30 PM - 02:00 PM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C12 Nepal SR05- Manaslu 
+MON 01:30 PM - 03:00 PM Lab 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C10 Nepal SR01- Fewa
+MON 01:30 PM - 03:00 PM Lab 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C8 Nepal SR02- Begnas 
+MON 01:30 PM - 03:00 PM Lab 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C15 Nepal SR03- Rara
+MON 01:30 PM - 03:00 PM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C11 Nepal SR07- Kapuche
+MON 01:30 PM - 03:00 PM Lab 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C9 UK TR01- Bigben
+TUE 07:00 AM - 08:30 AM Lecture 2 BIT A24 CS5002NP Software Engineering Mr. Sandeep Gurung C1+C2+C3 Nepal LT01- Machhapuchhre
+TUE 07:00 AM - 08:30 AM Lecture 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C14+C15 Nepal LT03- Rupa
+TUE 07:30 AM - 09:00 AM Lecture 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandip Dhakal C4+C5+C6 Nepal LT02- Annapurna
+TUE 09:30 AM - 11:00 AM Lecture 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandip Dhakal C1+C2+C3 Nepal LT02- Annapurna
+TUE 09:30 AM - 11:00 AM Lecture 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Suraj Shrestha C14+C15 Nepal LT03- Rupa
+TUE 10:00 AM - 11:30 AM Lecture 2 BIT A24 CS5002NP Software Engineering Mr. Sandeep Gurung C4+C5+C6 Nepal LT01- Machhapuchhre
+TUE 11:00 AM - 12:30 PM Lecture 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C9+C10+C11 Nepal LT02- Annapurna
+TUE 11:00 AM - 12:30 PM Lecture 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C7+C8 Nepal LT03- Rupa
+
+--- Page 5 ---
+Day Time Class Type Year Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 2 COMPUTING TIME TABLE
+TUE 11:00 AM - 12:30 PM Lecture 2 BIT A24 CS5071NP Professional and Ehical Issues Ms. Pratibha Gurung C12+C13 Nepal LT04- Dipang
+TUE 01:30 PM - 03:00 PM Lecture 2 BIT A24 CS5071NP Professional and Ehical Issues Ms. Pratibha Gurung C9+C10+C11 Nepal LT02- Annapurna
+TUE 01:30 PM - 03:00 PM Lecture 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandip Dhakal C7+C8 Nepal LT03- Rupa
+TUE 01:30 PM - 03:00 PM Lecture 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C12+C13 Nepal LT04- Dipang
+WED 07:00 AM - 08:30 AM Lecture 2 BIT A24 CS5002NP Software Engineering Mr. Sandeep Gurung C12+C13 Nepal LT02- Annapurna
+WED 07:00 AM - 08:30 AM Lecture 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C7+C8 Nepal LT03- Rupa
+WED 07:30 AM - 09:00 AM Lecture 2 BIT A24 CS5054NP Advanced Programming and Technologies  Mr. Sandip Dhakal C9+C10+C11 Nepal LT01- Machhapuchhre
+WED 09:30 AM - 11:00 AM Lecture 2 BIT A24 CS5054NP Advanced Programming and Technologies  Mr. Sandip Dhakal C12+C13 Nepal LT01- Machhapuchhre
+WED 09:30 AM - 11:00 AM Lecture 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Suraj Shrestha C7+C8 Nepal LT03- Rupa
+WED 10:00 AM - 11:30 AM Lecture 2 BIT A24 CS5002NP Software Engineering Mr. Sandeep Gurung C9+C10+C11 Nepal LT02- Annapurna
+WED 11:00 AM - 12:30 PM Lecture 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C1+C2+C3 Nepal LT01- Machhapuchhre
+WED 11:30 AM - 01:00 PM Lecture 2 BIT A24 CS5071NP Professional and Ehical Issues Ms. Pratibha Gurung C4+C5+C6 Nepal LT02- Annapurna
+WED 11:00 AM - 12:30 PM Lecture 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C14+C15 Nepal LT03- Rupa
+WED 01:30 PM - 03:00 PM Lecture 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C4+C5+C6 Nepal LT01- Machhapuchhre
+WED 01:30 PM - 03:00 PM Lecture 2 BIT A24 CS5071NP Professional and Ehical Issues Ms. Pratibha Gurung C1+C2+C3 Nepal LT02- Annapurna
+WED 01:30 PM - 03:00 PM Lecture 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandip Dhakal C14+C15 Nepal LT03- Rupa
+THU 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C10 Nepal SR04- Tilicho
+
+--- Page 6 ---
+Day Time Class Type Year Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 2 COMPUTING TIME TABLE
+THU 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C8 Nepal Lab01- Gokyo
+THU 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C2 Nepal Lab02- Nilgiri 
+THU 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C6 UK TR01- Bigben
+THU 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Suraj Shrestha C7 UK TR04- Kingston 
+THU 07:30 AM - 09:00 AM Tutorial 2 BIT A24 CS5002NP Software Engineering  Ms. Eliza Gautam C5 Nepal SR01- Fewa
+THU 07:30 AM - 09:00 AM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C3 Nepal SR02- Begnas
+THU 07:30 AM - 09:00 AM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Niroj Karki C12 UK TR02- Stonehenge
+THU 09:00 AM - 10:30 AM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Suraj Shrestha C15 Nepal SR05- Manaslu 
+THU 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Niroj Karki C11 Nepal LT03- Rupa
+THU 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C8 Nepal SR01- Fewa
+THU 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandip Dhakal C2 Nepal SR02- Begnas
+THU 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C7 Nepal Lab02- Nilgiri 
+THU 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C6 UK TR01- Bigben
+THU 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C10 UK TR02- Stonehenge
+THU 10:00 AM - 11:30 AM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C5 Nepal LT02- Annapurna
+THU 10:00 AM - 11:30 AM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C3 Nepal SR03- Rara
+THU 10:00 AM - 11:30 AM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Saugat Timilsina C12 UK TR04- Kingston 
+
+--- Page 7 ---
+Day Time Class Type Year Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 2 COMPUTING TIME TABLE
+THU 11:00 AM - 12:30 PM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Ms. Pratibha Gurung C1 Nepal LT04- Dipang 
+THU 11:00 AM - 12:30 PM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C4 Nepal SR04- Tilicho
+THU 11:00 AM - 12:30 PM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C14 UK TR02- Stonehenge
+THU 11:30 AM - 01:00 PM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C15 Nepal SR07- Kapuche
+THU 11:30 AM - 01:00 PM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Ms. Anupama Bajracharya C9 Nepal Lab01- Gokyo
+THU 11:30 AM - 01:00 PM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C13 UK TR03- Thames
+THU 12:00 PM - 01:30 PM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C11 Nepal SR01- Fewa
+THU 01:30 PM - 03:00 PM Tutorial 2 BIT A24 CS5002NP Software Engineering Mr. Sandeep Gurung C1 Nepal SR01- Fewa
+THU 01:30 PM - 03:00 PM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Saugat Timilsina C4 Nepal SR02- Begnas
+THU 01:30 PM - 03:00 PM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C9 Nepal SR03- Rara
+THU 01:30 PM - 03:00 PM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C14 Nepal SR04- Tilicho
+THU 01:30 PM - 03:00 PM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C13 Nepal Lab01- Gokyo
+FRI 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Suraj Shrestha C13 Nepal LT04- Dipang 
+FRI 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C6 Nepal SR04- Tilicho
+FRI 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C2 Nepal SR05- Manaslu 
+FRI 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C12 UK TR01- Bigben
+FRI 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C5 UK TR02- Stonehenge
+
+--- Page 8 ---
+Day Time Class Type Year Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 2 COMPUTING TIME TABLE
+FRI 07:00 AM - 08:30 AM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C3 UK TR03- Thames
+FRI 07:30 AM - 09:00 AM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Niroj Karki C14 Nepal Lab02- Nilgiri 
+FRI 07:30 AM - 09:00 AM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C1 UK Lab03- Open Access Lab
+FRI 09:00 AM - 10:30 AM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C9 Nepal SR05- Manaslu 
+FRI 09:00 AM - 10:30 AM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C7 Nepal SR03- Rara
+FRI 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Niroj Karki C13 Nepal SR02- Begnas
+FRI 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C3 Nepal SR04- Tilicho
+FRI 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C5 Nepal Lab02- Nilgiri 
+FRI 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CS5002NP Software Engineering Mr. Sandeep Gurung C2 UK TR01- Bigben
+FRI 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C6 UK TR02- Stonehenge
+FRI 09:30 AM - 11:00 AM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C12 UK TR04- Kingston 
+FRI 10:00 AM - 11:30 AM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Ms. Anupama Bajracharya C10 Nepal LT01- Machhapuchhre
+FRI 10:00 AM - 11:30 AM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Saugat Timilsina C14 Nepal SR01- Fewa
+FRI 10:00 AM - 11:30 AM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Jeevan Prakash Pant C1 Nepal Lab01- Gokyo
+FRI 11:00 AM - 12:30 PM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandip Dhakal C15 Nepal SR02- Begnas
+FRI 11:00 AM - 12:30 PM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C11 Nepal SR03- Rara
+FRI 11:00 AM - 12:30 PM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Pratigya Dhakal C4 Nepal Lab02- Nilgiri 
+
+--- Page 9 ---
+Day Time Class Type Year Course  Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 2 COMPUTING TIME TABLE
+FRI 11:30 AM - 01:00 PM Tutorial 2 BIT A24 CS5071NP Professional and Ehical Issues Mr. Sumit Gurung C8 Nepal SR01- Fewa
+FRI 11:30 AM - 01:00 PM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C9 Nepal SR04- Tilicho
+FRI 12:00 PM - 01:30 PM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C7 Nepal LT03-  Rupa
+FRI 12:00 PM - 01:30 PM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C10 Nepal Lab01- Gokyo
+FRI 01:30 PM - 03:00 PM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sunil Thapa C4 Nepal SR01- Fewa
+FRI 01:30 PM - 03:00 PM Tutorial 2 BIT A24 CC5067NP Smart Data Discovery Mr. Nischal Bhandari C8 Nepal SR02- Begnas
+FRI 01:30 PM - 03:00 PM Tutorial 2 BIT A24 CS5002NP Software Engineering Ms. Eliza Gautam C15 Nepal SR03- Rara
+FRI 01:30 PM - 03:00 PM Tutorial 2 BIT A24 CS5054NP Advanced Programming and Technologies Mr. Sandesh Hamal C11 Nepal Lab01- Gokyo
+
+================================================================================
+FILE: AY 2025-26 BIT Year 3 Class Schedule.pdf
+================================================================================
+Number of pages: 3
+
+--- Page 1 ---
+Day Time Class Type Year Course Intake Module Code Module Title Lecturer Group Block Room
+SUN 07:00 AM - 08:30 AM Tutorial 3 BIT A23 CS6004NP Application Development Mr. Sudip Bhandari C2 Nepal Lab02- Nilgiri 
+SUN 07:00 AM - 08:30 AM Tutorial 3 BIT A23 CC6012NP Data and Web Development Ms. Anupama Bajracharya C8 UK TR01- Bigben
+SUN 07:00 AM - 08:30 AM Tutorial 3 BIT A23 CS6004NP Application Development Mr. Prajwal Pokhrel C10 UK TR02- Stonehenge
+SUN 07:00 AM - 08:30 AM Tutorial 3 BIT A23 CC6012NP Data and Web Development Mr. Achyut Parajuli C4 UK TR03- Thames
+SUN 07:00 AM - 08:30 AM Tutorial 3 BIT A23 CS6004NP Application Development Mr. Sushil Dawadi C5 UK Lab03- Open Access Lab
+SUN 08:30 AM - 10:00 AM Tutorial 3 BIT A23 CC6012NP Data and Web Development Ms. Pratibha Gurung C1 Nepal Lab02- Nilgiri 
+SUN 08:30 AM - 10:00 AM Tutorial 3 BIT A23 CC6012NP Data and Web Development Ms. Anupama Bajracharya C7 UK TR01- Bigben
+SUN 08:30 AM - 10:00 AM Tutorial 3 BIT A23 CS6004NP Application Development Mr. Prajwal Pokhrel C9 UK TR02- Stonehenge
+SUN 08:30 AM - 10:00 AM Tutorial 3 BIT A23 CC6012NP Data and Web Development Mr. Achyut Parajuli C3 UK TR03- Thames
+SUN 08:30 AM - 10:00 AM Tutorial 3 BIT A23 CS6004NP Application Development Mr. Sushil Dawadi C6 UK Lab03- Open Access Lab
+MON 07:00 AM - 08:30 AM Tutorial 3 BIT A23 CS6004NP Application Development Mr. Sushil Dawadi C3 Nepal Lab02- Nilgiri 
+MON 07:00 AM - 08:30 AM Tutorial 3 BIT A23 CC6012NP Data and Web Development Ms. Pratibha Gurung C2 UK TR01- Bigben
+MON 07:00 AM - 08:30 AM Tutorial 3 BIT A23 CC6012NP Data and Web Development Mr. Achyut Parajuli C5 UK TR02- Stonehenge
+MON 07:00 AM - 08:30 AM Tutorial 3 BIT A23 CS6004NP Application Development Mr. Prajwal Pokhrel C7 UK TR03- Thames
+MON 07:00 AM - 08:30 AM Tutorial 3 BIT A23 CC6012NP Data and Web Development Ms. Anupama Bajracharya C9 UK Lab03- Open Access Lab
+MON 08:30 AM - 10:00 AM Tutorial 3 BIT A23 CS6004NP Application Development Mr. Sushil Dawadi C4 Nepal Lab02- Nilgiri 
+MON 08:30 AM - 10:00 AM Tutorial 3 BIT A23 CS6004NP Application Development Mr. Sudip Bhandari C1 UK TR01- Bigben
+MON 08:30 AM - 10:00 AM Tutorial 3 BIT A23 CC6012NP Data and Web Development Mr. Achyut Parajuli C6 UK TR02- StonehengeLONDON METROPOLITAN UNIVERSITY
+YEAR 3 COMPUTING TIME TABLE
+
+--- Page 2 ---
+Day Time Class Type Year Course Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 3 COMPUTING TIME TABLE
+MON 08:30 AM - 10:00 AM Tutorial 3 BIT A23 CS6004NP Application Development Mr. Prajwal Pokhrel C8 UK TR03- Thames
+MON 08:30 AM - 10:00 AM Tutorial 3 BIT A23 CC6012NP Data and Web Development Ms. Anupama Bajracharya C10 UK Lab03- Open Access Lab
+TUE 07:00 AM - 08:30 AM Lab 3 BIT A23 CC6012NP Data and Web Development Ms. Pratibha Gurung C1 Nepal SR05- Manaslu 
+TUE 07:00 AM - 08:30 AM Lab 3 BIT A23 CS6004NP Application Development Mr. Sudip Bhandari C2 Nepal SR07- Kapuche
+TUE 07:00 AM - 08:30 AM Lab 3 BIT A23 CC6012NP Data and Web Development Ms. Anupama Bajracharya C8 Nepal Lab01- Gokyo
+TUE 07:00 AM - 08:30 AM Lab 3 BIT A23 CS6004NP Application Development Mr. Prajwal Pokhrel C10 Nepal Lab02- Nilgiri 
+TUE 07:00 AM - 08:30 AM Lab 3 BIT A23 CS6004NP Application Development Mr. Sushil Dawadi C5 UK TR03- Thames
+TUE 07:00 AM - 08:30 AM Lab 3 BIT A23 CC6012NP Data and Web Development Mr. Achyut Parajuli C4 UK Lab03- Open Access Lab
+TUE 08:30 AM - 10:00 AM Lab 3 BIT A23 CC6012NP Data and Web Development Ms. Anupama Bajracharya C7 Nepal Lab01- Gokyo
+TUE 08:30 AM - 10:00 AM Lab 3 BIT A23 CS6004NP Application Development Mr. Prajwal Pokhrel C9 Nepal Lab02- Nilgiri 
+TUE 08:30 AM - 10:00 AM Lab 3 BIT A23 CS6004NP Application Development Mr. Sushil Dawadi C6 UK TR03- Thames
+TUE 08:30 AM - 10:00 AM Lab 3 BIT A23 CC6012NP Data and Web Development Mr. Achyut Parajuli C3 UK Lab03- Open Access Lab
+WED 07:00 AM - 08:30 AM Lab 3 BIT A23 CC6012NP Data and Web Development Ms. Anupama Bajracharya C9 Nepal SR04- Tilicho
+WED 07:00 AM - 08:30 AM Lab 3 BIT A23 CC6012NP Data and Web Development Ms. Pratibha Gurung C2 Nepal SR05- Manaslu 
+WED 07:00 AM - 08:30 AM Lab 3 BIT A23 CS6004NP Application Development Mr. Prajwal Pokhrel C7 Nepal Lab01- Gokyo
+WED 07:00 AM - 08:30 AM Lab 3 BIT A23 CS6004NP Application Development Mr. Sushil Dawadi C3 Nepal Lab02- Nilgiri 
+WED 07:00 AM - 08:30 AM Lab 3 BIT A23 CC6012NP Data and Web Development Mr. Achyut Parajuli C5 UK TR02- Stonehenge
+WED 08:30 AM - 10:00 AM Lab 3 BIT A23 CC6012NP Data and Web Development Ms. Anupama Bajracharya C10 Nepal SR04- Tilicho
+
+--- Page 3 ---
+Day Time Class Type Year Course Intake Module Code Module Title Lecturer Group Block RoomLONDON METROPOLITAN UNIVERSITY
+YEAR 3 COMPUTING TIME TABLE
+WED 08:30 AM - 10:00 AM Lab 3 BIT A23 CS6004NP Application Development Mr. Prajwal Pokhrel C8 Nepal Lab01- Gokyo
+WED 08:30 AM - 10:00 AM Lab 3 BIT A23 CS6004NP Application Development Mr. Sushil Dawadi C4 Nepal Lab02- Nilgiri 
+WED 08:30 AM - 10:00 AM Lab 3 BIT A23 CS6004NP Application Development Mr. Sudip Bhandari C1 UK TR01- Bigben
+WED 08:30 AM - 10:00 AM Lab 3 BIT A23 CC6012NP Data and Web Development Mr. Achyut Parajuli C6 UK TR02- Stonehenge
+THU 07:00 AM - 08:30 AM Lecture 3 BIT A23 CC6012NP Data and Web Development Mr. Achyut Parajuli C1+C2+C3 Nepal LT01- Machhapuchhre
+THU 07:00 AM - 08:30 AM Lecture 3 BIT A23 CS6004NP Application Development Mr. Sudip Bhandari C4+C5+C6 Nepal LT02- Annapurna
+THU 08:30 AM - 10:00 AM Lecture 3 BIT A23 CC6012NP Data and Web Development Ms. Pratibha Gurung C7+C8 Nepal LT01- Machhapuchhre
+THU 08:30 AM - 10:00 AM Lecture 3 BIT A23 CS6004NP Application Development Mr. Sudip Bhandari C9+C10 Nepal LT02- Annapurna
+FRI 07:00 AM - 08:30 AM Lecture 3 BIT A23 CS6004NP Application Development Mr. Sudip Bhandari C1+C2+C3 Nepal LT01- Machhapuchhre
+FRI 07:00 AM - 08:30 AM Lecture 3 BIT A23 CC6012NP Data and Web Development Mr. Achyut Parajuli C9+C10 Nepal LT02- Annapurna
+FRI 08:30 AM - 10:00 AM Lecture 3 BIT A23 CC6012NP Data and Web Development Ms. Pratibha Gurung C4+C5+C6 Nepal LT01- Machhapuchhre
+FRI 08:30 AM - 10:00 AM Lecture 3 BIT A23 CS6004NP Application Development Mr. Sudip Bhandari C7+C8 Nepal LT02- Annapurna

@@ -1,0 +1,24 @@
+LONDON METROPOLITAN UNIVERSITY
+YEAR 2 BUSINESS ADMINISTRATION TIME TABLE
+
+Day Time Class Type Year Course Intake Module Code Module Title Lecturer Group Block Room
+SUN 07:00 AM - 08:30 AM Lab 2 BBA A24 MN5004NP Leading Innovation and Entrepreneurship Mr. Kiran Kunwar B1 Nepal SR02- Begnas
+SUN 07:30 AM - 09:00 AM Lab 2 BBA A24 FE5056NP Problem Solving Methods and Analysis Mr. Arjun Sapkota B2 Nepal SR03- Rara
+SUN 09:00 AM - 10:30 AM Lab 2 BBA A24 FE5056NP Problem Solving Methods and Analysis Mr. Arjun Sapkota B1 Nepal SR02- Begnas
+SUN 09:00 AM - 10:30 AM Lab 2 BBA A24 MN5004NP Leading Innovation and Entrepreneurship Mr. Kiran Kunwar B2 Nepal SR03- Rara
+MON 07:00 AM - 08:30 AM Lab 2 BBA A24 HR5066NP Organisation Design and Management Ms. Rinki Gurung B2 Nepal SR02- Begnas
+MON 07:00 AM - 08:30 AM Lab 2 BBA A24 HR5067NP Leading, Managing, and Developing People Ms. Sajena Dwa B1 Nepal SR07- Kapuche
+MON 08:30 AM - 10:00 AM Lab 2 BBA A24 HR5067NP Leading, Managing, and Developing People Ms. Sajena Dwa B2 Nepal SR02- Begnas
+MON 08:30 AM - 10:00 AM Lab 2 BBA A24 HR5066NP Organisation Design and Management Ms. Rinki Gurung B1 Nepal SR07- Kapuche
+TUE 07:00 AM - 08:30 AM Lecture 2 BBA A24 MN5004NP Leading Innovation and Entrepreneurship Mr. Kiran Kunwar B1+B2 Nepal LT04- Dipang
+TUE 08:30 AM - 10:00 AM Lecture 2 BBA A24 FE5056NP Problem Solving Methods and Analysis Mr. Arjun Sapkota B1+B2 Nepal LT04- Dipang
+WED 07:00 AM - 08:30 AM Lecture 2 BBA A24 HR5066NP Organisation Design and Management Ms. Rinki Gurung B1+B2 Nepal LT04- Dipang
+WED 08:30 AM - 10:00 AM Lecture 2 BBA A24 HR5067NP Leading, Managing, and Developing People Ms. Sajena Dwa B1+B2 Nepal LT04- Dipang
+THU 07:00 AM - 08:30 AM Tutorial 2 BBA A24 MN5004NP Leading Innovation and Entrepreneurship Mr. Kiran Kunwar B2 UK Lab03- Open Access Lab
+THU 07:30 AM - 09:00 AM Tutorial 2 BBA A24 FE5056NP Problem Solving Methods and Analysis Mr. Arjun Sapkota B1 UK TR03- Thames
+THU 09:00 AM - 10:30 AM Tutorial 2 BBA A24 MN5004NP Leading Innovation and Entrepreneurship Mr. Kiran Kunwar B1 UK TR03- Thames
+THU 09:00 AM - 10:30 AM Tutorial 2 BBA A24 FE5056NP Problem Solving Methods and Analysis Mr. Arjun Sapkota B2 UK Lab03- Open Access Lab
+FRI 07:00 AM - 08:30 AM Tutorial 2 BBA A24 HR5066NP Organisation Design and Management Ms. Rinki Gurung B1 Nepal LT03- Rupa
+FRI 07:00 AM - 08:30 AM Tutorial 2 BBA A24 HR5067NP Leading, Managing, and Developing People Ms. Sajena Dwa B2 Nepal SR05- Manaslu
+FRI 08:30 AM - 10:00 AM Tutorial 2 BBA A24 HR5067NP Leading, Managing, and Developing People Ms. Sajena Dwa B1 Nepal LT03- Rupa
+FRI 08:30 AM - 10:00 AM Tutorial 2 BBA A24 HR5066NP Organisation Design and Management Ms. Rinki Gurung B2 Nepal SR05- Manaslu
