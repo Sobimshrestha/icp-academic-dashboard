@@ -149,6 +149,60 @@
             border-color: rgba(212, 175, 55, 0.5);
         }
         select { -webkit-appearance: none; appearance: none; }
+
+        /* === TOAST NOTIFICATIONS === */
+        .toast {
+            background: rgba(14, 14, 18, 0.97);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 14px 18px;
+            min-width: 280px;
+            max-width: 360px;
+            transform: translateX(120%);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: auto;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03);
+        }
+        .toast.show { transform: translateX(0); opacity: 1; }
+
+        /* === NOTIFICATION PANEL === */
+        .notif-panel {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            width: 340px;
+            background: rgba(14, 14, 18, 0.99);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 16px;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+            transform-origin: top right;
+            transform: scale(0.95) translateY(-8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 200;
+        }
+        .notif-panel.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: auto; }
+
+        /* === BELL BADGE === */
+        .bell-badge {
+            position: absolute;
+            top: 5px; right: 5px;
+            width: 9px; height: 9px;
+            border-radius: 50%;
+            background: #cf6679;
+            border: 2px solid #0e0e12;
+            animation: badge-pulse 2s ease-in-out infinite;
+        }
+        @keyframes badge-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(207, 102, 121, 0.5); }
+            50% { box-shadow: 0 0 0 5px rgba(207, 102, 121, 0); }
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -156,16 +210,37 @@
 <!-- Top Navigation -->
 <nav class="fixed top-0 flex justify-between items-center w-full px-6 md:px-12 py-6 z-40 bg-[#0e0e12]/80 backdrop-blur-xl border-b border-primary/10">
     <div class="flex items-center gap-4 md:gap-8">
-        <span class="text-xl md:text-2xl font-serif italic text-primary-variant drop-shadow-[0_0_8px_rgba(212,175,55,0.3)] tracking-wide">Digital Dean</span>
+        <div class="flex flex-col">
+            <span class="text-xl md:text-2xl font-serif italic text-primary-variant drop-shadow-[0_0_8px_rgba(212,175,55,0.3)] tracking-wide">Digital Dean</span>
+            <span id="lastVisitedEl" class="text-[9px] font-label uppercase tracking-[0.15em] text-outline/50 hidden"></span>
+        </div>
     </div>
     <div class="flex items-center gap-4 md:gap-6">
         <div class="hidden md:flex relative bg-surface-container-low px-4 py-2 rounded-full items-center gap-3 border border-white/5 focus-within:border-primary/50 transition-colors">
             <span class="material-symbols-outlined text-outline text-sm">search</span>
             <input id="globalSearch" class="bg-transparent border-none text-sm w-48 text-on-surface placeholder:text-outline-variant focus:ring-0" placeholder="Global search..." type="text"/>
         </div>
-        <button class="material-symbols-outlined text-primary hover:bg-primary/10 p-2 rounded-full transition-all">notifications</button>
+        <div class="relative" id="bellWrapper">
+            <button id="bellBtn" class="material-symbols-outlined text-primary hover:bg-primary/10 p-2 rounded-full transition-all">notifications</button>
+            <div id="bellBadge" class="bell-badge hidden"></div>
+            <!-- Notification Panel -->
+            <div id="notifPanel" class="notif-panel p-5">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
+                    <h3 class="font-label text-xs uppercase tracking-widest text-primary font-bold flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">notifications</span> Alerts
+                    </h3>
+                    <button id="clearNotifsBtn" class="text-[10px] font-label uppercase tracking-widest text-outline hover:text-white transition-colors px-2 py-1 rounded hover:bg-white/5">Clear all</button>
+                </div>
+                <div id="notifList" class="flex flex-col gap-2 max-h-72 overflow-y-auto">
+                    <p class="text-outline text-xs font-label uppercase tracking-widest text-center py-8">No alerts yet</p>
+                </div>
+                <p class="text-[9px] font-label uppercase tracking-widest text-outline/40 text-center mt-4 pt-3 border-t border-white/5">Based on your saved schedule</p>
+            </div>
+        </div>
     </div>
 </nav>
+<!-- Toast Container -->
+<div id="toastContainer" class="fixed top-24 right-6 z-[100] flex flex-col gap-3 pointer-events-none"></div>
 
 <!-- Drawer Overlay & Side Panel for Timeline -->
 <div id="drawerOverlay" class="drawer-overlay fixed inset-0 z-50"></div>
@@ -375,13 +450,35 @@
     const DAYS = ["SUN","MON","TUE","WED","THU","FRI"];
     const DAY_NAMES = {SUN:"Sunday", MON:"Monday", TUE:"Tuesday", WED:"Wednesday", THU:"Thursday", FRI:"Friday", SAT:"Saturday"};
     const DAY_MAP = {0:"SUN", 1:"MON", 2:"TUE", 3:"WED", 4:"THU", 5:"FRI", 6:"SAT"};
-    
-    let activeTab = "rooms-view";
-    let selectedRoomDay = DAY_MAP[new Date().getDay()] || "SUN";
-    if (selectedRoomDay === "SAT") selectedRoomDay = "SUN";
-    let selectedStudentDay = selectedRoomDay;
-    let selectedSyncDay = selectedRoomDay;
-    
+
+    // === LOCALSTORAGE STATE MANAGEMENT ===
+    const STATE_KEY = 'digital_dean_v1';
+    function loadState() {
+        try { return JSON.parse(localStorage.getItem(STATE_KEY)) || {}; }
+        catch(e) { return {}; }
+    }
+    function saveState() {
+        localStorage.setItem(STATE_KEY, JSON.stringify({
+            activeTab, selectedRoomDay, selectedStudentDay, selectedSyncDay,
+            studentYear: document.getElementById('studentYearSelect')?.value || '',
+            studentGroup: document.getElementById('studentGroupInput')?.value || '',
+            syncYearA: document.getElementById('syncYearA')?.value || '1',
+            syncGroupA: document.getElementById('syncGroupA')?.value || '',
+            syncYearB: document.getElementById('syncYearB')?.value || '1',
+            syncGroupB: document.getElementById('syncGroupB')?.value || '',
+            lastVisited: new Date().toISOString(),
+        }));
+    }
+
+    const _saved = loadState();
+    const _todayCode = DAY_MAP[new Date().getDay()] || "SUN";
+    const _defaultDay = _todayCode === "SAT" ? "SUN" : _todayCode;
+
+    let activeTab = _saved.activeTab || "rooms-view";
+    let selectedRoomDay = _saved.selectedRoomDay || _defaultDay;
+    let selectedStudentDay = _saved.selectedStudentDay || _defaultDay;
+    let selectedSyncDay = _saved.selectedSyncDay || _defaultDay;
+
     const ALL_ROOMS = [...new Set(SCHEDULE.map(e => e.room))].sort();
 
     // DOM Elements
@@ -474,6 +571,7 @@
             const targetId = btn.getAttribute("data-target");
             document.getElementById(targetId).classList.add("active");
             activeTab = targetId;
+            saveState();
 
             if (targetId === "rooms-view") renderRooms();
             if (targetId === "schedule-view") renderStudent();
@@ -981,44 +1079,199 @@
         document.querySelector('[data-target="rooms-view"]').click();
         renderRooms();
     });
-    document.getElementById("roomStatusFilter").addEventListener("change", renderRooms);
-    document.getElementById("studentYearSelect").addEventListener("change", renderStudent);
-    document.getElementById("studentGroupInput").addEventListener("input", renderStudent);
+    document.getElementById("roomStatusFilter").addEventListener("change", () => { renderRooms(); saveState(); });
+    document.getElementById("studentYearSelect").addEventListener("change", () => { renderStudent(); saveState(); checkNotifications(); });
+    document.getElementById("studentGroupInput").addEventListener("input", () => { renderStudent(); saveState(); checkNotifications(); });
 
     ['syncYearA', 'syncGroupA', 'syncYearB', 'syncGroupB'].forEach(id => {
         document.getElementById(id).addEventListener("input", () => {
             if (activeTab === "sync-view") renderSync();
+            saveState();
         });
     });
 
-    // Initializers
-    function updateClock() {
+    // ================================================
+    // PHASE 4: NOTIFICATION SYSTEM
+    // ================================================
+    let notifLog = [];
+
+    function checkNotifications() {
+        const year = parseInt(document.getElementById('studentYearSelect').value);
+        const group = document.getElementById('studentGroupInput').value.toUpperCase().trim();
+        if (!year || !group) return;
+
         const now = new Date();
-        let h = now.getHours(), m = now.getMinutes();
-        const ampm = h >= 12 ? "PM" : "AM";
-        const dh = h % 12 || 12;
-        
-        const opt = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
-        
-        document.getElementById("liveTime").textContent = String(dh).padStart(2,"0") + ":" + String(m).padStart(2,"0");
-        document.getElementById("liveAmPm").textContent = ampm;
-        document.getElementById("liveDate").textContent = now.toLocaleDateString('en-US', opt);
+        const todayCode = DAY_MAP[now.getDay()];
+        if (todayCode === 'SAT') return;
+        const nowMins = now.getHours() * 60 + now.getMinutes();
+
+        const todayClasses = SCHEDULE.filter(e =>
+            e.year === year && e.day === todayCode && e.group.split('+').includes(group)
+        ).sort((a, b) => parseTime(a.start) - parseTime(b.start));
+
+        todayClasses.forEach(cls => {
+            const startMins = parseTime(cls.start);
+            const endMins   = parseTime(cls.end);
+            const minsUntil = startMins - nowMins;
+
+            // Alert: class starting within 30 min
+            if (minsUntil > 0 && minsUntil <= 30) {
+                const id = `soon_${cls.day}_${cls.code}_${cls.start}_${group}`;
+                if (!notifLog.find(n => n.id === id)) {
+                    const n = { id, type: 'soon', text: cls.module, subtext: `Starts in ${minsUntil} min · ${cls.room}`, time: now.toISOString(), dismissed: false };
+                    notifLog.unshift(n);
+                    showToast('soon', n.text, n.subtext);
+                }
+            }
+            // Alert: class just started (within last 3 min)
+            if (nowMins >= startMins && nowMins < startMins + 3) {
+                const id = `started_${cls.day}_${cls.code}_${cls.start}_${group}`;
+                if (!notifLog.find(n => n.id === id)) {
+                    const n = { id, type: 'now', text: `${cls.module} has started!`, subtext: `${cls.room} · Until ${cls.end}`, time: now.toISOString(), dismissed: false };
+                    notifLog.unshift(n);
+                    showToast('now', n.text, n.subtext);
+                }
+            }
+        });
+        notifLog = notifLog.slice(0, 20);
+        updateBellBadge();
+        renderNotifPanel();
     }
 
-    buildDayTabs("roomDayTabs", selectedRoomDay, (d) => { selectedRoomDay = d; renderRooms(); });
-    buildDayTabs("studentDayTabs", selectedStudentDay, (d) => { selectedStudentDay = d; renderStudent(); });
-    buildDayTabs("syncDayTabs", selectedSyncDay, (d) => { selectedSyncDay = d; renderSync(); });
-    
+    function showToast(type, text, subtext) {
+        const container = document.getElementById('toastContainer');
+        const borderColor = { soon: 'rgba(212,175,55,0.7)', now: 'rgba(107,168,122,0.7)' };
+        const iconColor   = { soon: 'text-primary',         now: 'text-success' };
+        const icon        = { soon: 'schedule',              now: 'notifications_active' };
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.style.cssText += `border-left: 3px solid ${borderColor[type] || 'rgba(153,144,124,0.5)'};`;
+        toast.innerHTML = `
+            <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-sm mt-0.5 flex-none ${iconColor[type] || 'text-outline'}">${icon[type] || 'info'}</span>
+                <div class="flex-1 min-w-0">
+                    <p class="text-white text-sm font-semibold leading-snug">${text}</p>
+                    <p class="text-outline text-[11px] font-label uppercase tracking-wide mt-0.5">${subtext}</p>
+                </div>
+                <button class="flex-none text-outline hover:text-white transition-colors ml-1" onclick="this.closest('.toast').remove()">
+                    <span class="material-symbols-outlined text-xs">close</span>
+                </button>
+            </div>`;
+        container.appendChild(toast);
+        requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+        setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 8000);
+    }
+
+    function updateBellBadge() {
+        document.getElementById('bellBadge')?.classList.toggle('hidden', !notifLog.some(n => !n.dismissed));
+    }
+
+    function renderNotifPanel() {
+        const list = document.getElementById('notifList');
+        if (!list) return;
+        if (notifLog.length === 0) {
+            list.innerHTML = '<p class="text-outline text-xs font-label uppercase tracking-widest text-center py-8">No alerts yet</p>';
+            return;
+        }
+        const iconMap  = { soon: 'schedule', now: 'notifications_active' };
+        const colorMap = { soon: 'text-primary/70', now: 'text-success' };
+        list.innerHTML = notifLog.map(n => `
+            <div class="flex items-start gap-3 p-3 rounded-xl transition-all ${n.dismissed ? 'opacity-40' : 'bg-white/5 border border-white/5'}">
+                <span class="material-symbols-outlined text-xs flex-none mt-1 ${colorMap[n.type] || 'text-outline'}">${iconMap[n.type] || 'info'}</span>
+                <div class="flex-1 min-w-0">
+                    <p class="text-white text-xs font-semibold leading-snug">${n.text}</p>
+                    <p class="text-outline text-[10px] font-label uppercase tracking-wide mt-0.5">${n.subtext}</p>
+                    <p class="text-outline/40 text-[9px] font-label mt-1">${new Date(n.time).toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'})}</p>
+                </div>
+            </div>`).join('');
+    }
+
+    // Bell toggle
+    document.getElementById('bellBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const panel = document.getElementById('notifPanel');
+        panel.classList.toggle('open');
+        if (panel.classList.contains('open')) {
+            notifLog.forEach(n => n.dismissed = true);
+            updateBellBadge();
+            renderNotifPanel();
+        }
+    });
+    document.getElementById('clearNotifsBtn').addEventListener('click', () => {
+        notifLog = []; renderNotifPanel(); updateBellBadge();
+    });
+    document.addEventListener('click', (e) => {
+        const wrapper = document.getElementById('bellWrapper');
+        if (wrapper && !wrapper.contains(e.target)) document.getElementById('notifPanel')?.classList.remove('open');
+    });
+
+    // ================================================
+    // INITIALIZERS
+    // ================================================
+    function updateClock() {
+        const now = new Date();
+        const h = now.getHours(), m = now.getMinutes();
+        const ampm = h >= 12 ? "PM" : "AM";
+        const dh = h % 12 || 12;
+        document.getElementById("liveTime").textContent = String(dh).padStart(2,"0") + ":" + String(m).padStart(2,"0");
+        document.getElementById("liveAmPm").textContent = ampm;
+        document.getElementById("liveDate").textContent = now.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    }
+
+    // Restore saved form values
+    if (_saved.studentYear)  document.getElementById('studentYearSelect').value = _saved.studentYear;
+    if (_saved.studentGroup) document.getElementById('studentGroupInput').value  = _saved.studentGroup;
+    if (_saved.syncYearA)    document.getElementById('syncYearA').value           = _saved.syncYearA;
+    if (_saved.syncGroupA)   document.getElementById('syncGroupA').value          = _saved.syncGroupA;
+    if (_saved.syncYearB)    document.getElementById('syncYearB').value           = _saved.syncYearB;
+    if (_saved.syncGroupB)   document.getElementById('syncGroupB').value          = _saved.syncGroupB;
+
+    // Show last visited timestamp
+    if (_saved.lastVisited) {
+        const lastEl = document.getElementById('lastVisitedEl');
+        if (lastEl) {
+            const d = new Date(_saved.lastVisited);
+            lastEl.textContent = 'Last visit: ' + d.toLocaleDateString('en-US', {month:'short', day:'numeric'}) + ' · ' + d.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+            lastEl.classList.remove('hidden');
+            lastEl.classList.add('md:block');
+        }
+    }
+
+    buildDayTabs("roomDayTabs",     selectedRoomDay,     (d) => { selectedRoomDay    = d; renderRooms();   saveState(); });
+    buildDayTabs("studentDayTabs",  selectedStudentDay,  (d) => { selectedStudentDay = d; renderStudent(); saveState(); });
+    buildDayTabs("syncDayTabs",     selectedSyncDay,     (d) => { selectedSyncDay    = d; renderSync();    saveState(); });
+
+    // Restore active tab from localStorage
+    if (activeTab !== 'rooms-view') {
+        document.querySelectorAll('.nav-tab').forEach(t => {
+            t.classList.remove('active', 'bg-primary/20', 'border-primary/30', 'text-white', 'shadow-[0_0_15px_rgba(212,175,55,0.15)]');
+            t.classList.add('text-slate-400', 'border-transparent');
+        });
+        const savedBtn = document.querySelector(`[data-target="${activeTab}"]`);
+        if (savedBtn) {
+            savedBtn.classList.remove('text-slate-400', 'border-transparent');
+            savedBtn.classList.add('active', 'bg-primary/20', 'border-primary/30', 'text-white', 'shadow-[0_0_15px_rgba(212,175,55,0.15)]');
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+            document.getElementById(activeTab)?.classList.add('active');
+        }
+    }
+
     renderRooms();
     renderMap();
     updateClock();
-    
+    checkNotifications();
+
+    // Render the restored active view's content
+    if (activeTab === 'schedule-view') renderStudent();
+    else if (activeTab === 'sync-view') renderSync();
+
     setInterval(updateClock, 1000);
-    setInterval(() => { 
-        if (activeTab === "rooms-view") renderRooms(); 
+    setInterval(() => {
+        if (activeTab === "rooms-view")    renderRooms();
         else if (activeTab === "schedule-view") renderStudent();
-        else if (activeTab === "map-view") renderMap();
+        else if (activeTab === "map-view")  renderMap();
         else if (activeTab === "sync-view") renderSync();
+        checkNotifications();
     }, 60000);
 </script>
 </body>

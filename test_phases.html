@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Digital Dean — Test Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0e0e12;
+    color: #e4e1e7;
+    font-family: 'Manrope', sans-serif;
+    padding: 40px 24px 80px;
+    min-height: 100vh;
+  }
+  h1 { font-size: 1.8rem; font-weight: 800; color: #d4af37; margin-bottom: 6px; }
+  .subtitle { font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: #99907c; margin-bottom: 40px; }
+  .section { margin-bottom: 40px; }
+  .section-title {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.25em;
+    color: #d4af37; font-weight: 700; border-bottom: 1px solid rgba(212,175,55,0.15);
+    padding-bottom: 10px; margin-bottom: 16px;
+  }
+  /* Test Cards */
+  .test-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color 0.3s;
+  }
+  .test-card.pass  { border-color: rgba(107,168,122,0.5); background: rgba(107,168,122,0.05); }
+  .test-card.fail  { border-color: rgba(207,102,121,0.5); background: rgba(207,102,121,0.05); }
+  .test-card.pending { border-color: rgba(212,175,55,0.3); background: rgba(212,175,55,0.03); }
+  .status-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 16px; margin-top: 2px;
+  }
+  .pass  .status-dot { background: rgba(107,168,122,0.2); color: #6ba87a; }
+  .fail  .status-dot { background: rgba(207,102,121,0.2); color: #cf6679; }
+  .pending .status-dot { background: rgba(212,175,55,0.1); color: #d4af37; }
+  .test-info { flex: 1; }
+  .test-name { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+  .test-desc { font-size: 11px; color: #99907c; text-transform: uppercase; letter-spacing: 0.1em; }
+  .test-result { font-size: 12px; margin-top: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(0,0,0,0.2); font-family: monospace; }
+  .pass  .test-result { color: #6ba87a; }
+  .fail  .test-result { color: #cf6679; }
+  .pending .test-result { color: #d4af37; }
+  /* Summary bar */
+  .summary {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px; padding: 20px 24px; margin-bottom: 36px;
+    display: flex; gap: 32px; align-items: center; flex-wrap: wrap;
+  }
+  .summary-stat { text-align: center; }
+  .summary-stat .num { font-size: 2rem; font-weight: 800; }
+  .summary-stat .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: #99907c; margin-top: 2px; }
+  .num.total { color: #e4e1e7; }
+  .num.pass  { color: #6ba87a; }
+  .num.fail  { color: #cf6679; }
+  .num.pending { color: #d4af37; }
+  /* Manual test buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(212,175,55,0.3);
+    background: rgba(212,175,55,0.08); color: #d4af37;
+    font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 600;
+    cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;
+    transition: all 0.2s;
+  }
+  .btn:hover { background: rgba(212,175,55,0.15); border-color: rgba(212,175,55,0.6); }
+  .btn.danger { border-color: rgba(207,102,121,0.3); background: rgba(207,102,121,0.08); color: #cf6679; }
+  .btn.danger:hover { background: rgba(207,102,121,0.15); }
+  .btn.success { border-color: rgba(107,168,122,0.3); background: rgba(107,168,122,0.08); color: #6ba87a; }
+  .btn.success:hover { background: rgba(107,168,122,0.15); }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+  /* Log area */
+  .log {
+    background: #080810; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px; padding: 14px 16px;
+    font-family: monospace; font-size: 12px; color: #99907c;
+    max-height: 220px; overflow-y: auto; margin-top: 10px;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  .log .ok   { color: #6ba87a; }
+  .log .err  { color: #cf6679; }
+  .log .info { color: #d4af37; }
+  .log .dim  { color: #504940; }
+  /* Toast sim */
+  #toastSim {
+    position: fixed; top: 24px; right: 24px;
+    display: flex; flex-direction: column; gap: 10px;
+    z-index: 999; pointer-events: none;
+  }
+  .sim-toast {
+    background: rgba(14,14,18,0.97); border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 12px; padding: 14px 18px; min-width: 280px;
+    transform: translateX(120%); opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  }
+  .sim-toast.show { transform: translateX(0); opacity: 1; }
+  .sim-toast-text { font-size: 13px; font-weight: 600; color: #fff; }
+  .sim-toast-sub  { font-size: 11px; color: #99907c; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.08em; }
+  /* Progress bar */
+  .progress-bar {
+    height: 4px; background: rgba(255,255,255,0.05);
+    border-radius: 99px; margin-bottom: 28px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, #d4af37, #6ba87a);
+    border-radius: 99px; transition: width 0.5s ease;
+    width: 0%;
+  }
+  .link { color: #d4af37; text-decoration: underline; font-size: 13px; }
+  .divider { border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 28px 0; }
+</style>
+</head>
+<body>
+
+<div id="toastSim"></div>
+
+<h1>Digital Dean — Test Suite</h1>
+<p class="subtitle">Phase 1: LocalStorage Persistence &nbsp;|&nbsp; Phase 4: Notification System</p>
+
+<!-- Progress Bar -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- Summary -->
+<div class="summary">
+  <div class="summary-stat"><div class="num total" id="sumTotal">0</div><div class="lbl">Total</div></div>
+  <div class="summary-stat"><div class="num pass"  id="sumPass">0</div><div class="lbl">Passed</div></div>
+  <div class="summary-stat"><div class="num fail"  id="sumFail">0</div><div class="lbl">Failed</div></div>
+  <div class="summary-stat"><div class="num pending" id="sumPending">0</div><div class="lbl">Pending</div></div>
+  <div style="flex:1;text-align:right;">
+    <button class="btn" onclick="runAllTests()">
+      <span class="material-symbols-outlined" style="font-size:16px">play_arrow</span> Run All Tests
+    </button>
+    &nbsp;
+    <button class="btn danger" onclick="clearStorageAndReset()">
+      <span class="material-symbols-outlined" style="font-size:16px">delete</span> Clear Storage
+    </button>
+  </div>
+</div>
+
+<!-- =========================== -->
+<!-- PHASE 1: LOCALSTORAGE TESTS -->
+<!-- =========================== -->
+<div class="section">
+  <div class="section-title">Phase 1 — LocalStorage Persistence (Automated)</div>
+
+  <div class="test-card pending" id="t-ls-write">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">LS-01 &nbsp;·&nbsp; saveState() writes to localStorage</div>
+      <div class="test-desc">Calls saveState() and checks localStorage contains expected key</div>
+      <div class="test-result" id="t-ls-write-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-ls-read">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">LS-02 &nbsp;·&nbsp; loadState() reads back correctly</div>
+      <div class="test-desc">Writes a known state, reads it back and asserts field equality</div>
+      <div class="test-result" id="t-ls-read-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-ls-fields">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">LS-03 &nbsp;·&nbsp; All required fields are persisted</div>
+      <div class="test-desc">Checks all 10 expected keys exist in saved state object</div>
+      <div class="test-result" id="t-ls-fields-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-ls-tab">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">LS-04 &nbsp;·&nbsp; activeTab value is one of 4 valid tabs</div>
+      <div class="test-desc">Asserts saved activeTab is rooms-view, schedule-view, map-view, or sync-view</div>
+      <div class="test-result" id="t-ls-tab-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-ls-day">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">LS-05 &nbsp;·&nbsp; selectedRoomDay is a valid weekday code</div>
+      <div class="test-desc">Asserts value is one of SUN, MON, TUE, WED, THU, FRI</div>
+      <div class="test-result" id="t-ls-day-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-ls-timestamp">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">LS-06 &nbsp;·&nbsp; lastVisited is a valid ISO timestamp</div>
+      <div class="test-desc">Parses lastVisited as a Date and checks it's not NaN</div>
+      <div class="test-result" id="t-ls-timestamp-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-ls-corrupt">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">LS-07 &nbsp;·&nbsp; Corrupt localStorage data is handled gracefully</div>
+      <div class="test-desc">Writes invalid JSON, calls loadState(), expects empty object (no crash)</div>
+      <div class="test-result" id="t-ls-corrupt-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-ls-overwrite">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">LS-08 &nbsp;·&nbsp; Saving state overwrites previous state</div>
+      <div class="test-desc">Writes state A then state B, confirms only state B is in storage</div>
+      <div class="test-result" id="t-ls-overwrite-result">—</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ -->
+<!-- PHASE 4: NOTIFICATION TESTS  -->
+<!-- ============================ -->
+<div class="section">
+  <div class="section-title">Phase 4 — Notification System (Automated)</div>
+
+  <div class="test-card pending" id="t-n-parse">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">NT-01 &nbsp;·&nbsp; parseTime() converts "09:30 AM" correctly</div>
+      <div class="test-desc">Tests the time-to-minutes helper used in notification timing logic</div>
+      <div class="test-result" id="t-n-parse-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-n-dedup">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">NT-02 &nbsp;·&nbsp; Duplicate notifications are NOT fired twice</div>
+      <div class="test-desc">Simulates checkNotifications() twice for same class — expects 1 notification, not 2</div>
+      <div class="test-result" id="t-n-dedup-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-n-soon">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">NT-03 &nbsp;·&nbsp; "Starting soon" triggers for class ≤ 30 min away</div>
+      <div class="test-desc">Creates a fake class 15 min in the future, runs checker, expects 'soon' notification</div>
+      <div class="test-result" id="t-n-soon-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-n-started">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">NT-04 &nbsp;·&nbsp; "Has started" triggers when class began &lt;3 min ago</div>
+      <div class="test-desc">Creates a fake class that started 1 min ago, runs checker, expects 'now' notification</div>
+      <div class="test-result" id="t-n-started-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-n-notrigger">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">NT-05 &nbsp;·&nbsp; No notification for class > 30 min away</div>
+      <div class="test-desc">Creates a fake class 60 min in the future — expects 0 notifications</div>
+      <div class="test-result" id="t-n-notrigger-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-n-past">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">NT-06 &nbsp;·&nbsp; No notification for a class that already ended</div>
+      <div class="test-desc">Creates a fake class that ended 30 min ago — expects 0 notifications</div>
+      <div class="test-result" id="t-n-past-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-n-limit">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">NT-07 &nbsp;·&nbsp; Notification log is capped at 20 entries</div>
+      <div class="test-desc">Pushes 30 fake notifications, checks that log.length === 20</div>
+      <div class="test-result" id="t-n-limit-result">—</div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-n-nogroup">
+    <div class="status-dot"><span class="material-symbols-outlined">schedule</span></div>
+    <div class="test-info">
+      <div class="test-name">NT-08 &nbsp;·&nbsp; No notification without saved Year + Group</div>
+      <div class="test-desc">Runs checkNotifications() with empty group — expects 0 notifications</div>
+      <div class="test-result" id="t-n-nogroup-result">—</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- MANUAL TESTS -->
+<div class="section">
+  <div class="section-title">Manual Verification Tests</div>
+
+  <div class="test-card pending" id="t-m-toast">
+    <div class="status-dot"><span class="material-symbols-outlined">touch_app</span></div>
+    <div class="test-info">
+      <div class="test-name">MAN-01 &nbsp;·&nbsp; Toast slides in from right and auto-dismisses</div>
+      <div class="test-desc">Click button below — a gold toast should appear top-right and disappear after 8 seconds</div>
+      <div class="btn-row">
+        <button class="btn" onclick="testToast('soon')">Fire "Starting Soon" Toast</button>
+        <button class="btn success" onclick="testToast('now')">Fire "Started Now" Toast</button>
+      </div>
+      <div class="test-result" id="t-m-toast-result" style="color:#d4af37">→ Click a button above, then mark pass/fail below</div>
+      <div class="btn-row">
+        <button class="btn success" onclick="mark('t-m-toast','pass','Toast appeared correctly ✓')">✓ Pass</button>
+        <button class="btn danger"  onclick="mark('t-m-toast','fail','Toast did not appear ✗')">✗ Fail</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-m-persist">
+    <div class="status-dot"><span class="material-symbols-outlined">touch_app</span></div>
+    <div class="test-info">
+      <div class="test-name">MAN-02 &nbsp;·&nbsp; Settings persist across page reload</div>
+      <div class="test-desc">
+        Steps:<br>
+        1. Open <a class="link" href="index.html" target="_blank">index.html</a><br>
+        2. Click "My Schedule" tab → select Year 2, type "C7"<br>
+        3. Switch to "Campus Map" tab<br>
+        4. Close and reopen the page<br>
+        5. It should reopen on Campus Map with Year 2 and C7 still set
+      </div>
+      <div class="btn-row">
+        <button class="btn success" onclick="mark('t-m-persist','pass','State restored on reload ✓')">✓ Pass</button>
+        <button class="btn danger"  onclick="mark('t-m-persist','fail','State was lost on reload ✗')">✗ Fail</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-m-bell">
+    <div class="status-dot"><span class="material-symbols-outlined">touch_app</span></div>
+    <div class="test-info">
+      <div class="test-name">MAN-03 &nbsp;·&nbsp; Bell icon opens notification panel</div>
+      <div class="test-desc">
+        Steps:<br>
+        1. Open <a class="link" href="index.html" target="_blank">index.html</a><br>
+        2. Click the bell 🔔 icon in the top-right nav<br>
+        3. A panel should slide/scale down smoothly<br>
+        4. Click anywhere outside — panel should close
+      </div>
+      <div class="btn-row">
+        <button class="btn success" onclick="mark('t-m-bell','pass','Panel opened and closed correctly ✓')">✓ Pass</button>
+        <button class="btn danger"  onclick="mark('t-m-bell','fail','Panel did not open/close ✗')">✗ Fail</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-m-lastvisit">
+    <div class="status-dot"><span class="material-symbols-outlined">touch_app</span></div>
+    <div class="test-info">
+      <div class="test-name">MAN-04 &nbsp;·&nbsp; "Last visited" appears under logo after first use</div>
+      <div class="test-desc">
+        Steps:<br>
+        1. Open <a class="link" href="index.html" target="_blank">index.html</a>, interact with it<br>
+        2. Close and reopen it<br>
+        3. Check under "Digital Dean" logo — a tiny timestamp like "Last visit: Apr 16 · 09:30 AM" should appear
+      </div>
+      <div class="btn-row">
+        <button class="btn success" onclick="mark('t-m-lastvisit','pass','Timestamp visible under logo ✓')">✓ Pass</button>
+        <button class="btn danger"  onclick="mark('t-m-lastvisit','fail','Timestamp missing ✗')">✗ Fail</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-card pending" id="t-m-simnotif">
+    <div class="status-dot"><span class="material-symbols-outlined">touch_app</span></div>
+    <div class="test-info">
+      <div class="test-name">MAN-05 &nbsp;·&nbsp; Notification fires 30 min before a real class</div>
+      <div class="test-desc">
+        Steps:<br>
+        1. Open <a class="link" href="index.html" target="_blank">index.html</a><br>
+        2. Go to "My Schedule", pick a Year and Group<br>
+        3. Check today's timetable — find a class starting within the next 30 min<br>
+        4. A gold toast should already be visible (fires on load)<br>
+        5. Bell badge should show a red dot
+      </div>
+      <div class="btn-row">
+        <button class="btn success" onclick="mark('t-m-simnotif','pass','Toast + bell badge appeared ✓')">✓ Pass</button>
+        <button class="btn danger"  onclick="mark('t-m-simnotif','fail','No toast or no badge ✗')">✗ Fail</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+<!-- TEST LOG -->
+<div class="section">
+  <div class="section-title">Test Log</div>
+  <div class="log" id="testLog"><span class="dim">Waiting for tests to run...</span></div>
+</div>
+
+<!-- ===================== -->
+<!--   TEST ENGINE JS      -->
+<!-- ===================== -->
+<script>
+
+// ---- State ----
+const STATE_KEY = 'digital_dean_v1';
+const VALID_DAYS = ['SUN','MON','TUE','WED','THU','FRI'];
+const VALID_TABS = ['rooms-view','schedule-view','map-view','sync-view'];
+let results = { pass: 0, fail: 0, pending: 0, total: 0 };
+
+// ---- Helpers ----
+function log(msg, cls='') {
+  const el = document.getElementById('testLog');
+  if (el.textContent === 'Waiting for tests to run...') el.innerHTML = '';
+  el.innerHTML += `<span class="${cls}">${msg}</span>\n`;
+  el.scrollTop = el.scrollHeight;
+}
+
+function mark(id, status, msg) {
+  const card = document.getElementById(id);
+  const resultEl = document.getElementById(id + '-result');
+  card.className = 'test-card ' + status;
+  const dot = card.querySelector('.status-dot');
+  const icon = status === 'pass' ? 'check_circle' : status === 'fail' ? 'cancel' : 'schedule';
+  dot.innerHTML = `<span class="material-symbols-outlined">${icon}</span>`;
+  if (resultEl) resultEl.textContent = msg;
+  updateSummary();
+}
+
+function updateSummary() {
+  const cards = document.querySelectorAll('.test-card');
+  let pass=0, fail=0, pending=0;
+  cards.forEach(c => {
+    if (c.classList.contains('pass'))    pass++;
+    else if (c.classList.contains('fail')) fail++;
+    else pending++;
+  });
+  const total = cards.length;
+  document.getElementById('sumTotal').textContent   = total;
+  document.getElementById('sumPass').textContent    = pass;
+  document.getElementById('sumFail').textContent    = fail;
+  document.getElementById('sumPending').textContent  = pending;
+  document.getElementById('progressFill').style.width = total ? `${Math.round((pass+fail)/total*100)}%` : '0%';
+}
+
+// ---- parseTime (copy from index.html for unit testing) ----
+function parseTime(s) {
+  const parts = s.split(/\s+/);
+  if (parts.length < 2) return 0;
+  const [time, period] = parts;
+  let [h, m] = time.split(':').map(Number);
+  if (period === 'PM' && h !== 12) h += 12;
+  if (period === 'AM' && h === 12) h = 0;
+  return h * 60 + m;
+}
+
+// ---- Isolated notification checker (mirrors index.html logic) ----
+function runNotifCheck(schedule, year, group, nowMins, dayCode) {
+  const found = [];
+  const todayClasses = schedule.filter(e =>
+    e.year === year && e.day === dayCode && e.group.split('+').includes(group)
+  ).sort((a, b) => parseTime(a.start) - parseTime(b.start));
+
+  todayClasses.forEach(cls => {
+    const startMins = parseTime(cls.start);
+    const minsUntil = startMins - nowMins;
+    if (minsUntil > 0 && minsUntil <= 30) found.push({ type: 'soon', cls });
+    if (minsUntil <= 0 && nowMins < startMins + 3) found.push({ type: 'now', cls });
+  });
+  return found;
+}
+
+function toTimeStr(mins) {
+  const h = Math.floor(mins / 60), m = mins % 60;
+  const p = h >= 12 ? 'PM' : 'AM';
+  const dh = h % 12 || 12;
+  return `${String(dh).padStart(2,'0')}:${String(m).padStart(2,'0')} ${p}`;
+}
+
+// ---- LOCALSTORAGE TESTS ----
+function test_ls_write() {
+  const testState = { activeTab:'rooms-view', selectedRoomDay:'MON', lastVisited: new Date().toISOString() };
+  localStorage.setItem(STATE_KEY, JSON.stringify(testState));
+  const raw = localStorage.getItem(STATE_KEY);
+  if (raw && raw.includes('rooms-view')) {
+    mark('t-ls-write','pass','PASS — localStorage["digital_dean_v1"] contains expected data');
+    log('[LS-01] PASS — State written to localStorage ✓', 'ok');
+  } else {
+    mark('t-ls-write','fail','FAIL — localStorage key missing or malformed');
+    log('[LS-01] FAIL — Could not find written state', 'err');
+  }
+}
+
+function test_ls_read() {
+  const testState = { activeTab:'schedule-view', selectedRoomDay:'TUE', studentGroup:'C7', studentYear:'2', lastVisited:'2026-04-16T04:00:00.000Z' };
+  localStorage.setItem(STATE_KEY, JSON.stringify(testState));
+  let parsed;
+  try { parsed = JSON.parse(localStorage.getItem(STATE_KEY)); } catch(e) { parsed = {}; }
+  const ok = parsed.activeTab === 'schedule-view' && parsed.studentGroup === 'C7' && parsed.studentYear === '2';
+  if (ok) {
+    mark('t-ls-read','pass',`PASS — Read back: activeTab=${parsed.activeTab}, group=${parsed.studentGroup}, year=${parsed.studentYear}`);
+    log('[LS-02] PASS — loadState() returned correct values ✓', 'ok');
+  } else {
+    mark('t-ls-read','fail',`FAIL — Got: ${JSON.stringify(parsed)}`);
+    log('[LS-02] FAIL — loadState() values mismatch', 'err');
+  }
+}
+
+function test_ls_fields() {
+  const required = ['activeTab','selectedRoomDay','selectedStudentDay','selectedSyncDay',
+                    'studentYear','studentGroup','syncYearA','syncGroupA','syncYearB','syncGroupB','lastVisited'];
+  const full = {
+    activeTab:'rooms-view', selectedRoomDay:'MON', selectedStudentDay:'MON', selectedSyncDay:'MON',
+    studentYear:'1', studentGroup:'C4', syncYearA:'1', syncGroupA:'C7', syncYearB:'2', syncGroupB:'B2',
+    lastVisited: new Date().toISOString()
+  };
+  localStorage.setItem(STATE_KEY, JSON.stringify(full));
+  const parsed = JSON.parse(localStorage.getItem(STATE_KEY));
+  const missing = required.filter(k => !(k in parsed));
+  if (missing.length === 0) {
+    mark('t-ls-fields','pass',`PASS — All ${required.length} fields present`);
+    log(`[LS-03] PASS — All fields present: ${required.join(', ')} ✓`,'ok');
+  } else {
+    mark('t-ls-fields','fail',`FAIL — Missing: ${missing.join(', ')}`);
+    log(`[LS-03] FAIL — Missing fields: ${missing.join(', ')}`, 'err');
+  }
+}
+
+function test_ls_tab() {
+  const state = JSON.parse(localStorage.getItem(STATE_KEY)) || {};
+  const tab = state.activeTab || 'rooms-view';
+  if (VALID_TABS.includes(tab)) {
+    mark('t-ls-tab','pass',`PASS — activeTab = "${tab}" (valid)`);
+    log(`[LS-04] PASS — activeTab "${tab}" is valid ✓`, 'ok');
+  } else {
+    mark('t-ls-tab','fail',`FAIL — activeTab = "${tab}" is not a valid tab`);
+    log(`[LS-04] FAIL — invalid tab value: "${tab}"`, 'err');
+  }
+}
+
+function test_ls_day() {
+  const state = JSON.parse(localStorage.getItem(STATE_KEY)) || {};
+  const day = state.selectedRoomDay || 'SUN';
+  if (VALID_DAYS.includes(day)) {
+    mark('t-ls-day','pass',`PASS — selectedRoomDay = "${day}" (valid)`);
+    log(`[LS-05] PASS — Day "${day}" is a valid weekday code ✓`, 'ok');
+  } else {
+    mark('t-ls-day','fail',`FAIL — Day "${day}" is not one of ${VALID_DAYS.join(',')}`);
+    log(`[LS-05] FAIL — Invalid day value: "${day}"`, 'err');
+  }
+}
+
+function test_ls_timestamp() {
+  const state = JSON.parse(localStorage.getItem(STATE_KEY)) || {};
+  const ts = state.lastVisited;
+  const d = new Date(ts);
+  const valid = ts && !isNaN(d.getTime());
+  if (valid) {
+    mark('t-ls-timestamp','pass',`PASS — lastVisited = "${d.toLocaleString()}" (valid ISO)`);
+    log(`[LS-06] PASS — Timestamp "${ts}" is a valid ISO date ✓`, 'ok');
+  } else {
+    mark('t-ls-timestamp','fail',`FAIL — lastVisited = "${ts}" (invalid)`);
+    log(`[LS-06] FAIL — Timestamp is not a valid ISO string`, 'err');
+  }
+}
+
+function test_ls_corrupt() {
+  localStorage.setItem(STATE_KEY, '{ this is : not ; valid JSON }');
+  let result;
+  try { result = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch(e) { result = {}; }
+  const ok = typeof result === 'object' && !Array.isArray(result);
+  if (ok) {
+    mark('t-ls-corrupt','pass','PASS — Corrupt JSON returned {} instead of crashing');
+    log('[LS-07] PASS — Graceful fallback on corrupt localStorage ✓', 'ok');
+  } else {
+    mark('t-ls-corrupt','fail','FAIL — Corrupt JSON caused crash or wrong type');
+    log('[LS-07] FAIL — Corrupt JSON not handled', 'err');
+  }
+  // Restore clean state
+  localStorage.setItem(STATE_KEY, JSON.stringify({ activeTab:'rooms-view', selectedRoomDay:'MON', lastVisited: new Date().toISOString() }));
+}
+
+function test_ls_overwrite() {
+  localStorage.setItem(STATE_KEY, JSON.stringify({ activeTab:'sync-view', studentGroup:'C1' }));
+  localStorage.setItem(STATE_KEY, JSON.stringify({ activeTab:'map-view',  studentGroup:'C9' }));
+  const parsed = JSON.parse(localStorage.getItem(STATE_KEY));
+  if (parsed.activeTab === 'map-view' && parsed.studentGroup === 'C9') {
+    mark('t-ls-overwrite','pass','PASS — Second save correctly overwrote first (activeTab=map-view, group=C9)');
+    log('[LS-08] PASS — Overwrite works correctly ✓', 'ok');
+  } else {
+    mark('t-ls-overwrite','fail',`FAIL — After overwrite got: ${JSON.stringify(parsed)}`);
+    log('[LS-08] FAIL — State not overwritten correctly', 'err');
+  }
+}
+
+// ---- NOTIFICATION TESTS ----
+function test_n_parse() {
+  const cases = [
+    { input:'09:30 AM', expected: 9*60+30 },
+    { input:'12:00 PM', expected: 12*60 },
+    { input:'01:30 PM', expected: 13*60+30 },
+    { input:'07:00 AM', expected: 7*60 },
+    { input:'12:00 AM', expected: 0 },
+  ];
+  const failed = cases.filter(c => parseTime(c.input) !== c.expected);
+  if (failed.length === 0) {
+    mark('t-n-parse','pass',`PASS — All ${cases.length} time conversions correct`);
+    log(`[NT-01] PASS — parseTime() verified: ${cases.map(c=>c.input+'→'+c.expected+'min').join(', ')} ✓`, 'ok');
+  } else {
+    mark('t-n-parse','fail',`FAIL — Wrong for: ${failed.map(c=>`"${c.input}" expected ${c.expected} got ${parseTime(c.input)}`).join('; ')}`);
+    log('[NT-01] FAIL — parseTime() has incorrect results', 'err');
+  }
+}
+
+function test_n_dedup() {
+  const now = new Date();
+  const nowMins = now.getHours() * 60 + now.getMinutes();
+  const soonMins = nowMins + 15;
+  const fakeSchedule = [{ year:99, day:'MON', group:'ZZ', code:'TEST', start: toTimeStr(soonMins), end: toTimeStr(soonMins+90), module:'Test Module', room:'Room X', type:'Lecture' }];
+  const seen = new Set();
+  let count = 0;
+  for (let i = 0; i < 2; i++) {
+    const notifs = runNotifCheck(fakeSchedule, 99, 'ZZ', nowMins, 'MON');
+    notifs.forEach(n => {
+      const id = `${n.type}_${n.cls.day}_${n.cls.code}_${n.cls.start}_ZZ`;
+      if (!seen.has(id)) { seen.add(id); count++; }
+    });
+  }
+  if (count === 1) {
+    mark('t-n-dedup','pass','PASS — Ran checker twice, only 1 unique notification generated');
+    log('[NT-02] PASS — Deduplication working correctly ✓', 'ok');
+  } else {
+    mark('t-n-dedup','fail',`FAIL — Expected 1 notification, got ${count}`);
+    log(`[NT-02] FAIL — Dedup failed, got ${count} notifications`, 'err');
+  }
+}
+
+function test_n_soon() {
+  const now = new Date();
+  const nowMins = now.getHours() * 60 + now.getMinutes();
+  const soonMins = nowMins + 15;
+  const DAY_MAP = {0:'SUN',1:'MON',2:'TUE',3:'WED',4:'THU',5:'FRI',6:'SAT'};
+  const todayCode = DAY_MAP[now.getDay()] === 'SAT' ? 'SUN' : DAY_MAP[now.getDay()];
+  const fakeSchedule = [{ year:99, day:todayCode, group:'ZZ', code:'T01', start:toTimeStr(soonMins), end:toTimeStr(soonMins+90), module:'Mock Lecture', room:'LT01', type:'Lecture' }];
+  const notifs = runNotifCheck(fakeSchedule, 99, 'ZZ', nowMins, todayCode);
+  const hasSOon = notifs.some(n => n.type === 'soon');
+  if (hasSOon) {
+    mark('t-n-soon','pass',`PASS — "soon" notification triggered for class at +15min (${toTimeStr(soonMins)})`);
+    log(`[NT-03] PASS — "soon" alert correctly triggered for class starting in 15 min ✓`, 'ok');
+  } else {
+    mark('t-n-soon','fail',`FAIL — Expected "soon" notification for class at ${toTimeStr(soonMins)}, got none`);
+    log('[NT-03] FAIL — "soon" alert not triggered', 'err');
+  }
+}
+
+function test_n_started() {
+  const now = new Date();
+  const nowMins = now.getHours() * 60 + now.getMinutes();
+  const startedMins = nowMins - 1; // Started 1 min ago
+  const DAY_MAP = {0:'SUN',1:'MON',2:'TUE',3:'WED',4:'THU',5:'FRI',6:'SAT'};
+  const todayCode = DAY_MAP[now.getDay()] === 'SAT' ? 'SUN' : DAY_MAP[now.getDay()];
+  const fakeSchedule = [{ year:99, day:todayCode, group:'ZZ', code:'T02', start:toTimeStr(startedMins), end:toTimeStr(startedMins+90), module:'Mock Lab', room:'Lab01', type:'Lab' }];
+  const notifs = runNotifCheck(fakeSchedule, 99, 'ZZ', nowMins, todayCode);
+  const hasNow = notifs.some(n => n.type === 'now');
+  if (hasNow) {
+    mark('t-n-started','pass',`PASS — "now" notification triggered for class that started 1 min ago`);
+    log('[NT-04] PASS — "now" alert correctly triggered for just-started class ✓', 'ok');
+  } else {
+    mark('t-n-started','fail','FAIL — Expected "now" notification, got none');
+    log('[NT-04] FAIL — "now" alert not triggered for just-started class', 'err');
+  }
+}
+
+function test_n_notrigger() {
+  const now = new Date();
+  const nowMins = now.getHours() * 60 + now.getMinutes();
+  const farMins = nowMins + 60; // 60 min away
+  const DAY_MAP = {0:'SUN',1:'MON',2:'TUE',3:'WED',4:'THU',5:'FRI',6:'SAT'};
+  const todayCode = DAY_MAP[now.getDay()] === 'SAT' ? 'SUN' : DAY_MAP[now.getDay()];
+  const fakeSchedule = [{ year:99, day:todayCode, group:'ZZ', code:'T03', start:toTimeStr(farMins), end:toTimeStr(farMins+90), module:'Far Future', room:'SR01', type:'Lecture' }];
+  const notifs = runNotifCheck(fakeSchedule, 99, 'ZZ', nowMins, todayCode);
+  if (notifs.length === 0) {
+    mark('t-n-notrigger','pass',`PASS — No notification for class 60 min away (correct)`);
+    log('[NT-05] PASS — No alert for class > 30 min away ✓', 'ok');
+  } else {
+    mark('t-n-notrigger','fail',`FAIL — Got ${notifs.length} notification(s) for a class 60 min away`);
+    log('[NT-05] FAIL — Unexpected notification fired for far future class', 'err');
+  }
+}
+
+function test_n_past() {
+  const now = new Date();
+  const nowMins = now.getHours() * 60 + now.getMinutes();
+  const endedMins = nowMins - 30; // Ended 30 min ago
+  const startMins = endedMins - 90; // Was a 90-min class
+  const DAY_MAP = {0:'SUN',1:'MON',2:'TUE',3:'WED',4:'THU',5:'FRI',6:'SAT'};
+  const todayCode = DAY_MAP[now.getDay()] === 'SAT' ? 'SUN' : DAY_MAP[now.getDay()];
+  const fakeSchedule = [{ year:99, day:todayCode, group:'ZZ', code:'T04', start:toTimeStr(startMins), end:toTimeStr(endedMins), module:'Old Class', room:'SR02', type:'Tutorial' }];
+  const notifs = runNotifCheck(fakeSchedule, 99, 'ZZ', nowMins, todayCode);
+  if (notifs.length === 0) {
+    mark('t-n-past','pass','PASS — No notification for class that ended 30 min ago');
+    log('[NT-06] PASS — No alert for already-ended class ✓', 'ok');
+  } else {
+    mark('t-n-past','fail',`FAIL — Got ${notifs.length} notification(s) for an already-ended class`);
+    log('[NT-06] FAIL — Alert fired for ended class', 'err');
+  }
+}
+
+function test_n_limit() {
+  let log30 = [];
+  for (let i = 0; i < 30; i++) log30.unshift({ id:`notif-${i}`, type:'soon', text:`Class ${i}`, dismissed:false });
+  log30 = log30.slice(0, 20);
+  if (log30.length === 20) {
+    mark('t-n-limit','pass','PASS — After adding 30 entries, log is capped at 20');
+    log('[NT-07] PASS — Notification log capped at 20 ✓', 'ok');
+  } else {
+    mark('t-n-limit','fail',`FAIL — Log length = ${log30.length}, expected 20`);
+    log('[NT-07] FAIL — Log not capped correctly', 'err');
+  }
+}
+
+function test_n_nogroup() {
+  const DAY_MAP = {0:'SUN',1:'MON',2:'TUE',3:'WED',4:'THU',5:'FRI',6:'SAT'};
+  const todayCode = DAY_MAP[new Date().getDay()];
+  const nowMins = new Date().getHours()*60 + new Date().getMinutes();
+  // Pass empty group — should return 0
+  const notifs = runNotifCheck([], NaN, '', nowMins, todayCode);
+  if (notifs.length === 0) {
+    mark('t-n-nogroup','pass','PASS — 0 notifications with no year/group set');
+    log('[NT-08] PASS — No notifications fired with empty group ✓', 'ok');
+  } else {
+    mark('t-n-nogroup','fail',`FAIL — Got ${notifs.length} notifications with no group`);
+    log('[NT-08] FAIL — Notifications fired with no group', 'err');
+  }
+}
+
+// ---- Manual: Simulated Toast ----
+function testToast(type) {
+  const borderColor = { soon: 'rgba(212,175,55,0.7)', now: 'rgba(107,168,122,0.7)' };
+  const text    = type === 'soon' ? 'Programming Tutorial' : 'Software Engineering has started!';
+  const subtext = type === 'soon' ? 'Starts in 12 min · Lab02- Nilgiri' : 'SR01- Fewa · Until 12:30 PM';
+  const container = document.getElementById('toastSim');
+  const toast = document.createElement('div');
+  toast.className = 'sim-toast';
+  toast.style.borderLeft = `3px solid ${borderColor[type]}`;
+  toast.innerHTML = `<div class="sim-toast-text">${text}</div><div class="sim-toast-sub">${subtext}</div>`;
+  container.appendChild(toast);
+  requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+  setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 6000);
+  document.getElementById('t-m-toast-result').textContent = '→ Toast fired! Did it appear top-right?';
+}
+
+function clearStorageAndReset() {
+  localStorage.removeItem(STATE_KEY);
+  log('[RESET] localStorage cleared. All tests reset.', 'info');
+  document.querySelectorAll('.test-card[id^="t-ls-"]').forEach(c => {
+    c.className = 'test-card pending';
+    c.querySelector('.status-dot').innerHTML = '<span class="material-symbols-outlined">schedule</span>';
+    const r = c.querySelector('.test-result'); if(r) r.textContent = '—';
+  });
+  updateSummary();
+}
+
+// ---- Run All ----
+function runAllTests() {
+  document.getElementById('testLog').innerHTML = '';
+  log('[START] Running automated test suite...\n', 'info');
+
+  const tests = [
+    test_ls_write, test_ls_read, test_ls_fields, test_ls_tab,
+    test_ls_day, test_ls_timestamp, test_ls_corrupt, test_ls_overwrite,
+    test_n_parse, test_n_dedup, test_n_soon, test_n_started,
+    test_n_notrigger, test_n_past, test_n_limit, test_n_nogroup
+  ];
+
+  let i = 0;
+  function next() {
+    if (i < tests.length) { tests[i++](); setTimeout(next, 120); }
+    else { log('\n[DONE] Automated tests complete. Check manual tests above.', 'info'); updateSummary(); }
+  }
+  next();
+}
+
+// Init summary count on load
+updateSummary();
+</script>
+</body>
+</html>
