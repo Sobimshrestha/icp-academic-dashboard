@@ -3,7 +3,7 @@ import re
 import os
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-js_file = os.path.join(base_dir, "schedule_data.js")
+js_file = os.path.join(base_dir, "src", "js", "schedule_data.js")
 
 with open(js_file, 'r', encoding='utf-8') as f:
     text = f.read()

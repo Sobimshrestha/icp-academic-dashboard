@@ -4,7 +4,7 @@ import os
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 txt_dir = os.path.join(base_dir, "data", "extracted_txt")
-js_file = os.path.join(base_dir, "schedule_data.js")
+js_file = os.path.join(base_dir, "src", "js", "schedule_data.js")
 
 bba_files = [
     os.path.join(txt_dir, 'BBA_first_year_extracted.txt'),

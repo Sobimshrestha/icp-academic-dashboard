@@ -48,7 +48,7 @@ schedule_json = json.dumps(schedule)
 
 js_content = f"const SCHEDULE = {schedule_json};"
 
-output_js = os.path.join(base_dir, "schedule_data.js")
+output_js = os.path.join(base_dir, "src", "js", "schedule_data.js")
 with open(output_js, "w", encoding="utf-8") as f:
     f.write(js_content)
 

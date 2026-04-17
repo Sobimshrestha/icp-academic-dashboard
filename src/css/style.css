@@ -1,0 +1,164 @@
+body {
+    background-color: #0e0e12;
+    color: #e4e1e7;
+    font-family: 'Manrope', sans-serif;
+    overflow-x: hidden;
+}
+
+.glass-panel {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(19, 19, 23, 0.6) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.glow-gold {
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+/* Ambient Lighting */
+body::after {
+    content: "";
+    position: fixed;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(212,175,55,0.04) 0%, transparent 40%);
+    animation: rotateLight 30s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes rotateLight {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animations */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+    animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.view-section {
+    display: none;
+}
+.view-section.active {
+    display: block;
+    animation: fadeUp 0.5s ease-out;
+}
+
+/* Map Styles */
+.map-tooltip {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0;
+    background: rgba(14, 14, 18, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 12px 16px;
+    border-radius: 8px;
+    z-index: 9999;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transform: translateY(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    min-width: 200px;
+}
+.map-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Drawer Overlay */
+.drawer-overlay {
+    background: rgba(14, 14, 18, 0.6);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.drawer-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Drawer Panel */
+.drawer-panel {
+    transform: translateX(100%);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer-panel.open {
+    transform: translateX(0);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(212, 175, 55, 0.4); }
+
+/* Fancy Inputs */
+input:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    border-color: rgba(212, 175, 55, 0.5);
+}
+select { -webkit-appearance: none; appearance: none; }
+
+/* === TOAST NOTIFICATIONS === */
+.toast {
+    background: rgba(14, 14, 18, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 12px;
+    padding: 14px 18px;
+    min-width: 280px;
+    max-width: 360px;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03);
+}
+.toast.show { transform: translateX(0); opacity: 1; }
+
+/* === NOTIFICATION PANEL === */
+.notif-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 340px;
+    background: rgba(14, 14, 18, 0.99);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+    transform-origin: top right;
+    transform: scale(0.95) translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 200;
+}
+.notif-panel.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: auto; }
+
+/* === BELL BADGE === */
+.bell-badge {
+    position: absolute;
+    top: 5px; right: 5px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: #cf6679;
+    border: 2px solid #0e0e12;
+    animation: badge-pulse 2s ease-in-out infinite;
+}
+@keyframes badge-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(207, 102, 121, 0.5); }
+    50% { box-shadow: 0 0 0 5px rgba(207, 102, 121, 0); }
+}
