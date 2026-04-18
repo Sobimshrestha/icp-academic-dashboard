@@ -110,6 +110,57 @@
         </div>
     </section>
 
+    <!-- Today's Summary Dashboard Card -->
+    <section id="todaySummarySection" class="hidden max-w-3xl mx-auto mb-10 animate-fade-up" style="animation-delay: 0.05s;">
+        <div class="glass-panel rounded-2xl border border-white/5 px-6 py-4 relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 text-8xl font-headline text-white/[0.015] italic pointer-events-none">T</div>
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+                <div class="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
+                    <!-- Class Count -->
+                    <div class="flex items-center gap-2">
+                        <div class="p-1.5 bg-primary/10 rounded-lg border border-primary/20">
+                            <span class="material-symbols-outlined text-primary text-sm">menu_book</span>
+                        </div>
+                        <div>
+                            <span id="summaryClassCount" class="text-white text-sm font-semibold">--</span>
+                            <span class="text-outline text-xs font-label ml-1">today</span>
+                        </div>
+                    </div>
+
+                    <span class="text-white/10 hidden sm:inline">|</span>
+
+                    <!-- Next Class Countdown -->
+                    <div class="flex items-center gap-2">
+                        <div class="p-1.5 bg-primary/10 rounded-lg border border-primary/20">
+                            <span class="material-symbols-outlined text-primary text-sm">schedule</span>
+                        </div>
+                        <div>
+                            <span id="summaryNextClass" class="text-white text-sm font-semibold">--</span>
+                        </div>
+                    </div>
+
+                    <span class="text-white/10 hidden sm:inline">|</span>
+
+                    <!-- Free Time -->
+                    <div class="flex items-center gap-2">
+                        <div class="p-1.5 bg-success/10 rounded-lg border border-success/20">
+                            <span class="material-symbols-outlined text-success text-sm">coffee</span>
+                        </div>
+                        <div>
+                            <span id="summaryFreeTime" class="text-success text-sm font-semibold">--</span>
+                            <span class="text-outline text-xs font-label ml-1">free</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current/Next Class Name -->
+                <div id="summaryDetail" class="text-center sm:text-right">
+                    <p id="summaryDetailText" class="text-[10px] font-label uppercase tracking-widest text-outline"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Sub-Nav Dashboard Switcher -->
     <section class="flex justify-center mb-10 animate-fade-up" style="animation-delay: 0.1s;">
         <div class="bg-surface-container-low p-1 rounded-full flex gap-1 border border-white/5 shadow-lg">

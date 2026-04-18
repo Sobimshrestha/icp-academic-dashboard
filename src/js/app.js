@@ -862,6 +862,102 @@ function updateClock() {
     document.getElementById("liveDate").textContent = now.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 }
 
+// ================================================
+// TODAY'S SUMMARY DASHBOARD
+// ================================================
+function updateTodaySummary() {
+    const section = document.getElementById('todaySummarySection');
+    if (!section) return;
+
+    const yearStr = document.getElementById('studentYearSelect')?.value;
+    const groupStr = (document.getElementById('studentGroupInput')?.value || '').toUpperCase().trim();
+
+    // Hide if no credentials saved
+    if (!yearStr || !groupStr) {
+        section.classList.add('hidden');
+        return;
+    }
+
+    const now = new Date();
+    const todayCode = DAY_MAP[now.getDay()];
+
+    // Hide on Saturday
+    if (todayCode === 'SAT') {
+        section.classList.add('hidden');
+        return;
+    }
+
+    const year = parseInt(yearStr);
+    const nowMins = now.getHours() * 60 + now.getMinutes();
+    const courseData = filterScheduleByCourse(studentCourse);
+    const todayClasses = courseData.filter(e =>
+        e.year === year && e.day === todayCode && e.group.split('+').includes(groupStr)
+    ).sort((a, b) => parseTime(a.start) - parseTime(b.start));
+
+    // Hide if no classes today
+    if (todayClasses.length === 0) {
+        section.classList.add('hidden');
+        return;
+    }
+
+    section.classList.remove('hidden');
+
+    // --- Class count ---
+    const totalClasses = todayClasses.length;
+    const completedClasses = todayClasses.filter(e => nowMins >= parseTime(e.end)).length;
+    const elCount = document.getElementById('summaryClassCount');
+    if (elCount) elCount.textContent = `${completedClasses}/${totalClasses} classes`;
+
+    // --- Next class / current class ---
+    const elNext = document.getElementById('summaryNextClass');
+    const elDetail = document.getElementById('summaryDetailText');
+    const currentClass = todayClasses.find(e => nowMins >= parseTime(e.start) && nowMins < parseTime(e.end));
+    const nextClass = todayClasses.find(e => parseTime(e.start) > nowMins);
+    const allDone = completedClasses === totalClasses;
+
+    if (allDone) {
+        if (elNext) elNext.textContent = 'All done';
+        if (elDetail) elDetail.textContent = 'No more classes today';
+    } else if (currentClass) {
+        const endsIn = parseTime(currentClass.end) - nowMins;
+        if (elNext) elNext.textContent = `Ends in ${endsIn} min`;
+        if (elDetail) elDetail.innerHTML = `In class: <span class="text-white font-semibold">${currentClass.module}</span> <span class="text-primary">@ ${currentClass.room.split('-')[0].trim()}</span>`;
+    } else if (nextClass) {
+        const startsIn = parseTime(nextClass.start) - nowMins;
+        if (startsIn < 60) {
+            if (elNext) elNext.textContent = `Next in ${startsIn} min`;
+        } else {
+            const h = Math.floor(startsIn / 60);
+            const m = startsIn % 60;
+            if (elNext) elNext.textContent = `Next in ${h}h ${m > 0 ? m + 'm' : ''}`;
+        }
+        if (elDetail) elDetail.innerHTML = `Next: <span class="text-white font-semibold">${nextClass.module}</span> <span class="text-primary">@ ${nextClass.room.split('-')[0].trim()}</span>`;
+    }
+
+    // --- Total free time remaining today ---
+    const END_OF_DAY = 17 * 60;
+    let freeMinutes = 0;
+    let cursor = Math.max(nowMins, 7 * 60);
+
+    // Only count future free time
+    const futureClasses = todayClasses.filter(e => parseTime(e.end) > nowMins);
+    futureClasses.forEach(e => {
+        const s = parseTime(e.start);
+        const en = parseTime(e.end);
+        const effectiveStart = Math.max(s, cursor);
+        if (effectiveStart > cursor) {
+            freeMinutes += effectiveStart - cursor;
+        }
+        cursor = Math.max(cursor, en);
+    });
+    if (cursor < END_OF_DAY) {
+        freeMinutes += END_OF_DAY - cursor;
+    }
+
+    const elFree = document.getElementById('summaryFreeTime');
+    if (elFree) elFree.textContent = formatDuration(freeMinutes);
+}
+
 // Restore saved course selections (must happen before year options update)
 if (_saved.studentCourse) setStudentCourse(_saved.studentCourse);
 if (_saved.syncCourseA) setSyncCourse('A', _saved.syncCourseA);
@@ -908,13 +1004,14 @@ if (activeTab !== 'rooms-view') {
 renderRooms();
 renderMap();
 updateClock();
+updateTodaySummary();
 checkNotifications();
 
 // Render the restored active view's content
 if (activeTab === 'schedule-view') renderStudent();
 else if (activeTab === 'sync-view') renderSync();
 
-setInterval(updateClock, 1000);
+setInterval(() => { updateClock(); updateTodaySummary(); }, 1000);
 setInterval(() => {
     if (activeTab === "rooms-view")    renderRooms();
     else if (activeTab === "schedule-view") renderStudent();
