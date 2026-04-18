@@ -12,6 +12,7 @@ function loadState() {
 function saveState() {
     localStorage.setItem(STATE_KEY, JSON.stringify({
         activeTab, selectedRoomDay, selectedStudentDay, selectedSyncDay,
+        studentCourse, syncCourseA, syncCourseB,
         studentYear: document.getElementById('studentYearSelect')?.value || '',
         studentGroup: document.getElementById('studentGroupInput')?.value || '',
         syncYearA: document.getElementById('syncYearA')?.value || '1',
@@ -30,6 +31,83 @@ let activeTab = _saved.activeTab || "rooms-view";
 let selectedRoomDay = _saved.selectedRoomDay || _defaultDay;
 let selectedStudentDay = _saved.selectedStudentDay || _defaultDay;
 let selectedSyncDay = _saved.selectedSyncDay || _defaultDay;
+let studentCourse = _saved.studentCourse || 'computing';
+let syncCourseA = _saved.syncCourseA || 'computing';
+let syncCourseB = _saved.syncCourseB || 'computing';
+
+// === COURSE SELECTOR LOGIC ===
+function updateYearOptions(selectId, course) {
+    const sel = document.getElementById(selectId);
+    if (!sel) return;
+    const currentVal = sel.value;
+    if (course === 'bba') {
+        sel.innerHTML = '<option value="" disabled>Select Year</option><option value="1">Year 1</option><option value="2">Year 2</option>';
+    } else {
+        sel.innerHTML = '<option value="" disabled>Select Year</option><option value="1">Level / Year 1</option><option value="2">Level / Year 2</option><option value="3">Level / Year 3</option>';
+    }
+    // Try to restore previous value if still valid
+    const opts = Array.from(sel.options).map(o => o.value);
+    if (opts.includes(currentVal)) sel.value = currentVal;
+    else sel.value = '';
+}
+
+function updateGroupPlaceholder(inputId, course) {
+    const inp = document.getElementById(inputId);
+    if (!inp) return;
+    inp.placeholder = course === 'bba' ? 'Group (e.g. B1, B2)' : 'Group (e.g. C7)';
+}
+
+function setStudentCourse(course) {
+    studentCourse = course;
+    // Toggle button styles
+    const compBtn = document.getElementById('studentCourseComputing');
+    const bbaBtn = document.getElementById('studentCourseBBA');
+    if (course === 'computing') {
+        compBtn.classList.add('active', 'bg-primary/20', 'text-white', 'border-primary/30');
+        compBtn.classList.remove('text-slate-400', 'border-transparent');
+        bbaBtn.classList.remove('active', 'bg-primary/20', 'text-white', 'border-primary/30');
+        bbaBtn.classList.add('text-slate-400', 'border-transparent');
+    } else {
+        bbaBtn.classList.add('active', 'bg-primary/20', 'text-white', 'border-primary/30');
+        bbaBtn.classList.remove('text-slate-400', 'border-transparent');
+        compBtn.classList.remove('active', 'bg-primary/20', 'text-white', 'border-primary/30');
+        compBtn.classList.add('text-slate-400', 'border-transparent');
+    }
+    updateYearOptions('studentYearSelect', course);
+    updateGroupPlaceholder('studentGroupInput', course);
+    renderStudent();
+    saveState();
+    checkNotifications();
+}
+
+function setSyncCourse(target, course) {
+    const isPrimary = target === 'A';
+    if (isPrimary) syncCourseA = course; else syncCourseB = course;
+    
+    const btnClass = isPrimary ? '.sync-course-btn-a' : '.sync-course-btn-b';
+    const activeColor = isPrimary ? 'bg-primary/20' : 'bg-success/20';
+    const activeBorder = isPrimary ? 'border-primary/30' : 'border-success/30';
+    
+    document.querySelectorAll(btnClass).forEach(btn => {
+        if (btn.dataset.course === course) {
+            btn.classList.add('active', activeColor, 'text-white', activeBorder);
+            btn.classList.remove('text-slate-400', 'border-transparent');
+        } else {
+            btn.classList.remove('active', activeColor, 'text-white', activeBorder);
+            btn.classList.add('text-slate-400', 'border-transparent');
+        }
+    });
+    
+    updateYearOptions(isPrimary ? 'syncYearA' : 'syncYearB', course);
+    updateGroupPlaceholder(isPrimary ? 'syncGroupA' : 'syncGroupB', course);
+    renderSync();
+    saveState();
+}
+
+function filterScheduleByCourse(course) {
+    if (course === 'bba') return SCHEDULE.filter(e => e.course === 'BBA');
+    return SCHEDULE.filter(e => !e.course);
+}
 
 const ALL_ROOMS = [...new Set(SCHEDULE.map(e => e.room))].sort();
 
@@ -345,7 +423,8 @@ function renderStudent() {
     }
 
     const year = parseInt(yearStr);
-    const myClasses = SCHEDULE.filter(e => e.year === year && e.day === selectedStudentDay && e.group.split('+').includes(groupStr))
+    const courseData = filterScheduleByCourse(studentCourse);
+    const myClasses = courseData.filter(e => e.year === year && e.day === selectedStudentDay && e.group.split('+').includes(groupStr))
         .sort((a,b) => parseTime(a.start) - parseTime(b.start));
 
     if (myClasses.length === 0) {
@@ -537,8 +616,9 @@ function renderMap() {
 }
 
 // --- RENDER SOCIAL SYNC ENGINE ---
-function getFreeBlocks(groupStr, year, dayCode) {
-    const classes = SCHEDULE.filter(e => e.year === year && e.day === dayCode && e.group.split('+').includes(groupStr))
+function getFreeBlocks(groupStr, year, dayCode, course) {
+    const courseData = filterScheduleByCourse(course || 'computing');
+    const classes = courseData.filter(e => e.year === year && e.day === dayCode && e.group.split('+').includes(groupStr))
         .sort((a,b) => parseTime(a.start) - parseTime(b.start));
     
     const freeBlocks = [];
@@ -577,8 +657,8 @@ function renderSync() {
         return;
     }
 
-    const freeA = getFreeBlocks(gA, yA, selectedSyncDay);
-    const freeB = getFreeBlocks(gB, yB, selectedSyncDay);
+    const freeA = getFreeBlocks(gA, yA, selectedSyncDay, syncCourseA);
+    const freeB = getFreeBlocks(gB, yB, selectedSyncDay, syncCourseB);
     
     // Find mathematical intersections
     const overlaps = [];
@@ -668,7 +748,8 @@ function checkNotifications() {
     if (todayCode === 'SAT') return;
     const nowMins = now.getHours() * 60 + now.getMinutes();
 
-    const todayClasses = SCHEDULE.filter(e =>
+    const courseData = filterScheduleByCourse(studentCourse);
+    const todayClasses = courseData.filter(e =>
         e.year === year && e.day === todayCode && e.group.split('+').includes(group)
     ).sort((a, b) => parseTime(a.start) - parseTime(b.start));
 
@@ -780,6 +861,11 @@ function updateClock() {
     document.getElementById("liveAmPm").textContent = ampm;
     document.getElementById("liveDate").textContent = now.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 }
+
+// Restore saved course selections (must happen before year options update)
+if (_saved.studentCourse) setStudentCourse(_saved.studentCourse);
+if (_saved.syncCourseA) setSyncCourse('A', _saved.syncCourseA);
+if (_saved.syncCourseB) setSyncCourse('B', _saved.syncCourseB);
 
 // Restore saved form values
 if (_saved.studentYear)  document.getElementById('studentYearSelect').value = _saved.studentYear;

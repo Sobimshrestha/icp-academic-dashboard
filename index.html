@@ -166,8 +166,13 @@
         <!-- ======================= -->
         <div id="schedule-view" class="view-section">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-10 bg-surface-container-low p-4 rounded-3xl border border-white/5 shadow-md">
-                <div class="flex gap-4 w-full md:w-auto">
-                    <div class="relative w-1/2 md:w-40">
+                <div class="flex flex-wrap gap-3 w-full md:w-auto items-center">
+                    <!-- Course Toggle -->
+                    <div class="flex bg-surface rounded-full p-1 border border-white/10">
+                        <button id="studentCourseComputing" class="course-toggle-btn active px-4 py-2 rounded-full font-label text-[10px] uppercase tracking-widest transition-all bg-primary/20 text-white border border-primary/30" data-course="computing" onclick="setStudentCourse('computing')">Computing</button>
+                        <button id="studentCourseBBA" class="course-toggle-btn px-4 py-2 rounded-full font-label text-[10px] uppercase tracking-widest transition-all text-slate-400 border border-transparent" data-course="bba" onclick="setStudentCourse('bba')">BBA</button>
+                    </div>
+                    <div class="relative w-auto md:w-36">
                         <select id="studentYearSelect" class="w-full bg-surface text-on-surface font-label text-sm px-6 py-3 rounded-full border border-white/10 appearance-none focus:border-primary/50 transition-colors cursor-pointer text-center">
                             <option value="" disabled selected>Select Year</option>
                             <option value="1">Level / Year 1</option>
@@ -176,8 +181,8 @@
                         </select>
                         <span class="material-symbols-outlined absolute right-4 top-3 text-outline text-sm pointer-events-none">expand_more</span>
                     </div>
-                    <div class="relative w-1/2 md:w-40">
-                        <input id="studentGroupInput" class="w-full bg-surface text-on-surface font-label text-sm px-6 py-3 rounded-full border border-white/10 focus:border-primary/50 transition-colors placeholder:text-outline-variant text-center" placeholder="Group (e.g. C7, B2)" autocapitalize="characters" type="text"/>
+                    <div class="relative w-auto md:w-36">
+                        <input id="studentGroupInput" class="w-full bg-surface text-on-surface font-label text-sm px-6 py-3 rounded-full border border-white/10 focus:border-primary/50 transition-colors placeholder:text-outline-variant text-center" placeholder="Group (e.g. C7)" autocapitalize="characters" type="text"/>
                     </div>
                 </div>
 
@@ -257,6 +262,10 @@
                 <div class="glass-panel p-6 rounded-3xl border border-white/5 relative">
                     <div class="absolute top-0 right-0 p-8 text-white/5 font-serif italic text-6xl pointer-events-none line-height-none">A</div>
                     <h3 class="font-label text-xs uppercase tracking-[0.2em] text-primary mb-6 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary inline-block shadow-[0_0_8px_rgba(212,175,55,0.8)]"></span> Target Alpha</h3>
+                    <div class="flex bg-surface rounded-full p-1 border border-white/10 mb-4">
+                        <button class="sync-course-btn-a active px-3 py-1.5 rounded-full font-label text-[9px] uppercase tracking-widest transition-all bg-primary/20 text-white border border-primary/30 w-1/2" data-course="computing" onclick="setSyncCourse('A','computing')">Computing</button>
+                        <button class="sync-course-btn-a px-3 py-1.5 rounded-full font-label text-[9px] uppercase tracking-widest transition-all text-slate-400 border border-transparent w-1/2" data-course="bba" onclick="setSyncCourse('A','bba')">BBA</button>
+                    </div>
                     <div class="flex gap-3">
                         <select id="syncYearA" class="w-1/2 bg-surface text-on-surface font-label text-sm px-4 py-3 rounded-full border border-white/10 appearance-none focus:border-primary/50 transition-colors">
                             <option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option>
@@ -269,6 +278,10 @@
                 <div class="glass-panel p-6 rounded-3xl border border-white/5 relative">
                     <div class="absolute top-0 right-0 p-8 text-white/5 font-serif italic text-6xl pointer-events-none line-height-none">B</div>
                     <h3 class="font-label text-xs uppercase tracking-[0.2em] text-success mb-6 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-success inline-block shadow-[0_0_8px_rgba(107,168,122,0.8)]"></span> Target Beta</h3>
+                    <div class="flex bg-surface rounded-full p-1 border border-white/10 mb-4">
+                        <button class="sync-course-btn-b active px-3 py-1.5 rounded-full font-label text-[9px] uppercase tracking-widest transition-all bg-success/20 text-white border border-success/30 w-1/2" data-course="computing" onclick="setSyncCourse('B','computing')">Computing</button>
+                        <button class="sync-course-btn-b px-3 py-1.5 rounded-full font-label text-[9px] uppercase tracking-widest transition-all text-slate-400 border border-transparent w-1/2" data-course="bba" onclick="setSyncCourse('B','bba')">BBA</button>
+                    </div>
                     <div class="flex gap-3">
                         <select id="syncYearB" class="w-1/2 bg-surface text-on-surface font-label text-sm px-4 py-3 rounded-full border border-white/10 appearance-none focus:border-success/50 transition-colors">
                             <option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option>
