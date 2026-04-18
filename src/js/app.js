@@ -237,8 +237,8 @@ function renderTimelineInDrawer(room, dayCode) {
         html = `
         <div class="flex flex-col items-center justify-center p-12 text-center border border-white/5 rounded-2xl glass-panel mt-10">
             <span class="material-symbols-outlined text-4xl text-primary/40 mb-4">weekend</span>
-            <p class="font-headline text-xl text-white">All Clear</p>
-            <p class="text-xs text-outline font-label uppercase tracking-widest mt-2">No schedules found for this day.</p>
+            <p class="font-headline text-xl text-white">No Classes</p>
+            <p class="text-xs text-outline font-label uppercase tracking-widest mt-2">This room has no classes scheduled for this day.</p>
         </div>`;
     } else {
         html += `<div class="relative pl-6 border-l border-white/5 mt-6 pb-12 space-y-8">`;
@@ -258,7 +258,7 @@ function renderTimelineInDrawer(room, dayCode) {
                 <div class="relative group">
                     <div class="absolute -left-[29px] top-4 w-3 h-3 rounded-full border-2 border-success bg-[#111115] z-10"></div>
                     <div class="glass-panel p-5 rounded-2xl border-l-2 border-l-success border-t-white/5 border-r-white/5 border-b-white/5">
-                        <span class="text-success font-label text-[10px] uppercase font-bold tracking-widest block mb-1">Free Session</span>
+                        <span class="text-success font-label text-[10px] uppercase font-bold tracking-widest block mb-1">Free Slot</span>
                         <span class="text-white text-sm block">${formatTime(cursor)} - ${formatTime(s)}</span>
                         <span class="text-outline text-xs mt-2 block">Duration: ${formatDuration(s-cursor)}</span>
                     </div>
@@ -293,9 +293,9 @@ function renderTimelineInDrawer(room, dayCode) {
             <div class="relative group">
                 <div class="absolute -left-[29px] top-4 w-3 h-3 rounded-full border-2 border-success bg-[#111115] z-10"></div>
                 <div class="glass-panel p-5 rounded-2xl border-l-2 border-l-success border-t-white/5 border-r-white/5 border-b-white/5">
-                    <span class="text-success font-label text-[10px] uppercase font-bold tracking-widest block mb-1">Free Session</span>
+                    <span class="text-success font-label text-[10px] uppercase font-bold tracking-widest block mb-1">Free Slot</span>
                     <span class="text-white text-sm block">${formatTime(cursor)} - 05:00 PM</span>
-                    <span class="text-outline text-xs mt-2 block">Available until EOD</span>
+                    <span class="text-outline text-xs mt-2 block">Free for the rest of the day</span>
                 </div>
             </div>`;
         }
@@ -383,8 +383,8 @@ function renderRooms() {
         container.innerHTML = `
         <div class="col-span-full py-20 flex flex-col items-center justify-center border border-dashed border-white/10 rounded-3xl">
             <span class="material-symbols-outlined text-4xl text-outline-variant mb-4">search_off</span>
-            <p class="text-white font-headline text-2xl italic">No sanctuaries found</p>
-            <p class="text-outline text-sm mt-2 font-label uppercase tracking-widest">Adjust filters or search parameters</p>
+            <p class="text-white font-headline text-2xl italic">No rooms found</p>
+            <p class="text-outline text-sm mt-2 font-label uppercase tracking-widest">Try changing your filters or search</p>
         </div>`;
     } else {
         container.innerHTML = html;
@@ -397,7 +397,7 @@ function renderRooms() {
             });
         });
     }
-    meta.innerHTML = `Cataloging <strong>${count}</strong> spaces on <strong>${DAY_NAMES[selectedRoomDay]}</strong>`;
+    meta.innerHTML = `Showing <strong>${count}</strong> rooms on <strong>${DAY_NAMES[selectedRoomDay]}</strong>`;
 }
 
 // --- RENDER MY SCHEDULE HORIZONTAL/MASONRY ---
@@ -416,8 +416,8 @@ function renderStudent() {
         container.innerHTML = `
         <div class="py-24 text-center border border-dashed border-white/10 rounded-3xl animate-fade-up">
             <span class="material-symbols-outlined text-5xl text-outline-variant mb-4 hover:rotate-12 transition-transform">fingerprint</span>
-            <p class="font-headline text-3xl italic text-white mb-2">Identify Yourself</p>
-            <p class="font-label text-xs uppercase tracking-widest text-primary/60">Select Year and enter Group to access chronological directives.</p>
+            <p class="font-headline text-3xl italic text-white mb-2">Select Your Details</p>
+            <p class="font-label text-xs uppercase tracking-widest text-primary/60">Pick your year and enter your group to see your schedule.</p>
         </div>`;
         return;
     }
@@ -431,13 +431,13 @@ function renderStudent() {
         container.innerHTML = `
         <div class="py-24 text-center border border-dashed border-success/30 rounded-3xl glass-panel animate-fade-up">
             <span class="material-symbols-outlined text-5xl text-success/60 mb-4 scale-110">celebration</span>
-            <p class="font-headline text-3xl italic text-success mb-2">Liberation Day</p>
-            <p class="font-label text-xs uppercase tracking-widest text-outline">You have zero obligations on ${DAY_NAMES[selectedStudentDay]}.</p>
+            <p class="font-headline text-3xl italic text-success mb-2">No Classes Today</p>
+            <p class="font-label text-xs uppercase tracking-widest text-outline">You have no classes on ${DAY_NAMES[selectedStudentDay]}. Enjoy your day off!</p>
         </div>`;
         return;
     }
 
-    meta.innerHTML = `Displaying trajectory for <strong>${DAY_NAMES[selectedStudentDay]}</strong>`;
+    meta.innerHTML = `Showing schedule for <strong>${DAY_NAMES[selectedStudentDay]}</strong>`;
 
     const now = new Date();
     const todayCode = DAY_MAP[now.getDay()];
@@ -449,7 +449,7 @@ function renderStudent() {
         const lastClassEndMins = parseTime(myClasses[myClasses.length-1].end);
         if (nowMins >= lastClassEndMins) {
             lastClassEnded = true;
-            notice.innerHTML = `<div class="bg-success/10 border border-success/20 text-success text-center py-4 rounded-xl font-label text-xs uppercase tracking-[0.1em] font-bold shadow-[0_0_15px_rgba(107,168,122,0.1)]">All sessions have successfully concluded.</div>`;
+            notice.innerHTML = `<div class="bg-success/10 border border-success/20 text-success text-center py-4 rounded-xl font-label text-xs uppercase tracking-[0.1em] font-bold shadow-[0_0_15px_rgba(107,168,122,0.1)]">All your classes for today are done.</div>`;
         }
     }
 
@@ -651,8 +651,8 @@ function renderSync() {
         container.innerHTML = `
         <div class="py-12 flex flex-col items-center border border-dashed border-white/10 rounded-3xl mt-4">
             <span class="material-symbols-outlined text-4xl text-outline-variant mb-2">sync_problem</span>
-            <p class="font-headline italic text-xl text-white">Missing Parameters</p>
-            <p class="text-xs text-outline font-label uppercase tracking-widest mt-2">Identify targets to execute</p>
+            <p class="font-headline italic text-xl text-white">Fill In Both Groups</p>
+            <p class="text-xs text-outline font-label uppercase tracking-widest mt-2">Enter groups for both sides to compare</p>
         </div>`;
         return;
     }
@@ -676,8 +676,8 @@ function renderSync() {
         container.innerHTML = `
         <div class="py-12 flex flex-col items-center border border-dashed border-danger/30 rounded-3xl bg-danger/5 mt-4">
             <span class="material-symbols-outlined text-4xl text-danger/60 mb-2">link_off</span>
-            <p class="font-headline italic text-xl text-danger">No Mutual Intersections</p>
-            <p class="text-[10px] text-danger/70 font-label uppercase tracking-widest mt-2">Trajectories simply do not align today.</p>
+            <p class="font-headline italic text-xl text-danger">No Common Free Time</p>
+            <p class="text-[10px] text-danger/70 font-label uppercase tracking-widest mt-2">These two groups have no overlapping free time on this day.</p>
         </div>`;
         return;
     }
@@ -686,7 +686,7 @@ function renderSync() {
     const todayCode = DAY_MAP[now.getDay()];
     const nowMins = now.getHours() * 60 + now.getMinutes();
 
-    let html = `<div class="text-center font-label text-xs uppercase tracking-[0.2em] text-outline mb-4 border-b border-white/5 pb-2">Located ${overlaps.length} Matching Temporal Windows</div>`;
+    let html = `<div class="text-center font-label text-xs uppercase tracking-[0.2em] text-outline mb-4 border-b border-white/5 pb-2">Found ${overlaps.length} shared free slot${overlaps.length > 1 ? 's' : ''}</div>`;
     
     overlaps.forEach((o, i) => {
         const isToday = (selectedSyncDay === todayCode);
@@ -709,7 +709,7 @@ function renderSync() {
                     </p>
                 </div>
             </div>
-            ${isCurrent ? '<span class="flex-none bg-success/20 text-success border border-success/30 px-3 py-1 rounded text-[10px] uppercase font-bold tracking-widest animate-pulse flex items-center gap-2"><span class="w-1.5 h-1.5 bg-success rounded-full block"></span> Happening Now</span>' : ''}
+            ${isCurrent ? '<span class="flex-none bg-success/20 text-success border border-success/30 px-3 py-1 rounded text-[10px] uppercase font-bold tracking-widest animate-pulse flex items-center gap-2"><span class="w-1.5 h-1.5 bg-success rounded-full block"></span> Right Now</span>' : ''}
         </div>`;
     });
     

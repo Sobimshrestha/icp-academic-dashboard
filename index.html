@@ -101,12 +101,12 @@
     <!-- The Chronos Display -->
     <section class="flex flex-col items-center justify-center mb-12">
         <div class="text-center animate-fade-up border-b border-primary/10 pb-8 px-12">
-            <p class="font-label text-[10px] md:text-xs uppercase tracking-[0.4em] text-primary/60 mb-2">Academic Timeline</p>
+            <p class="font-label text-[10px] md:text-xs uppercase tracking-[0.4em] text-primary/60 mb-2">Current Time</p>
             <div class="flex items-baseline justify-center gap-3">
                 <h1 id="liveTime" class="text-6xl md:text-8xl font-extralight tracking-tighter text-white glow-gold leading-none">--:--</h1>
                 <span id="liveAmPm" class="text-2xl md:text-4xl font-serif italic text-primary/60">--</span>
             </div>
-            <p id="liveDate" class="font-serif text-lg md:text-xl text-primary-variant italic mt-4 tracking-wide">Loading chronos...</p>
+            <p id="liveDate" class="font-serif text-lg md:text-xl text-primary-variant italic mt-4 tracking-wide">Loading...</p>
         </div>
     </section>
 
@@ -241,7 +241,7 @@
                 <div class="flex gap-2 bg-surface p-1 rounded-full overflow-x-auto w-full md:w-auto" id="studentDayTabs"></div>
             </div>
 
-            <p id="studentResultsMeta" class="font-label text-xs uppercase tracking-[0.2em] text-outline mb-6 text-center border-b border-white/5 pb-4">Waiting for credentials...</p>
+            <p id="studentResultsMeta" class="font-label text-xs uppercase tracking-[0.2em] text-outline mb-6 text-center border-b border-white/5 pb-4">Select your year and group above</p>
             
             <div id="studentNoticeArea" class="mb-8"></div>
             
@@ -255,8 +255,8 @@
         <!-- ======================= -->
         <div id="map-view" class="view-section">
             <div class="flex flex-col items-center justify-center mb-10 text-center animate-fade-up">
-                <h2 class="font-headline text-3xl italic text-white mb-2">Live Tactical Grid</h2>
-                <p class="font-label text-xs uppercase tracking-widest text-outline">Real-time occupancy matrix</p>
+                <h2 class="font-headline text-3xl italic text-white mb-2">Campus Map</h2>
+                <p class="font-label text-xs uppercase tracking-widest text-outline">See which rooms are free or busy right now</p>
             </div>
             
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-12 max-w-[1400px] mx-auto animate-fade-up" style="animation-delay: 0.1s;">
@@ -300,8 +300,8 @@
         <!-- ======================= -->
         <div id="sync-view" class="view-section">
             <div class="flex flex-col items-center justify-center mb-10 text-center animate-fade-up">
-                <h2 class="font-headline text-3xl italic text-white mb-2">Overlap Engine</h2>
-                <p class="font-label text-xs uppercase tracking-widest text-outline">Calculate mutual temporal freedom</p>
+                <h2 class="font-headline text-3xl italic text-white mb-2">Find Common Free Time</h2>
+                <p class="font-label text-xs uppercase tracking-widest text-outline">See when two groups are both free</p>
             </div>
             
             <div class="flex items-center justify-center p-4 mb-10 animate-fade-up" style="animation-delay: 0.1s;">
